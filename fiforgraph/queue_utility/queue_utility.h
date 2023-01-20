@@ -6,7 +6,7 @@
 typedef struct s_element	t_element;
 struct s_element
 {
-	int	content;
+	void	*content;
 	t_element	*next;
 };
 
@@ -18,9 +18,10 @@ struct s_queue
 };
 
 t_queue	*ft_init(void);
-void	ft_enqueue(t_queue *queue, int new_content);
+void	ft_enqueue(t_queue *queue, void *new_content);
 void	ft_end(t_queue *queue);
 void	ft_dequeue(t_queue *queue);
+void	ft_addint(t_queue *queue, int value);
 void	ft_printqueue(t_queue *queue);
 
 #endif

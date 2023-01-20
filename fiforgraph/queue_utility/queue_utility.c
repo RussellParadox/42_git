@@ -11,7 +11,17 @@ t_queue	*ft_init(void)
 	return(queue);
 }
 
-void	ft_enqueue(t_queue *queue, int new_content)
+void	ft_addint(t_queue *queue, int value)
+{
+	int *v;
+
+	v = malloc(sizeof(int));
+
+	*v = value;
+	ft_enqueue(queue, v);
+}
+
+void	ft_enqueue(t_queue *queue, void *new_content)
 {
 	t_element	*new_ele;
 	t_element	*e;
@@ -44,6 +54,7 @@ void	ft_dequeue(t_queue *queue)
 
 	del_ele = queue->first;
 	queue->first = del_ele->next;
+	free(del_ele->content);
 	free(del_ele);
 }
 
@@ -55,6 +66,7 @@ void	ft_end(t_queue *queue)
 	e1 = queue->first;
 	while (e1 != NULL)
 	{
+		free(e1->content);
 		e2 = e1->next;
 		free(e1);
 		e1 = e2;
@@ -69,7 +81,7 @@ void	ft_printqueue(t_queue *queue)
 	e = queue->first;
 	while (e != NULL)
 	{
-		printf("%d\n", e->content);
+		printf("%d\n", *(int *)(e->content));
 		e = e->next;
 	}
 }
