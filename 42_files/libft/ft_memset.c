@@ -6,20 +6,21 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 12:12:40 by gdornic           #+#    #+#             */
-/*   Updated: 2023/02/02 12:19:49 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/02/02 17:29:27 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stddef.h>
+
 void	*ft_memset(void *s, int c, size_t n)
 {
-	int	i;
+	int	*s_toint;
 
-	i = 0;
-	while (i < n)
+	s_toint = (int *)s;
+	while (n > 0)
 	{
-		*s = c;
-		s++;
-		i++;
+		*s_toint++ = c;
+		n -= sizeof(n);
 	}
-	return (s-n);
+	return (s);
 }
