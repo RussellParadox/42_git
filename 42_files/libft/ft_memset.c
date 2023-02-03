@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 12:12:40 by gdornic           #+#    #+#             */
-/*   Updated: 2023/02/03 00:00:34 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/02/03 13:47:13 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,15 @@
 
 void	*ft_memset(void *s, int c, size_t n)
 {
-	unsigned char	*s_toint;
+	unsigned char	*pon_s;
+	int		i;
 
-	s_toint = (unsigned char *)s;
-	while (n > 0)
+	pon_s = (unsigned char *)s;
+	i = 0;
+	while (i < n)
 	{
-		*s_toint++ = (unsigned char)c;
-		n -= sizeof(unsigned char);
+		pon_s[i] = (unsigned char)c;
+		i++;
 	}
 	return (s);
 }
