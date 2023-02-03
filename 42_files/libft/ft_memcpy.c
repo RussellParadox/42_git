@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 12:45:19 by gdornic           #+#    #+#             */
-/*   Updated: 2023/02/03 13:58:42 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/02/03 19:24:56 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
 	unsigned char	*pon_dest;
 	unsigned char	*pon_src;
-	size_t	i;
+	size_t			i;
 
 	pon_dest = (unsigned char *)dest;
 	pon_src = (unsigned char *)src;
