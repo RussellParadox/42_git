@@ -6,13 +6,13 @@
 #    By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/01 16:56:21 by gdornic           #+#    #+#              #
-#    Updated: 2023/02/05 14:15:16 by gdornic          ###   ########.fr        #
+#    Updated: 2023/02/05 20:55:07 by gdornic          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
 
-SRC = ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c ft_strlen.c ft_memset.c ft_bzero.c ft_memcpy.c ft_memmove.c
+SRC = ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c ft_strlen.c ft_memset.c ft_bzero.c ft_memcpy.c ft_memmove.c ft_strlcpy.c ft_strlcat.c
 
 OBJ = ${SRC:.c=.o}
 
@@ -21,6 +21,7 @@ all: $(NAME)
 
 $(NAME):
 	gcc -Wall -Wextra -Werror -c $(SRC)
+
 clean:
 	rm -f $(OBJ)
 
