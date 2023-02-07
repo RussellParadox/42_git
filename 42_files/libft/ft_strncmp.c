@@ -1,31 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/07 14:49:02 by gdornic           #+#    #+#             */
-/*   Updated: 2023/02/07 16:39:26 by gdornic          ###   ########.fr       */
+/*   Created: 2023/02/07 16:40:56 by gdornic           #+#    #+#             */
+/*   Updated: 2023/02/07 17:17:59 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strchr(const char *s, int c)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	char	*first_occ;
-	char	ctochr;
+	unsigned char	*s1_cpy;
+	unsigned char	*s2_cpy;
+	size_t	i;
 
-	ctochr = (char)c;
-	first_occ = (char *)s;
-	while (*first_occ)
+	if (!n)
+		return (0);
+	s1_cpy = (unsigned char *)s1;
+	s2_cpy = (unsigned char *)s2;
+	i = 0;
+	while (*s1_cpy == *s2_cpy && *s2_cpy && i < n - 1)
 	{
-		if (*first_occ == ctochr)
-			return (first_occ);
-		first_occ++;
+		s1_cpy++;
+		s2_cpy++;
+		i++;
 	}
-	if (!ctochr)
-		return (first_occ);
-	return (NULL);
+	return (*s1_cpy - *s2_cpy);
 }

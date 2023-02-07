@@ -1,31 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/07 14:49:02 by gdornic           #+#    #+#             */
-/*   Updated: 2023/02/07 16:39:26 by gdornic          ###   ########.fr       */
+/*   Created: 2023/02/07 16:10:40 by gdornic           #+#    #+#             */
+/*   Updated: 2023/02/07 16:38:04 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strchr(const char *s, int c)
+char	*ft_strrchr(const char *s, int c)
 {
-	char	*first_occ;
+	char	*last_occ;
 	char	ctochr;
 
+	last_occ = ft_strchr((char *)s, '\0');
 	ctochr = (char)c;
-	first_occ = (char *)s;
-	while (*first_occ)
+	while (last_occ != (char *)s)
 	{
-		if (*first_occ == ctochr)
-			return (first_occ);
-		first_occ++;
+		if (*last_occ == ctochr)
+			return (last_occ);
+		last_occ--;
 	}
-	if (!ctochr)
-		return (first_occ);
+	if (*last_occ == ctochr)
+		return (last_occ);
 	return (NULL);
 }
