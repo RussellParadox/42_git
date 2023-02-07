@@ -1,33 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/07 16:40:56 by gdornic           #+#    #+#             */
-/*   Updated: 2023/02/07 20:14:57 by gdornic          ###   ########.fr       */
+/*   Created: 2023/02/07 19:59:39 by gdornic           #+#    #+#             */
+/*   Updated: 2023/02/07 20:07:40 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-	unsigned char	*s1_cpy;
-	unsigned char	*s2_cpy;
+	unsigned char	*scast;
+	unsigned char	ctochr;
 	size_t			i;
 
-	if (!n)
-		return (0);
-	s1_cpy = (unsigned char *)s1;
-	s2_cpy = (unsigned char *)s2;
+	scast = (unsigned char *)s;
+	ctochr = (unsigned char)c;
 	i = 0;
-	while (*s1_cpy == *s2_cpy && *s2_cpy && i < n - 1)
+	while (i < n)
 	{
-		s1_cpy++;
-		s2_cpy++;
+		if (*scast == ctochr)
+			return (scast);
+		scast++;
 		i++;
 	}
-	return (*s1_cpy - *s2_cpy);
+	return (NULL);
 }
