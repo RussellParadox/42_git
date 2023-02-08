@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 17:37:59 by gdornic           #+#    #+#             */
-/*   Updated: 2023/02/07 20:39:14 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/02/08 17:02:34 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int		ft_toupper(int c);
 int		ft_tolower(int c);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
+int		ft_atoi(const char *nptr);
 
 char	*ft_strchr(const char *s, int c);
 char	*ft_strrchr(const char *s, int c);
