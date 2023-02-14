@@ -6,12 +6,11 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 11:29:17 by gdornic           #+#    #+#             */
-/*   Updated: 2023/02/14 16:00:42 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/02/14 16:48:41 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
 
 static size_t	ft_wordqt(char const *s, char c)
 {
@@ -105,36 +104,3 @@ char	**ft_split(char const *s, char c)
 	free(word_size);
 	return (split_str);
 }
-/*
-int	main(void)
-{
-	const char	str0[] = "";
-	size_t		*sizes;
-	size_t		qt;
-	size_t		i;
-	char	**split_test;
-	char	c;
-
-	i = 0;
-	c = ' ';
-	qt = ft_wordqt(str0, c);
-	sizes = ft_wordsize(qt, str0, c);
-	printf("qt: %ld\n", qt);
-	while (i < qt)
-	{
-		printf("size %ld: %ld\n", i, sizes[i]);
-		i++;
-	}
-	split_test = ft_split(str0, c);
-	i = 0;
-	while (i < qt)
-	{
-		printf("mot %ld: %s\n", i, split_test[i]);
-		i++;
-	}
-	printf("mot %ld: %p\n", i, split_test[i]);
-	for (size_t j = 0; j <= qt; j++)
-		free(split_test[j]);
-	free(split_test);
-	free(sizes);
-}*/
