@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 11:29:17 by gdornic           #+#    #+#             */
-/*   Updated: 2023/02/14 16:48:41 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/02/14 23:27:21 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,15 @@ char	**ft_split(char const *s, char c)
 	size_t	*word_size;
 	char	**split_str;
 
+	if (s == NULL)
+		return (NULL);
 	word_qt = ft_wordqt(s, c);
 	word_size = ft_wordsize(word_qt, s, c);
+	if (word_size == NULL)
+		return (NULL);
 	split_str = ft_splitstr(word_size, word_qt, s, c);
+	if (split_str == NULL)
+		return (NULL);
 	free(word_size);
 	return (split_str);
 }

@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:02:14 by gdornic           #+#    #+#             */
-/*   Updated: 2023/02/09 16:33:34 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/02/14 22:40:36 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,14 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	size_t	sub_len;
 	size_t	slen;
 
+	if (s == NULL)
+		return (NULL);
 	slen = ft_strlen(s);
 	if (start < slen)
 		sub_len = ft_strllen(s + start, len);
 	else
 		sub_len = 0;
-	sub_str = malloc((sub_len + 1) * sizeof(char));
+	sub_str = ft_calloc(sub_len + 1, sizeof(char));
 	if (sub_str == NULL)
 		return (NULL);
 	ft_memcpy(sub_str, s + start, sub_len);

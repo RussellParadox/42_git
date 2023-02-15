@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 17:43:00 by gdornic           #+#    #+#             */
-/*   Updated: 2023/02/06 20:06:24 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/02/14 22:17:29 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size)
 	size_t	dst_len;
 	size_t	free_size;
 
+	if (dst == NULL && size == 0)
+		return (0);
 	src_len = ft_strlen(src);
 	dst_len = ft_strllen(dst, size);
 	if (dst_len != size)

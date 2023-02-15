@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 23:08:58 by gdornic           #+#    #+#             */
-/*   Updated: 2023/02/11 00:08:42 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/02/14 23:22:10 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@ static int	ft_belongto(const char *str, char c)
 
 char	*ft_strtrim(char const *s1, char const *set)
 {
-	size_t			sub_len;
 	char			*trim_str;
 	char			*iterator;
 	unsigned int	start;
 	unsigned int	end;
 
+	if (s1 == NULL || set == NULL)
+		return (NULL);
 	iterator = (char *)s1;
-	sub_len = ft_strlen(s1);
 	start = 0;
 	while (ft_belongto(set, *iterator))
 	{
@@ -47,7 +47,6 @@ char	*ft_strtrim(char const *s1, char const *set)
 		end++;
 		iterator--;
 	}
-	sub_len -= (start + end);
-	trim_str = ft_substr(s1, start, sub_len);
+	trim_str = ft_substr(s1, start, ft_strlen(s1) - (start + end));
 	return (trim_str);
 }

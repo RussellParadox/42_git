@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 20:20:16 by gdornic           #+#    #+#             */
-/*   Updated: 2023/02/07 23:31:38 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/02/14 22:19:11 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 	size_t	search_zone;
 	size_t	i;
 
+	if (big == NULL && len == 0)
+		return (0);
 	big_cpy = (char *)big;
 	little_len = ft_strlen(little);
 	if (!little_len)
