@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 17:37:59 by gdornic           #+#    #+#             */
-/*   Updated: 2023/02/16 16:29:49 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/02/16 16:33:17 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	*ft_memchr(const void *s, int c, size_t n);
 void	*ft_calloc(size_t nmemb, size_t size);
 void	ft_striteri(char *s, void (*f)(unsigned int, char *));
 void	ft_putchar_fd(char c, int fd);
+void	ft_putstr_fd(char *s, int fd);
 
 size_t	ft_strlen(const char *c);
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
