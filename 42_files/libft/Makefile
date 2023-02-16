@@ -6,7 +6,7 @@
 #    By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/01 16:56:21 by gdornic           #+#    #+#              #
-#    Updated: 2023/02/16 20:17:20 by gdornic          ###   ########.fr        #
+#    Updated: 2023/02/16 21:53:06 by gdornic          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ SRC = ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c ft_strlen
 
 OBJ = ${SRC:.c=.o}
 
-BONUS_SRC = ft_lstnew.c ft_lstadd_front.c
+BONUS_SRC = ft_lstnew.c ft_lstadd_front.c ft_lstsize.c
 
 BONUS_OBJ = ${BONUS_SRC:.c=.o}
 
