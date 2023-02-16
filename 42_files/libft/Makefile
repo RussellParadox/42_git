@@ -6,7 +6,7 @@
 #    By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/01 16:56:21 by gdornic           #+#    #+#              #
-#    Updated: 2023/02/16 17:09:36 by gdornic          ###   ########.fr        #
+#    Updated: 2023/02/16 19:43:35 by gdornic          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,10 @@ SRC = ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c ft_strlen
 
 OBJ = ${SRC:.c=.o}
 
+BONUS_SRC = ft_lstnew.c
+
+BONUS_OBJ = ${BONUS_SRC:.c=.o}
+
 all: $(NAME)
 	ar -cr $(NAME) $(OBJ)
 
@@ -23,9 +27,13 @@ $(NAME):
 	gcc -Wall -Wextra -Werror -c $(SRC)
 
 clean:
-	rm -f $(OBJ)
+	rm -f $(OBJ) $(BONUS_OBJ)
 
 fclean: clean
 	rm -f $(NAME)
 
-re: fclean all
+bonus:
+	gcc -Wall -Wextra -Werror -c $(BONUS_SRC)
+	ar -cr $(NAME) $(BONUS_OBJ)
+
+re: fclean all bonus
