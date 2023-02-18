@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 17:37:59 by gdornic           #+#    #+#             */
-/*   Updated: 2023/02/17 20:53:53 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/02/18 17:58:25 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 # include <stddef.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include <limits.h>
 
 typedef struct s_list
 {
@@ -25,6 +24,7 @@ typedef struct s_list
 
 t_list	*ft_lstnew(void *content);
 t_list	*ft_lstlast(t_list *lst);
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
