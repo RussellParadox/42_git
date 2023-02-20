@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 03:54:53 by gdornic           #+#    #+#             */
-/*   Updated: 2023/02/20 21:33:35 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/02/20 21:40:35 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,26 +71,24 @@ size_t	*ft_wordsize(size_t word_qt, char const *s, char c)
 {
 	size_t	*word_size;
 	size_t	size;
-	char	*pon_s;
 
-	pon_s = (char *)s;
 	word_size = ft_calloc(word_qt, sizeof(size_t));
 	if (word_size == NULL)
 		return (NULL);
-	while (*pon_s)
+	while (*s)
 	{
-		while (*pon_s == c)
+		while (*s == c)
 		{
 			word_size++;
-			pon_s++;
+			s++;
 		}
-		if (*pon_s != c && (*pon_s || !c))
+		if (*s != c && (*s || !c))
 		{
 			size = 0;
-			while (*pon_s != c && *pon_s)
+			while (*s != c && *s)
 			{
 				size++;
-				pon_s++;
+				s++;
 			}
 			*word_size = size + 1;
 		}
@@ -102,8 +100,8 @@ char	**ft_splitstr(size_t *word_size, size_t word_qt, \
 		char const *s, char c)
 {
 	char	**split_str;
-	int	i;
-	int	j;
+	size_t	i;
+	size_t	j;
 
 	split_str = (char **)ft_calloc(word_qt + 1, sizeof(char *));
 	i = 0;

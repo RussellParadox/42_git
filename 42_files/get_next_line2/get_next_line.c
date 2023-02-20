@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 03:54:32 by gdornic           #+#    #+#             */
-/*   Updated: 2023/02/20 20:56:42 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/02/20 21:38:51 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ static	char	**file_to_str(int fd)
 
 	str = ft_strjoin("", "");
 	read_size = read(fd, buffer, BUFFER_SIZE);
-	while(read_size != 0 && read_size != -1)
+	while (read_size != 0 && read_size != -1)
 	{
 		str_tmp = str;
 		str = ft_strjoin(str_tmp, buffer);
@@ -97,7 +97,7 @@ static	char	**file_to_str(int fd)
 char	*get_next_line(int fd)
 {
 	static t_file	file;
-	char		*line;
+	char			*line;
 
 	if (file.position == 0)
 	{
