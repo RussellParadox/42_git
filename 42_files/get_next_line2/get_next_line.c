@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 03:54:32 by gdornic           #+#    #+#             */
-/*   Updated: 2023/02/20 21:38:51 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/02/21 13:31:36 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ static char	*ft_strjoin(char const *s1, char const *s2)
 		return (NULL);
 	s1_len = 0;
 	s2_len = 0;
+	//printf("buffer:%s\\\n", s2);
 	while (s1[s1_len])
 		s1_len++;
 	while (s2[s2_len])
@@ -50,6 +51,7 @@ static char	*ft_strjoin(char const *s1, char const *s2)
 		return (NULL);
 	ft_memcpy(new_str, s1, s1_len);
 	ft_memcpy(new_str + s1_len, s2, s2_len + 1);
+	//printf("%s\\\n", new_str);
 	return (new_str);
 }
 
@@ -76,17 +78,19 @@ static	char	**file_to_str(int fd)
 {
 	ssize_t		read_size;
 	char		**line;
-	char		buffer[BUFFER_SIZE];
+	char		buffer[BUFFER_SIZE + 1];
 	char		*str;
 	char		*str_tmp;
 
 	str = ft_strjoin("", "");
+	ft_memset(buffer, '\0', BUFFER_SIZE + 1);
 	read_size = read(fd, buffer, BUFFER_SIZE);
 	while (read_size != 0 && read_size != -1)
 	{
 		str_tmp = str;
 		str = ft_strjoin(str_tmp, buffer);
 		free(str_tmp);
+		ft_memset(buffer, '\0', BUFFER_SIZE + 1);
 		read_size = read(fd, buffer, BUFFER_SIZE);
 	}
 	line = ft_split(str, '\n');
