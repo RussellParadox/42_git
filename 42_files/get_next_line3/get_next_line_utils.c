@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 15:41:21 by gdornic           #+#    #+#             */
-/*   Updated: 2023/02/24 04:24:23 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/02/24 04:37:02 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	*ft_strnjoin(char const *s1, char const *s2, size_t n)
 		return (NULL);
 	ft_memmove(new_str, s1, s1_len);
 	ft_memmove(new_str + s1_len, s2, s2_len);
-	new_str[s2_len] = '\0';
+	new_str[s1_len + s2_len] = '\0';
 	return (new_str);
 }
 
