@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 15:29:06 by gdornic           #+#    #+#             */
-/*   Updated: 2023/02/24 20:09:54 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/02/24 20:12:16 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,39 +57,30 @@ static char	*get_the_line(int fd, char *stack)
 	return (line);
 }
 
-//static char	*fast_get_line(int fd)
-//{
-//	static char	stack[BUFFER_SIZE + 1];
-//	char		*line;
-//
-//	line = get_the_line(fd, stack);
-//	return (line);
-//}
-
 static char	*slow_get_line(int fd)
 {
-	static char	*stack;
+	static char	*stack[1024];
 	char		*line;
 	size_t		stack_type;
 	size_t		stack_size;
 
-	if (stack == NULL)
+	if (stack[fd] == NULL)
 	{
 		stack_type = sizeof(char);
 		stack_size = BUFFER_SIZE + 1;
 		if (stack_size * stack_type / stack_type != stack_size \
 			|| stack_size * stack_type / stack_size != stack_type)
 			return (NULL);
-		stack = (char *)malloc(stack_size * stack_type);
-		if (stack == NULL)
+		stack[fd] = (char *)malloc(stack_size * stack_type);
+		if (stack[fd] == NULL)
 			return (NULL);
-		ft_memset(stack, '\0', stack_size);
+		ft_memset(stack[fd], '\0', stack_size);
 	}
-	line = get_the_line(fd, stack);
-	if (stack != NULL && line == NULL)
+	line = get_the_line(fd, stack[fd]);
+	if (stack[fd] != NULL && line == NULL)
 	{
-		free(stack);
-		stack = NULL;
+		free(stack[fd]);
+		stack[fd] = NULL;
 	}
 	return (line);
 }
@@ -101,9 +92,6 @@ char	*get_next_line(int fd)
 	line = NULL;
 	if (fd < 0)
 		return (NULL);
-	//if (BUFFER_SIZE < 8192000)
-	//	line = fast_get_line(fd);
-	//else
 	line = slow_get_line(fd);
 	return (line);
 }
