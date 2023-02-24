@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 15:41:21 by gdornic           #+#    #+#             */
-/*   Updated: 2023/02/24 04:37:02 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/02/24 14:51:26 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ char	*ft_strnjoin(char const *s1, char const *s2, size_t n)
 	char	*new_str;
 	size_t	s1_len;
 	size_t	s2_len;
+	size_t	new_type;
+	size_t	new_size;
 
 	if (s1 == NULL || s2 == NULL)
 		return (NULL);
@@ -44,12 +46,17 @@ char	*ft_strnjoin(char const *s1, char const *s2, size_t n)
 		s1_len++;
 	while (s2[s2_len] && s2_len < n)
 		s2_len++;
-	new_str = malloc(sizeof(char) * (s1_len + s2_len + 1));
+	new_type = sizeof(char);
+	new_size = s1_len + s2_len + 1;
+	if (new_size * new_type / new_type != new_size \
+		|| new_size * new_type / new_size != new_type)
+		return (NULL);
+	new_str = malloc(new_size * new_type);
 	if (new_str == NULL)
 		return (NULL);
 	ft_memmove(new_str, s1, s1_len);
 	ft_memmove(new_str + s1_len, s2, s2_len);
-	new_str[s1_len + s2_len] = '\0';
+	new_str[new_size - 1] = '\0';
 	return (new_str);
 }
 
@@ -61,9 +68,9 @@ void	*ft_memmove(void *dest, const void *src, size_t n)
 
 	pon_dest = (unsigned char *)dest;
 	pon_src = (unsigned char *)src;
-	i = 0;
 	if (dest < src)
 	{
+		i = 0;
 		while (i < n)
 		{
 			pon_dest[i] = pon_src[i];
@@ -82,14 +89,33 @@ void	*ft_memmove(void *dest, const void *src, size_t n)
 	return (dest);
 }
 
-void	ft_stackmove(char *stack, char *first_occ)
+void	ft_stackmove(char *stack)
+{
+	size_t	i;
+	size_t	len;
+
+	len = 0;
+	while (stack[len] && stack[len] != '\n')
+			len++;
+	len++;
+	ft_memset(stack, '\0', len);
+	i = 0;
+	while (stack[len + i])
+	{
+		stack[i] = stack[len + i];
+		i++;
+	}
+	ft_memset(stack + i, '\0', len);
+}
+
+/*void	ft_stackmove(char *stack, char *first_occ)
 {
 	size_t	move_that;
 
 	move_that = BUFFER_SIZE - (first_occ - stack);
 	ft_memmove(stack, first_occ + 1, move_that);
 	ft_memset(stack + move_that, '\0', BUFFER_SIZE - move_that);
-}
+}*/
 
 void	*ft_memset(void *s, int c, size_t n)
 {

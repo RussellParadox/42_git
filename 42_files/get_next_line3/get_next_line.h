@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 15:39:10 by gdornic           #+#    #+#             */
-/*   Updated: 2023/02/24 03:40:35 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/02/24 05:14:29 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*get_next_line(int fd);
 char	*ft_strnjoin(char const *s1, char const *s2, size_t n);
 void	*ft_memset(void *s, int c, size_t n);
 char	*ft_strchr(const char *s, int c);
-void	ft_stackmove(char *stack, char *first_occ);
+void	ft_stackmove(char *stack);
 void	*ft_memmove(void *dest, const void *src, size_t n);
 
 #endif
