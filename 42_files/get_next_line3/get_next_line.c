@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 15:29:06 by gdornic           #+#    #+#             */
-/*   Updated: 2023/02/24 14:57:44 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/02/24 15:29:09 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ char	*get_next_line(int fd)
 	char	*line;
 
 	line = NULL;
-	if (fd < 0 || fd > 4096)
+	if (fd < 0)
 		return (NULL);
 	if (BUFFER_SIZE < 8192000)
 		line = fast_get_line(fd);
