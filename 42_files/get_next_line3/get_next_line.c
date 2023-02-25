@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 15:29:06 by gdornic           #+#    #+#             */
-/*   Updated: 2023/02/24 20:09:54 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/02/24 20:44:03 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,14 @@ static char	*get_the_line(int fd, char *stack)
 	return (line);
 }
 
-//static char	*fast_get_line(int fd)
-//{
-//	static char	stack[BUFFER_SIZE + 1];
-//	char		*line;
-//
-//	line = get_the_line(fd, stack);
-//	return (line);
-//}
+static char	*fast_get_line(int fd)
+{
+	static char	stack[BUFFER_SIZE + 1];
+	char		*line;
+
+	line = get_the_line(fd, stack);
+	return (line);
+}
 
 static char	*slow_get_line(int fd)
 {
@@ -86,7 +86,7 @@ static char	*slow_get_line(int fd)
 		ft_memset(stack, '\0', stack_size);
 	}
 	line = get_the_line(fd, stack);
-	if (stack != NULL && line == NULL)
+	if (stack != NULL && stack[0] == '\0')
 	{
 		free(stack);
 		stack = NULL;
@@ -101,9 +101,9 @@ char	*get_next_line(int fd)
 	line = NULL;
 	if (fd < 0)
 		return (NULL);
-	//if (BUFFER_SIZE < 8192000)
-	//	line = fast_get_line(fd);
-	//else
-	line = slow_get_line(fd);
+	if (BUFFER_SIZE < 8192000)
+		line = fast_get_line(fd);
+	else
+		line = slow_get_line(fd);
 	return (line);
 }

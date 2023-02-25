@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 15:29:06 by gdornic           #+#    #+#             */
-/*   Updated: 2023/02/24 20:12:16 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/02/24 20:27:44 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static char	*slow_get_line(int fd)
 		ft_memset(stack[fd], '\0', stack_size);
 	}
 	line = get_the_line(fd, stack[fd]);
-	if (stack[fd] != NULL && line == NULL)
+	if (stack[fd] != NULL && stack[fd][0] == '\0')
 	{
 		free(stack[fd]);
 		stack[fd] = NULL;
