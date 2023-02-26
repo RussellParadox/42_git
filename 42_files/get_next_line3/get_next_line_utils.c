@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 15:41:21 by gdornic           #+#    #+#             */
-/*   Updated: 2023/02/26 12:47:42 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/02/26 18:52:17 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ char	*ft_strnjoin(char const *s1, char const *s2, size_t n)
 	char	*new_str;
 	size_t	s1_len;
 	size_t	s2_len;
-	size_t	new_type;
 	size_t	new_size;
 
 	if (s1 == NULL || s2 == NULL)
@@ -46,12 +45,11 @@ char	*ft_strnjoin(char const *s1, char const *s2, size_t n)
 		s1_len++;
 	while (s2[s2_len] && s2_len < n)
 		s2_len++;
-	new_type = sizeof(char);
 	new_size = s1_len + s2_len + 1;
-	if (new_size * new_type / new_type != new_size \
-		|| new_size * new_type / new_size != new_type)
+	if (new_size * sizeof(char) / sizeof(char) != new_size \
+		|| new_size * sizeof(char) / new_size != sizeof(char))
 		return (NULL);
-	new_str = malloc(new_size * new_type);
+	new_str = malloc(new_size * sizeof(char));
 	if (new_str == NULL)
 		return (NULL);
 	ft_memmove(new_str, s1, s1_len);

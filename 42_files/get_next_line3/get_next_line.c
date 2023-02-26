@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 15:29:06 by gdornic           #+#    #+#             */
-/*   Updated: 2023/02/26 12:50:32 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/02/26 18:50:28 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,46 +57,37 @@ static char	*get_the_line(int fd, char *stack)
 	return (line);
 }
 
-//static char	*fast_get_line(int fd)
-//{
-//	static char	stack[BUFFER_SIZE + 1];
-//	char		*line;
-//
-//	line = get_the_line(fd, stack);
-//	return (line);
-//}
+static void	ft_free_stack(char **stack)
+{
+	free(*stack);
+	*stack = NULL;
+}
 
 static char	*slow_get_line(int fd)
 {
 	static char	*stack;
 	char		*line;
-	size_t		stack_type;
 	size_t		stack_size;
 
 	if (stack == NULL)
 	{
-		stack_type = sizeof(char);
 		stack_size = BUFFER_SIZE + 1;
-		if (stack_size * stack_type / stack_type != stack_size \
-			|| stack_size * stack_type / stack_size != stack_type)
+		if (stack_size * sizeof(char) / sizeof(char) != stack_size \
+			|| stack_size * sizeof(char) / stack_size != sizeof(char))
 			return (NULL);
-		stack = (char *)malloc(stack_size * stack_type);
+		stack = (char *)malloc(stack_size * sizeof(char));
 		if (stack == NULL)
 			return (NULL);
 		ft_memset(stack, '\0', stack_size);
 	}
 	if (read(fd, 0, 0) < 0)
 	{
-		free(stack);
-		stack = NULL;
+		ft_free_stack(&stack);
 		return (NULL);
 	}
 	line = get_the_line(fd, stack);
 	if (stack != NULL && (stack[0] == '\0' || line == NULL))
-	{
-		free(stack);
-		stack = NULL;
-	}
+		ft_free_stack(&stack);
 	return (line);
 }
 
@@ -105,9 +96,6 @@ char	*get_next_line(int fd)
 	char	*line;
 
 	line = NULL;
-//	if (BUFFER_SIZE < 8192000)
-//		line = fast_get_line(fd);
-//	else
 	line = slow_get_line(fd);
 	return (line);
 }

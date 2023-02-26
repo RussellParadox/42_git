@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 15:29:06 by gdornic           #+#    #+#             */
-/*   Updated: 2023/02/26 13:56:00 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/02/26 18:46:53 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,39 +57,37 @@ static char	*get_the_line(int fd, char *stack)
 	return (line);
 }
 
+static void	ft_free_stack(char **stack)
+{
+	free(*stack);
+	*stack = NULL;
+}
+
 static char	*slow_get_line(int fd)
 {
 	static char	*stack[4096];
 	char		*line;
-	size_t		stack_type;
 	size_t		stack_size;
 
-	if (fd < 0)
-		return (NULL);
-	if (stack[fd] == NULL)
+	if (fd >= 0 && stack[fd] == NULL)
 	{
-		stack_type = sizeof(char);
 		stack_size = BUFFER_SIZE + 1;
-		if (stack_size * stack_type / stack_type != stack_size \
-			|| stack_size * stack_type / stack_size != stack_type)
+		if (stack_size * sizeof(char) / sizeof(char) != stack_size \
+			|| stack_size * sizeof(char) / stack_size != sizeof(char))
 			return (NULL);
-		stack[fd] = (char *)malloc(stack_size * stack_type);
+		stack[fd] = (char *)malloc(stack_size * sizeof(char));
 		if (stack[fd] == NULL)
 			return (NULL);
 		ft_memset(stack[fd], '\0', stack_size);
 	}
 	if (read(fd, 0, 0) < 0)
 	{
-		free(stack[fd]);
-		stack[fd] = NULL;
+		ft_free_stack(&stack[fd]);
 		return (NULL);
 	}
 	line = get_the_line(fd, stack[fd]);
 	if (stack[fd] != NULL && (stack[fd][0] == '\0' || line == NULL))
-	{
-		free(stack[fd]);
-		stack[fd] = NULL;
-	}
+		ft_free_stack(&stack[fd]);
 	return (line);
 }
 
