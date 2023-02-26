@@ -6,11 +6,11 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 15:41:21 by gdornic           #+#    #+#             */
-/*   Updated: 2023/02/26 18:52:56 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/02/26 20:32:14 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_strchr(const char *s, int c)
 {

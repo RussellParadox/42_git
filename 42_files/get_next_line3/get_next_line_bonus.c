@@ -6,11 +6,11 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 15:29:06 by gdornic           #+#    #+#             */
-/*   Updated: 2023/02/26 18:46:53 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/02/26 20:31:56 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 static char	*ft_addnstack(char *line, char *stack, size_t n)
 {
