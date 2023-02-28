@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 15:41:21 by gdornic           #+#    #+#             */
-/*   Updated: 2023/02/26 18:52:17 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/02/28 18:39:26 by gdi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	ft_stackmove(char *stack)
 		return ;
 	len = 0;
 	while (stack[len] && stack[len] != '\n')
-			len++;
+		len++;
 	len++;
 	ft_memset(stack, '\0', len);
 	i = 0;
