@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 22:36:09 by gdornic           #+#    #+#             */
-/*   Updated: 2023/03/05 13:40:43 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/03/08 20:58:11 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 //print at most n characters from str, return i + n
 //return -1 if an error occurs
-size_t	usual_print(char *str, size_t i, size_t n)
+int	usual_print(char *str, int i, int n)
 {
 }
 
@@ -42,9 +42,9 @@ void	flags_manager(_Bool *flags, char c)
 }
 
 //get data in field_width and return the number of characters read
-size_t	ft_atoi_field(char *s, size_t *field_width)
+int	ft_atoi_field(char *s, int *field_width)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
 	while (s[i] && ft_isdigit(s[i]))
@@ -55,9 +55,35 @@ size_t	ft_atoi_field(char *s, size_t *field_width)
 	return (i);
 }
 
-//print a valid format, return i plus the number of characters read
+//insert the next argument in arg with the correct type
+char	*id_manager(va_list *ap, char id)
+{
+	if (id == '%')
+		return (ft_strdup("%"));
+	if (id == 'c')
+		return (ft_strdup(&va_arg(ap, char)));
+	else if (id == 's')
+		return (ft_strdup(va_arg(ap, char *)));
+	else if (id == 'p' || id == 'x' || id == 'X')
+		return (ft_itoa_base(va_arg(ap, int)), "0123456789abcdef");
+	else if (id == 'd' || id == 'i')
+		return (ft_itoa_base(va_arg(ap, int), "0123456789"));
+	else if (id == 'u')
+		return (ft_itoa_base(va_arg(ap, unsigned int), "0123456789"));
+}
+
+//print a valid format, return i plus the number of characters printed
 //return -1 if an error occurs
-size_t	print_format(_Bool *flags, size_t *field_width, va_list *ap, size_t i)
+int	print_format(t_data *format_data, char id, va_list *ap, int i)
+{
+	char	*str_arg;
+	size_t	str_size;
+	void	*arg;
+
+	arg = NULL;
+	str_arg = id_manager(ap, id);
+
+	return (usual_print(str_arg, i, str_size));
 
 //search for an allowed format, print it with the associate argument
 //and return the number of characters printed plus i
@@ -67,29 +93,28 @@ size_t	print_format(_Bool *flags, size_t *field_width, va_list *ap, size_t i)
 //[0]: minimum
 //[1]: '.'
 //[2]: maximum
-size_t	special_print(const char *format, va_list *ap, size_t i)
+int	special_print(const char *format, va_list *ap, int i)
 {
-	_Bool	flags[5];
-	size_t	field_width[3];
-	size_t	j;
+	t_data	format_data;
+	int	j;
 
-	ft_bzero(flags, 5);
-	ft_bzero(field_width, 3);
+	ft_bzero(format_data->flags, 5);
+	ft_bzero(format_data->field_width, 3);
 	j = 0;
 	while (format[j] && ft_strchr("-0+ #", format[j]) != NULL)
 	{
-		flags_manager(flags, format[j]);
+		flags_manager(format_data->flags, format[j]);
 		j++;
 	}
-	j += ft_atoi_field(&format[j], &field_width[0]);
+	j += ft_atoi_field(&format[j], format_data->field_width[0]);
 	while (format[j] && format[j] == '.')
 	{
-		field_width[1] = 1;
+		format_data->field_width[1] = 1;
 		j++;
 	}
-	j += ft_atoi_field(&format[j], &field_width[2]);
+	j += ft_atoi_field(&format[j], format_data->field_width[2]);
 	if (ft_strchr("cspdiuxX%", format[j]))
-		return (print_format(flags, field_width, &ap, i));
+		return (print_format(&format_data, &ap, i));
 	else
 		return (usual_print(format, i, j);
 }
@@ -97,7 +122,7 @@ size_t	special_print(const char *format, va_list *ap, size_t i)
 int	ft_printf(const char *format, ...)
 {
 	va_list	ap;
-	size_t	i;
+	int	i;
 
 	va_start(ap, format);
 	i = 0;
