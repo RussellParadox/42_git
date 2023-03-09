@@ -6,11 +6,11 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:48:04 by gdornic           #+#    #+#             */
-/*   Updated: 2023/03/09 03:14:50 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/03/09 07:45:43 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libft/libft.h"
 
 static size_t	ft_nbrsize(long n, size_t radix)
 {

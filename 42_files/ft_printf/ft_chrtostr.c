@@ -6,11 +6,11 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 04:47:40 by gdornic           #+#    #+#             */
-/*   Updated: 2023/03/09 04:51:59 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/03/09 07:45:59 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libft/libft.h"
 
 char	*ft_chrtostr(char c)
 {

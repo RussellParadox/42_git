@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 15:52:35 by gdornic           #+#    #+#             */
-/*   Updated: 2023/03/08 20:22:18 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/03/09 10:14:24 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,9 @@ typedef struct s_data
 }	t_data;
 
 int	ft_printf(const char *format, ...);
+
+char	*ft_itoa_base(long n, char *b);
+char	*ft_chrtostr(char c);
+char	*ft_balloc(size_t nmemb, size_t size);
 
 #endif
