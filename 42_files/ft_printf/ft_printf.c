@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 22:36:09 by gdornic           #+#    #+#             */
-/*   Updated: 2023/03/08 20:58:11 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/03/09 02:48:59 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	ft_atoi_field(char *s, int *field_width)
 	return (i);
 }
 
-//insert the next argument in arg with the correct type
+//get the next argument, transform and return it into a list
 char	*id_manager(va_list *ap, char id)
 {
 	if (id == '%')
@@ -82,8 +82,8 @@ int	print_format(t_data *format_data, char id, va_list *ap, int i)
 
 	arg = NULL;
 	str_arg = id_manager(ap, id);
-
 	return (usual_print(str_arg, i, str_size));
+}
 
 //search for an allowed format, print it with the associate argument
 //and return the number of characters printed plus i
