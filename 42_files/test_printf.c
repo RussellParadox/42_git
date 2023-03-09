@@ -8,9 +8,10 @@ int	main(void)
 	char	*str_nb;
 
 	nb = -354;
-	str_nb = ft_itoa_base((unsigned int)nb, "0123456789abcdef");
+	str_nb = ft_itoa_base(nb, "0123456789");
 	if (str_nb == NULL)
 		return (printf("coucou"));
-	ft_printf("|%d| |%s|", nb, str_nb);
+	printf("|%d| |%s|\n", nb, "coucou");
+	ft_printf("|%d| |%s|\n", nb, "coucou");
 	free(str_nb);
 }

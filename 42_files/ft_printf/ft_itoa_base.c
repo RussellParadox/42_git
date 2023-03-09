@@ -6,15 +6,15 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:48:04 by gdornic           #+#    #+#             */
-/*   Updated: 2023/03/09 07:45:43 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/03/09 13:03:32 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/libft.h"
 
-static size_t	ft_nbrsize(long n, size_t radix)
+static long	ft_nbrsize(long n, long radix)
 {
-	size_t	size;
+	long	size;
 
 	size = 0;
 	if (n == 0)
@@ -39,9 +39,9 @@ static int	ft_abs(int x)
 char	*ft_itoa_base(long n, char *b)
 {
 	char	*ntostr;
-	size_t	radix;
-	size_t	nsize;
-	size_t	i;
+	long	radix;
+	long	nsize;
+	long	i;
 
 	radix = ft_strlen(b);
 	nsize = ft_nbrsize(n, radix);
