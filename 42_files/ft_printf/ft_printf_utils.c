@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 16:41:44 by gdornic           #+#    #+#             */
-/*   Updated: 2023/03/09 17:02:24 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/03/10 14:47:48 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,12 @@ size_t	ft_lower_bound(int bound, int n)
 	return (n);
 }
 
-char	*prefix_add(char *prefix, char *str)
+char	*prefix_add(char *prefix, char *str, char id)
 {
-	char	*tmp;
-
-	tmp = str;
-	str = ft_strjoin(prefix, str);
-	free(tmp);
+	if (!(id == 'p' && str[0] == '0'))
+		str = ft_strjoin(prefix, str);
+	else
+		str = ft_strdup("(nil)");
 	return (str);
 }
 
@@ -45,7 +44,7 @@ char	*prefix_add(char *prefix, char *str)
 //[2]: '+'
 //[3]: ' '
 //[4]: '#'
-void	flags_manager(_Bool *flags, char c)
+void	flags_manager(char *flags, char c)
 {
 	if (c == '-')
 		flags[0] = 1;

@@ -11,7 +11,7 @@ int	main(void)
 	str_nb = ft_itoa_base(nb, "0123456789");
 	if (str_nb == NULL)
 		return (printf("coucou"));
-	printf("|%d| |%s|\n", nb, "coucou");
-	ft_printf("|%d| |%s|\n", nb, "coucou");
+	printf("|%d| |%p|\n", nb, NULL);
+	ft_printf("|%d| |%p|\n", nb, NULL);
 	free(str_nb);
 }

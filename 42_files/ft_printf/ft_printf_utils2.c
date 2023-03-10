@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 16:45:11 by gdornic           #+#    #+#             */
-/*   Updated: 2023/03/09 17:11:44 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/03/10 15:02:12 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*id_manager(va_list ap, char id)
 //arg_len) and void_str in the good order
 //return NULL if an error occurs
 char	*justification_dealer(char *str_arg, char *void_str, \
-	size_t arg_len, _Bool left_justify)
+	size_t arg_len, char left_justify)
 {
 	char	*str;
 	char	*tmp;
@@ -48,6 +48,7 @@ char	*justification_dealer(char *str_arg, char *void_str, \
 
 	str_len = ft_min(ft_strlen(str_arg), arg_len);
 	str = ft_substr(str_arg, 0, str_len);
+	free(str_arg);
 	if (str == NULL)
 		return (NULL);
 	tmp = str;
@@ -60,29 +61,40 @@ char	*justification_dealer(char *str_arg, char *void_str, \
 	return (str);
 }
 
+//manage argument's flags, return the managed argument
+char	*argflags_manager(char *str_arg, char *flags, char id)
+{
+	if (flags[2] && ft_strchr("diu", id) && !ft_strchr("-", str_arg[0]))
+		return (prefix_add("+", str_arg, id));
+	else if (flags[3] && ft_strchr("diu", id) && !ft_strchr("-", str_arg[0]))
+		return (prefix_add(" ", str_arg, id));
+	else if (id == 'p' || (flags[4] && id == 'x'))
+		return (prefix_add("0x", str_arg, id));
+	else if (flags[4] && id == 'X')
+		return (prefix_add("0X", str_arg, id));
+	else
+		return (ft_strdup(str_arg));
+}
+
 //deal with the flags and the fields width, return a formated string
 //return NULL if an error occurs
-char	*data_dealer(_Bool *flags, int *field_width, char *str_arg, char id)
+char	*data_dealer(char *flags, int *field_width, char *str_arg, char id)
 {
+	char	*tmp;
 	char	*void_str;
 	size_t	void_len;
 	size_t	arg_len;
 
-	if (flags[2] && ft_strchr("diu", id) && !ft_strchr("-", str_arg[0]))
-		str_arg = prefix_add("+", str_arg);
-	else if (flags[3] && ft_strchr("diu", id) && !ft_strchr("-", str_arg[0]))
-		str_arg = prefix_add(" ", str_arg);
-	if (id == 'p' || (flags[4] && id == 'x'))
-		str_arg = prefix_add("0x", str_arg);
-	if (flags[4] && id == 'X')
-		str_arg = prefix_add("0X", str_arg);
+	//tmp = str_arg;
+	str_arg = argflags_manager(str_arg, flags, id);
+	//free(tmp);
 	if (str_arg == NULL)
 		return (NULL);
 	arg_len = ft_strlen(str_arg);
 	if (id == 's' && field_width[1])
 		arg_len = ft_min(field_width[2], arg_len);
 	void_len = ft_lower_bound(0, field_width[0] - arg_len);
-	void_str = ft_balloc(void_len, sizeof(char));
+	void_str = ft_balloc(void_len + 1, sizeof(char));
 	if (void_str == NULL)
 		return (NULL);
 	if (flags[1] && !(flags[0] && ft_strchr("pdiuxX", id)))

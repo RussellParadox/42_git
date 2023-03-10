@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 15:52:35 by gdornic           #+#    #+#             */
-/*   Updated: 2023/03/10 12:05:21 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/03/10 14:10:45 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 typedef struct s_data
 {
-	_Bool	flags[5];
+	char	flags[5];
 	int		field_width[3];
 }	t_data;
 
@@ -34,12 +34,12 @@ char	*ft_chrtostr(char c);
 char	*ft_balloc(size_t nmemb, size_t size);
 char	*id_manager(va_list ap, char id);
 char	*justification_dealer(char *str_arg, char *void_str, \
-		size_t arg_len, _Bool left_justify);
-char	*data_dealer(_Bool *flags, int *field_width, char *str_arg, char id);
-char	*prefix_add(char *prefix, char *str);
+		size_t arg_len, char left_justify);
+char	*data_dealer(char *flags, int *field_width, char *str_arg, char id);
+char	*prefix_add(char *prefix, char *str, char id);
 
 void	*ft_memset_int(void *s, int c, size_t n);
 
-void	flags_manager(_Bool *flags, char c);
+void	flags_manager(char *flags, char c);
 
 #endif
