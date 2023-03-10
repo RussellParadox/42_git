@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 22:36:09 by gdornic           #+#    #+#             */
-/*   Updated: 2023/03/09 17:13:00 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/03/10 12:04:43 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int	ft_printf(const char *format, ...)
 			chr_printed = special_print(&format[i], ap, i);
 			i++;
 			while (!ft_strchr("cspdiuxX%", format[i]))
-					i++;
+				i++;
 		}
 		else
 			chr_printed = usual_print(&format[i], i, 1);

@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 12:12:40 by gdornic           #+#    #+#             */
-/*   Updated: 2023/03/09 17:13:49 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/03/10 12:06:24 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	*ft_memset_int(void *s, int c, size_t n)
 {
-	int	*pon_s;
+	int		*pon_s;
 	size_t	i;
 
 	pon_s = (int *)s;
