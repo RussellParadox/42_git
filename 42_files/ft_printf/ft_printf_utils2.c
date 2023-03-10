@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 16:45:11 by gdornic           #+#    #+#             */
-/*   Updated: 2023/03/10 15:02:12 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/03/10 15:19:57 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,9 @@ char	*justification_dealer(char *str_arg, char *void_str, \
 //manage argument's flags, return the managed argument
 char	*argflags_manager(char *str_arg, char *flags, char id)
 {
-	if (flags[2] && ft_strchr("diu", id) && !ft_strchr("-", str_arg[0]))
+	if (str_arg == NULL)
+		return (ft_strdup("(null)"));
+	else if (flags[2] && ft_strchr("diu", id) && !ft_strchr("-", str_arg[0]))
 		return (prefix_add("+", str_arg, id));
 	else if (flags[3] && ft_strchr("diu", id) && !ft_strchr("-", str_arg[0]))
 		return (prefix_add(" ", str_arg, id));
@@ -80,14 +82,11 @@ char	*argflags_manager(char *str_arg, char *flags, char id)
 //return NULL if an error occurs
 char	*data_dealer(char *flags, int *field_width, char *str_arg, char id)
 {
-	char	*tmp;
 	char	*void_str;
 	size_t	void_len;
 	size_t	arg_len;
 
-	//tmp = str_arg;
 	str_arg = argflags_manager(str_arg, flags, id);
-	//free(tmp);
 	if (str_arg == NULL)
 		return (NULL);
 	arg_len = ft_strlen(str_arg);
