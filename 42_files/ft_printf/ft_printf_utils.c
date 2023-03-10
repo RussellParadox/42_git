@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 16:41:44 by gdornic           #+#    #+#             */
-/*   Updated: 2023/03/10 14:47:48 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/03/10 21:11:07 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@ size_t	ft_lower_bound(int bound, int n)
 
 char	*prefix_add(char *prefix, char *str, char id)
 {
-	if (!(id == 'p' && str[0] == '0'))
+	if (id == 'p' && str[0] == '-')
+		str = ft_strjoin(prefix, str + 1);
+	else if (!(id == 'p' && str[0] == '0'))
 		str = ft_strjoin(prefix, str);
 	else
 		str = ft_strdup("(nil)");

@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 16:45:11 by gdornic           #+#    #+#             */
-/*   Updated: 2023/03/10 15:19:57 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/03/10 21:12:00 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ char	*id_manager(va_list ap, char id)
 	else if (id == 'u')
 		return (ft_itoa_base(va_arg(ap, unsigned int), "0123456789"));
 	else if (id == 'p')
-		return (ft_itoa_base((long)va_arg(ap, void *), "0123456789abcdef"));
+		return (ft_itoa_base_pointer((unsigned long long) \
+			va_arg(ap, void *), "0123456789abcdef"));
 	return (NULL);
 }
 
@@ -90,7 +91,8 @@ char	*data_dealer(char *flags, int *field_width, char *str_arg, char id)
 	if (str_arg == NULL)
 		return (NULL);
 	arg_len = ft_strlen(str_arg);
-	if (id == 's' && field_width[1])
+	if (id == 's' && ft_strncmp(str_arg, "(null)", sizeof(str_arg)) \
+	&& field_width[1])
 		arg_len = ft_min(field_width[2], arg_len);
 	void_len = ft_lower_bound(0, field_width[0] - arg_len);
 	void_str = ft_balloc(void_len + 1, sizeof(char));

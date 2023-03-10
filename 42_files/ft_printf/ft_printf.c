@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 22:36:09 by gdornic           #+#    #+#             */
-/*   Updated: 2023/03/10 18:21:06 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/03/10 20:58:25 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,21 @@ int	print_format(t_data *format_data, char id, va_list ap, int i)
 	size_t	str_len;
 
 	str_arg = id_manager(ap, id);
-	tmp = str_arg;
-	str_arg = data_dealer(format_data->flags, \
-		format_data->field_width, str_arg, id);
-	if (tmp != NULL)
-		free(tmp);
-	if (str_arg == NULL)
-		return (-1);
+	if (id != '%')
+	{
+		tmp = str_arg;
+		str_arg = data_dealer(format_data->flags, \
+			format_data->field_width, str_arg, id);
+		if (tmp != NULL)
+			free(tmp);
+		if (str_arg == NULL)
+			return (-1);
+	}
 	str_len = ft_strlen(str_arg);
-	chr_printed = usual_print(str_arg, i, str_len);
+	if (id == 'c' && !ft_isprint(str_arg[0]))
+		chr_printed = usual_print(str_arg, i, 1);
+	else
+		chr_printed = usual_print(str_arg, i, str_len);
 	free(str_arg);
 	return (chr_printed);
 }
@@ -96,7 +102,7 @@ int	ft_printf(const char *format, ...)
 	{
 		if (format[i] == '%')
 		{
-			chr_printed = special_print(&format[i], ap, i);
+			chr_printed = special_print(&format[i], ap, chr_printed);
 			i++;
 			while (!ft_strchr("cspdiuxX%", format[i]))
 				i++;

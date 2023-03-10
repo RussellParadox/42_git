@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoa_base.c                                     :+:      :+:    :+:   */
+/*   ft_itoa_base_pointer.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 19:48:04 by gdornic           #+#    #+#             */
-/*   Updated: 2023/03/10 19:53:54 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/03/10 20:47:13 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/libft.h"
 
-static long	ft_nbrsize(long long n, long radix)
+static long	ft_nbrsize(unsigned long long n, long radix)
 {
 	long	size;
 
 	size = 0;
 	if (n == 0)
-		size++;
-	if (n < 0)
 		size++;
 	while (n != 0)
 	{
@@ -36,7 +34,7 @@ static int	ft_abs(int x)
 	return (x);
 }
 
-char	*ft_itoa_base(long long n, char *b)
+char	*ft_itoa_base_pointer(unsigned long long n, char *b)
 {
 	char	*ntostr;
 	long	radix;
@@ -51,8 +49,6 @@ char	*ft_itoa_base(long long n, char *b)
 		i = nsize - 1;
 		if (n == 0)
 			ntostr[0] = '0';
-		if (n < 0)
-			ntostr[0] = '-';
 		while (n != 0)
 		{
 			ntostr[i] = b[ft_abs(n % radix)];

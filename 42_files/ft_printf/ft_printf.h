@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 15:52:35 by gdornic           #+#    #+#             */
-/*   Updated: 2023/03/10 14:10:45 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/03/10 20:45:53 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ char	*justification_dealer(char *str_arg, char *void_str, \
 		size_t arg_len, char left_justify);
 char	*data_dealer(char *flags, int *field_width, char *str_arg, char id);
 char	*prefix_add(char *prefix, char *str, char id);
+char	*ft_itoa_base_pointer(unsigned long long n, char *b);
 
 void	*ft_memset_int(void *s, int c, size_t n);
 
