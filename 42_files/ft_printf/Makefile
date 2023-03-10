@@ -6,11 +6,11 @@
 #    By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/28 17:08:19 by gdornic           #+#    #+#              #
-#    Updated: 2023/03/09 16:59:28 by gdornic          ###   ########.fr        #
+#    Updated: 2023/03/10 18:08:56 by gdornic          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = ft_printf.a
+NAME = libftprintf.a
 
 SRC = ft_printf.c ft_itoa_base.c ft_chrtostr.c ft_balloc.c ft_memset_int.c ft_printf_utils.c ft_printf_utils2.c
 
