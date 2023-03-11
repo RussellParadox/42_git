@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 16:45:11 by gdornic           #+#    #+#             */
-/*   Updated: 2023/03/10 21:12:00 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/03/12 00:15:24 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,17 @@ char	*justification_dealer(char *str_arg, char *void_str, \
 {
 	char	*str;
 	char	*tmp;
-	size_t	str_len;
+	//size_t	str_len;
 
-	str_len = ft_min(ft_strlen(str_arg), arg_len);
-	str = ft_substr(str_arg, 0, str_len);
+	//str_len = ft_min(ft_strlen(str_arg), arg_len);
+	str = ft_substr(str_arg, 0, arg_len);
 	free(str_arg);
 	if (str == NULL)
 		return (NULL);
 	tmp = str;
-	if (left_justify)
+	if (left_justify && arg_len == 1)
+		str = inclusive_strjoin(str, void_str);
+	else if (left_justify)
 		str = ft_strjoin(str, void_str);
 	else
 		str = ft_strjoin(void_str, str);
@@ -90,7 +92,10 @@ char	*data_dealer(char *flags, int *field_width, char *str_arg, char id)
 	str_arg = argflags_manager(str_arg, flags, id);
 	if (str_arg == NULL)
 		return (NULL);
-	arg_len = ft_strlen(str_arg);
+	if (id == 'c')
+		arg_len = 1;
+	else
+		arg_len = ft_strlen(str_arg);
 	if (id == 's' && ft_strncmp(str_arg, "(null)", sizeof(str_arg)) \
 	&& field_width[1])
 		arg_len = ft_min(field_width[2], arg_len);

@@ -5,5 +5,5 @@
 
 int	main(void)
 {
-	printf("\nstate :%d\n", ft_printf(" %p %p ", ULONG_MAX, -ULONG_MAX));
+	printf("\nstate :%d\n", ft_printf(" %-2c ", 0));
 }

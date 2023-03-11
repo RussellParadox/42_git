@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 22:36:09 by gdornic           #+#    #+#             */
-/*   Updated: 2023/03/10 20:58:25 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/03/11 23:32:40 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,11 @@ int	print_format(t_data *format_data, char id, va_list ap, int i)
 		if (str_arg == NULL)
 			return (-1);
 	}
-	str_len = ft_strlen(str_arg);
-	if (id == 'c' && !ft_isprint(str_arg[0]))
-		chr_printed = usual_print(str_arg, i, 1);
+	if (id == 'c')
+		str_len = ft_lower_bound(1, (format_data->field_width)[0]);
 	else
-		chr_printed = usual_print(str_arg, i, str_len);
+		str_len = ft_strlen(str_arg);
+	chr_printed = usual_print(str_arg, i, str_len);
 	free(str_arg);
 	return (chr_printed);
 }
