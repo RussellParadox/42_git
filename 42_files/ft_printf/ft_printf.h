@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 15:52:35 by gdornic           #+#    #+#             */
-/*   Updated: 2023/03/12 00:11:41 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/03/12 17:31:01 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ size_t	ft_lower_bound(int bound, int n);
 char	*ft_itoa_base(long n, char *b);
 char	*ft_chrtostr(char c);
 char	*ft_balloc(size_t nmemb, size_t size);
-char	*id_manager(va_list ap, char id);
 char	*justification_dealer(char *str_arg, char *void_str, \
 		size_t arg_len, char left_justify);
 char	*data_dealer(char *flags, int *field_width, char *str_arg, char id);
@@ -43,5 +42,6 @@ char	*inclusive_strjoin(char const *s1, char const *s2);
 void	*ft_memset_int(void *s, int c, size_t n);
 
 void	flags_manager(char *flags, char c);
+void	ft_chrswap(char *chr1, char *chr2);
 
 #endif

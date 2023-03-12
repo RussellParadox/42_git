@@ -6,11 +6,36 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 22:36:09 by gdornic           #+#    #+#             */
-/*   Updated: 2023/03/11 23:32:40 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/03/12 17:30:47 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+//get the next argument, transform and return it into a string
+char	*id_manager(va_list ap, char id)
+{
+	if (id == '%')
+		return (ft_strdup("%"));
+	else if (id == 'c')
+		return (ft_chrtostr((char)va_arg(ap, int)));
+	else if (id == 's')
+		return (ft_strdup(va_arg(ap, char *)));
+	else if (id == 'x')
+		return (ft_itoa_base((unsigned int)(va_arg(ap, int)), \
+			"0123456789abcdef"));
+	else if (id == 'X')
+		return (ft_itoa_base((unsigned int)(va_arg(ap, int)), \
+			"0123456789ABCDEF"));
+	else if (id == 'd' || id == 'i')
+		return (ft_itoa_base(va_arg(ap, int), "0123456789"));
+	else if (id == 'u')
+		return (ft_itoa_base(va_arg(ap, unsigned int), "0123456789"));
+	else if (id == 'p')
+		return (ft_itoa_base_pointer((unsigned long long) \
+			va_arg(ap, void *), "0123456789abcdef"));
+	return (NULL);
+}
 
 //print at most n characters from str, return i + n
 //return -1 if an error occurs
