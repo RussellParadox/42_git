@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 16:45:11 by gdornic           #+#    #+#             */
-/*   Updated: 2023/03/12 22:08:39 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/03/13 08:35:21 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,27 +20,24 @@ char	*precision_manager(char *str_arg, int *field_width, char id)
 	size_t	arg_len;
 	size_t	zero_len;
 
-	if (ft_strchr("diuxX", id))
+	arg_len = ft_strlen(str_arg);
+	if (str_arg[0] == '-')
+		arg_len--;
+	if (ft_strchr("diuxX", id) && field_width[2] > (int)arg_len)
 	{
-		arg_len = ft_strlen(str_arg);
+		zero_len = ft_lower_bound(0, field_width[2] - arg_len);
+		zero_str = (char *)ft_calloc(zero_len + 1, sizeof(char));
+		if (zero_str == NULL)
+			return (NULL);
+		ft_memset(zero_str, '0', zero_len);
 		if (str_arg[0] == '-')
-			arg_len--;
-		if (field_width[2] > (int)arg_len)
-		{
-			zero_len = ft_lower_bound(0, field_width[2] - arg_len);
-			zero_str = (char *)ft_calloc(zero_len + 1, sizeof(char));
-			if (zero_str == NULL)
-				return (NULL);
-			ft_memset(zero_str, '0', zero_len);
-			if (str_arg[0] == '-')
-				ft_chrswap(&zero_str[0], &str_arg[0]);
-			res = prefix_add(zero_str, str_arg, id);
-			free(zero_str);
-			return (res);
-		}
+			ft_chrswap(&zero_str[0], &str_arg[0]);
+		res = prefix_add(zero_str, str_arg, id);
+		free(zero_str);
+		return (res);
 	}
-	else if (id == 's')
-
+	else if (field_width[1] && field_width[2] == 0 && str_arg[0] == '0')
+		return (ft_strdup(""));
 	return (ft_strdup(str_arg));
 }
 
@@ -81,7 +78,7 @@ char	*void_manager(int *field_width, char *flags, size_t arg_len, char id)
 	void_str = ft_balloc(void_len + 1, sizeof(char));
 	if (void_str == NULL)
 		return (NULL);
-	if (flags[1] && !(flags[0] && ft_strchr("pdiuxX", id)))
+	if (flags[1] && !((flags[0] || field_width[1]) && ft_strchr("pdiuxX", id)))
 		ft_memset(void_str, '0', void_len);
 	return (void_str);
 }
@@ -89,7 +86,7 @@ char	*void_manager(int *field_width, char *flags, size_t arg_len, char id)
 //manage argument's flags, return the managed argument
 char	*argflags_manager(char *str_arg, int *field_width, char *flags, char id)
 {
-	if (str_arg == NULL && field_width[2] > 5)
+	if (str_arg == NULL && (field_width[2] > 5 || !field_width[1]))
 		return (ft_strdup("(null)"));
 	else if (str_arg == NULL)
 		return (ft_strdup(""));
@@ -113,7 +110,7 @@ char	*data_dealer(char *flags, int *field_width, char *str_arg, char id)
 	char	*tmp;
 	size_t	arg_len;
 
-	str_arg = argflags_manager(str_arg, flags, id);
+	str_arg = argflags_manager(str_arg, field_width, flags, id);
 	if (str_arg == NULL)
 		return (NULL);
 	tmp = str_arg;
@@ -129,7 +126,7 @@ char	*data_dealer(char *flags, int *field_width, char *str_arg, char id)
 	&& field_width[1])
 		arg_len = ft_min(field_width[2], arg_len);
 	void_str = void_manager(field_width, flags, arg_len, id);
-	if (!flags[0] && flags[1] && void_str[0] && (id == 'd' || id == 'i') \
+	if (!flags[0] && flags[1] && void_str[0] == '0' && (id == 'd' || id == 'i') \
 	&& str_arg[0] == '-')
 		ft_chrswap(&void_str[0], &str_arg[0]);
 	return (justification_dealer(str_arg, void_str, arg_len, flags[0]));
