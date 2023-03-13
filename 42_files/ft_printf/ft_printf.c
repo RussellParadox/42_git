@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 22:36:09 by gdornic           #+#    #+#             */
-/*   Updated: 2023/03/13 12:01:37 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/03/13 13:31:04 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,12 @@ int	print_format(t_data *format_data, char id, va_list ap, int i)
 //[0]: minimum
 //[1]: '.'
 //[2]: maximum
-int	special_print(const char *format, va_list ap, int i)
+int	special_print(const char *format, va_list ap, int i, int *diff)
 {
 	t_data	format_data;
 	int		j;
 
+	*diff = 0;
 	ft_memset(format_data.flags, 0, 5);
 	ft_memset_int(format_data.field_width, 0, 3);
 	j = 1;
@@ -112,6 +113,9 @@ int	special_print(const char *format, va_list ap, int i)
 		return (print_format(&format_data, format[j], ap, i));
 	while (!ft_strchr("cspdiuxX%", format[j]))
 		j++;
+	if (format[j] == '%')
+		j--;
+	*diff = j;
 	return (usual_print(format, i, j));
 }
 
@@ -120,6 +124,7 @@ int	ft_printf(const char *format, ...)
 	va_list	ap;
 	int		i;
 	int		chr_printed;
+	int		diff;
 
 	va_start(ap, format);
 	i = 0;
@@ -128,10 +133,13 @@ int	ft_printf(const char *format, ...)
 	{
 		if (format[i] == '%')
 		{
-			chr_printed = special_print(&format[i], ap, chr_printed);
+			chr_printed = special_print(&format[i], ap, chr_printed, &diff);
 			i++;
-			while (!ft_strchr("cspdiuxX%", format[i]))
-				i++;
+			if (!diff)
+				while (!ft_strchr("cspdiuxX%", format[i]))
+					i++;
+			else
+				while (diff--);
 		}
 		else
 			chr_printed = usual_print(&format[i], chr_printed, 1);
