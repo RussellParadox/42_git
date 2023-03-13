@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 22:36:09 by gdornic           #+#    #+#             */
-/*   Updated: 2023/03/12 17:30:47 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/03/13 12:01:37 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,8 +110,9 @@ int	special_print(const char *format, va_list ap, int i)
 	j += ft_atoi_field(&format[j], &(format_data.field_width[2]));
 	if (ft_strchr("cspdiuxX%", format[j]))
 		return (print_format(&format_data, format[j], ap, i));
-	else
-		return (usual_print(format, i, j));
+	while (!ft_strchr("cspdiuxX%", format[j]))
+		j++;
+	return (usual_print(format, i, j));
 }
 
 int	ft_printf(const char *format, ...)

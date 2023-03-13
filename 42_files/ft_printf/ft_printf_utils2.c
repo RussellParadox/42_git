@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 16:45:11 by gdornic           #+#    #+#             */
-/*   Updated: 2023/03/13 08:35:21 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/03/13 11:54:17 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,8 @@ char	*void_manager(int *field_width, char *flags, size_t arg_len, char id)
 	void_str = ft_balloc(void_len + 1, sizeof(char));
 	if (void_str == NULL)
 		return (NULL);
-	if (flags[1] && !((flags[0] || field_width[1]) && ft_strchr("pdiuxX", id)))
+	if (id != 's' && id != 'c' && flags[1] && !((flags[0] \
+	|| field_width[1]) && ft_strchr("pdiuxX", id)))
 		ft_memset(void_str, '0', void_len);
 	return (void_str);
 }
