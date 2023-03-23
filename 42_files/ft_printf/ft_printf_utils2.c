@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 16:45:11 by gdornic           #+#    #+#             */
-/*   Updated: 2023/03/13 11:54:17 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/03/13 12:51:52 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,9 @@ char	*argflags_manager(char *str_arg, int *field_width, char *flags, char id)
 		return (ft_strdup("(null)"));
 	else if (str_arg == NULL)
 		return (ft_strdup(""));
-	else if (flags[2] && ft_strchr("diu", id) && !ft_strchr("-", str_arg[0]))
+	else if (flags[2] && ft_strchr("di", id) && !ft_strchr("-", str_arg[0]))
 		return (prefix_add("+", str_arg, id));
-	else if (flags[3] && ft_strchr("diu", id) && !ft_strchr("-", str_arg[0]))
+	else if (flags[3] && ft_strchr("di", id) && !ft_strchr("-", str_arg[0]))
 		return (prefix_add(" ", str_arg, id));
 	else if (id == 'p' || (flags[4] && str_arg[0] != '0' && id == 'x'))
 		return (prefix_add("0x", str_arg, id));

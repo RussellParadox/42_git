@@ -3,61 +3,91 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/19 03:54:32 by gdornic           #+#    #+#             */
-/*   Updated: 2023/02/21 19:20:41 by gdornic          ###   ########.fr       */
+/*   Created: 2023/02/23 15:29:06 by gdornic           #+#    #+#             */
+/*   Updated: 2023/02/26 18:50:28 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static _Bool	ft_belong_to(char c, const char *str)
+static char	*ft_addnstack(char *line, char *stack, size_t n)
 {
-	size_t	i;
+	char	*tmp;
 
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == c)
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-static char	*ft_free_tmp(char *tmp)
-{
-	free(tmp);
-	return (NULL);
-}
-
-static char	*ft_fdtoline(int fd)
-{
-	static char	buffer[BUFFER_SIZE + 1];
-	char		*line;
-	char		*line_tmp;
-	ssize_t		read_size;
-
-	line = ft_strjoin(buffer, "");
 	if (line == NULL)
-		return (NULL);
-	read_size = 1;
-	while (!ft_belong_to('\n', buffer) && read_size > 0)
 	{
-		ft_memset(buffer, '\0', BUFFER_SIZE + 1);
-		read_size = read(fd, buffer, BUFFER_SIZE);
-		line_tmp = line;
-		line = ft_strjoin(line_tmp, buffer);
+		line = (char *)malloc(sizeof(char));
 		if (line == NULL)
-			return (ft_free_tmp(line_tmp));
-		free(line_tmp);
+			return (NULL);
+		ft_memset(line, '\0', 1);
 	}
-	line_tmp = line;
-	line = ft_strdup_to('\n', line_tmp, buffer);
-	if (line == NULL)
-		return (ft_free_tmp(line_tmp));
-	free(line_tmp);
+	tmp = line;
+	line = ft_strnjoin(tmp, stack, n);
+	free(tmp);
+	return (line);
+}
+
+static char	*get_the_line(int fd, char *stack)
+{
+	char	*line;
+	char	*first_occ;
+	ssize_t	read_size;
+
+	if (stack[0] == '\0')
+	{
+		read_size = read(fd, stack, BUFFER_SIZE);
+		if (read_size <= 0)
+			return (NULL);
+	}
+	first_occ = ft_strchr(stack, '\n');
+	line = NULL;
+	while (first_occ == NULL && stack[0] != '\0')
+	{
+		line = ft_addnstack(line, stack, BUFFER_SIZE);
+		ft_memset(stack, '\0', BUFFER_SIZE);
+		read_size = read(fd, stack, BUFFER_SIZE);
+		if (read_size < 0)
+			return (NULL);
+		first_occ = ft_strchr(stack, '\n');
+	}
+	line = ft_addnstack(line, stack, (first_occ - stack + 1));
+	ft_stackmove(stack);
+	return (line);
+}
+
+static void	ft_free_stack(char **stack)
+{
+	free(*stack);
+	*stack = NULL;
+}
+
+static char	*slow_get_line(int fd)
+{
+	static char	*stack;
+	char		*line;
+	size_t		stack_size;
+
+	if (stack == NULL)
+	{
+		stack_size = BUFFER_SIZE + 1;
+		if (stack_size * sizeof(char) / sizeof(char) != stack_size \
+			|| stack_size * sizeof(char) / stack_size != sizeof(char))
+			return (NULL);
+		stack = (char *)malloc(stack_size * sizeof(char));
+		if (stack == NULL)
+			return (NULL);
+		ft_memset(stack, '\0', stack_size);
+	}
+	if (read(fd, 0, 0) < 0)
+	{
+		ft_free_stack(&stack);
+		return (NULL);
+	}
+	line = get_the_line(fd, stack);
+	if (stack != NULL && (stack[0] == '\0' || line == NULL))
+		ft_free_stack(&stack);
 	return (line);
 }
 
@@ -65,13 +95,7 @@ char	*get_next_line(int fd)
 {
 	char	*line;
 
-	line = ft_fdtoline(fd);
-	if (line == NULL)
-		return (NULL);
-	if (line[0] == '\0')
-	{
-		free(line);
-		return (NULL);
-	}
+	line = NULL;
+	line = slow_get_line(fd);
 	return (line);
 }

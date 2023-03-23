@@ -5,5 +5,5 @@
 
 int	main(void)
 {
-	printf("\nstate :%d\n", ft_printf(" %-2c ", 0));
+	ft_printf(" %: %% ", 213);
 }

@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 22:36:09 by gdornic           #+#    #+#             */
-/*   Updated: 2023/03/13 13:31:04 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/03/14 15:53:42 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,13 +133,13 @@ int	ft_printf(const char *format, ...)
 	{
 		if (format[i] == '%')
 		{
-			chr_printed = special_print(&format[i], ap, chr_printed, &diff);
-			i++;
+			chr_printed = special_print(&format[i++], ap, chr_printed, &diff);
+			//i++;
 			if (!diff)
 				while (!ft_strchr("cspdiuxX%", format[i]))
 					i++;
-			else
-				while (diff--);
+			//else
+			//	while (diff--);
 		}
 		else
 			chr_printed = usual_print(&format[i], chr_printed, 1);
