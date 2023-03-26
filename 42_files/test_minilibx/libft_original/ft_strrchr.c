@@ -1,18 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/16 16:27:20 by gdornic           #+#    #+#             */
-/*   Updated: 2023/03/26 19:52:41 by gdornic          ###   ########.fr       */
+/*   Created: 2023/02/07 16:10:40 by gdornic           #+#    #+#             */
+/*   Updated: 2023/02/07 16:38:04 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putchar_fd(char c, int fd)
+char	*ft_strrchr(const char *s, int c)
 {
-	write(fd, &c, 1);
+	char	*last_occ;
+	char	ctochr;
+
+	last_occ = ft_strchr((char *)s, '\0');
+	ctochr = (char)c;
+	while (last_occ != (char *)s)
+	{
+		if (*last_occ == ctochr)
+			return (last_occ);
+		last_occ--;
+	}
+	if (*last_occ == ctochr)
+		return (last_occ);
+	return (NULL);
 }

@@ -1,18 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/16 16:27:20 by gdornic           #+#    #+#             */
-/*   Updated: 2023/03/26 19:52:41 by gdornic          ###   ########.fr       */
+/*   Created: 2023/02/05 14:20:51 by gdornic           #+#    #+#             */
+/*   Updated: 2023/02/05 17:38:27 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putchar_fd(char c, int fd)
+size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
-	write(fd, &c, 1);
-}
+	size_t	src_size;
+
+	src_size = ft_strlen(src) + 1;
+	if (src_size < size)
+		ft_memcpy(dst, src, src_size);
+	else if (size != 0)
+	{
+		ft_memcpy(dst, src, size - 1);
+		dst[size - 1] = '\0';
+	}
+	return (src_size - 1);
+}	
