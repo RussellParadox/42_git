@@ -6,47 +6,31 @@
 #    By: gdornic <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 21:58:09 by gdornic           #+#    #+#              #
-#    Updated: 2023/03/26 20:18:11 by gdornic          ###   ########.fr        #
+#    Updated: 2023/03/26 20:38:38 by gdornic          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = fdf
+NAME = lib42.a
 
-DEP = lib42
+LIB = libft/libft.a get_next_line/gnl.a
 
-HEADERS = -I/usr/include -Imlx_linux -Ilib42
-
-LIB_LINK = -Lmlx_linux -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz -Llib42 -l42
-
-SRC = main.c
-
-OBJ = $(SRC:.c=.o)
-
-CC = gcc
-
-CFLAGS = -Wall -Werror -Wextra
-
-define make_dep
-	for d in $(DEP) ; do \
+define make_lib
+	for d in $(LIB) ; do \
 		make -C $$d $(1) ; \
 	done
 endef
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
-	$(call make_dep,all)
-	$(CC) $(OBJ) $(HEADERS) $(LIB_LINK) -o $(NAME)
-
-%.o: %.c
-	$(CC) $(CFLAGS) $(HEADERS) -O3 -c $< -o $@
+$(NAME):
+	$(call make_lib,all)
+	ar crsT $(NAME) $(LIB)
 
 clean:
-	rm -f $(OBJ)
-	$(call make_dep,clean)
+	$(call make_lib,clean)
 
 fclean: clean
 	rm -f $(NAME)
-	$(call make_dep,fclean)
+	$(call make_lib,fclean)
 
 re: fclean all

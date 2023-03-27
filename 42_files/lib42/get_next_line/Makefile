@@ -6,25 +6,25 @@
 #    By: gdornic <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 21:58:09 by gdornic           #+#    #+#              #
-#    Updated: 2023/03/26 20:18:11 by gdornic          ###   ########.fr        #
+#    Updated: 2023/03/26 20:24:03 by gdornic          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = fdf
+NAME = gnl.a
 
-DEP = lib42
+DEP =
 
-HEADERS = -I/usr/include -Imlx_linux -Ilib42
+HEADERS =
 
-LIB_LINK = -Lmlx_linux -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz -Llib42 -l42
+LIB_LINK =
 
-SRC = main.c
+SRC = get_next_line_bonus.c get_next_line_utils_bonus.c
 
 OBJ = $(SRC:.c=.o)
 
 CC = gcc
 
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Wextra
 
 define make_dep
 	for d in $(DEP) ; do \
@@ -36,7 +36,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	$(call make_dep,all)
-	$(CC) $(OBJ) $(HEADERS) $(LIB_LINK) -o $(NAME)
+	ar -cr $(NAME) $(OBJ)
 
 %.o: %.c
 	$(CC) $(CFLAGS) $(HEADERS) -O3 -c $< -o $@
