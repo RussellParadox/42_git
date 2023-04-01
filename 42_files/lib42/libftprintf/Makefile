@@ -6,25 +6,25 @@
 #    By: gdornic <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 21:58:09 by gdornic           #+#    #+#              #
-#    Updated: 2023/04/01 20:29:34 by gdornic          ###   ########.fr        #
+#    Updated: 2023/04/01 20:45:53 by gdornic          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = get_next_line.a
+NAME = libftprintf.a
 
-DEP =
+DEP = ../libft
 
-HEADERS =
+HEADERS = -I../libft
 
-LIB_LINK =
+LIB_LINK = -L../libft -lft
 
-SRC = get_next_line.c get_next_line_utils.c
+SRC = ft_balloc.c ft_itoa_base.c ft_printf.c ft_printf_utils.c ft_chrswap.c ft_itoa_base_pointer.c inclusive_strjoin.c ft_chrtostr.c ft_memset_int.c ft_printf_utils2.c
 
 OBJ = $(SRC:.c=.o)
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra
+CFLAGS = -Wall -Werror -Wextra
 
 define make_dep
 	for d in $(DEP) ; do \
