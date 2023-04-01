@@ -6,7 +6,7 @@
 #    By: gdornic <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 21:58:09 by gdornic           #+#    #+#              #
-#    Updated: 2023/04/01 21:33:53 by gdornic          ###   ########.fr        #
+#    Updated: 2023/04/02 01:23:00 by gdornic          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,13 +18,13 @@ HEADERS = -I/usr/include -Imlx_linux -Ilib42
 
 LIB_LINK = -Lmlx_linux -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz -Llib42 -l42
 
-SRC = main.c
+SRC = main.c map_management.c
 
 OBJ = $(SRC:.c=.o)
 
 CC = gcc
 
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Wextra -fsanitize=address
 
 define make_dep
 	for d in $(DEP) ; do \
