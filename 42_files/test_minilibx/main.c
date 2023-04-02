@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 21:31:06 by gdornic           #+#    #+#             */
-/*   Updated: 2023/03/24 23:50:26 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/02 01:57:57 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,6 @@ double	ft_abs(double x)
 	if (x >= 0)
 		return (x);
 	return (-x);
-}
-
-int	ft_min(int a, int b)
-{
-	if (a < b)
-		return (a);
-	return (b);
 }
 
 int	ft_max(int a, int b)
@@ -100,7 +93,12 @@ int	main(void)
 {
 	void	*mlx;
 	void	*mlx_win;
+	char	*msg;
 
+	msg = (char *)malloc(10 * sizeof(char));
+	msg[0] = 'a';
+	msg[1] = '\0';
+	ft_printf("%s\n", msg);
 	ft_putstr_fd("Initiating the window\n", 1);
 	mlx = mlx_init();
 	mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");

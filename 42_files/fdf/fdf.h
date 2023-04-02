@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 20:00:43 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/02 01:17:50 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/02 03:27:17 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,12 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
-# include <stdlib.h>
-# include <errno.h>
 
 typedef struct s_map
 {
 	int	**height;
-	size_t	xmax;
-	size_t	ymax;
+	int	xmax;
+	int	ymax;
 }	t_map;
 
 t_map	*get_the_map(int argc, char *argv[]);

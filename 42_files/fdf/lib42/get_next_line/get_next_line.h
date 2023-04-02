@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 15:39:10 by gdornic           #+#    #+#             */
-/*   Updated: 2023/02/26 18:42:26 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/02 04:40:00 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@
 
 char	*get_next_line(int fd);
 char	*ft_strnjoin(char const *s1, char const *s2, size_t n);
-void	*ft_memset(void *s, int c, size_t n);
-char	*ft_strchr(const char *s, int c);
+void	*ft_memset_gnl(void *s, int c, size_t n);
+char	*ft_strchr_gnl(const char *s, int c);
 void	ft_stackmove(char *stack);
-void	*ft_memmove(void *dest, const void *src, size_t n);
+void	*ft_memmove_gnl(void *dest, const void *src, size_t n);
 
 #endif
