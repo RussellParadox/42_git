@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 15:29:06 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/02 04:41:01 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/02/26 20:31:56 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 static char	*ft_addnstack(char *line, char *stack, size_t n)
 {
@@ -21,7 +21,7 @@ static char	*ft_addnstack(char *line, char *stack, size_t n)
 		line = (char *)malloc(sizeof(char));
 		if (line == NULL)
 			return (NULL);
-		ft_memset_gnl(line, '\0', 1);
+		ft_memset(line, '\0', 1);
 	}
 	tmp = line;
 	line = ft_strnjoin(tmp, stack, n);
@@ -41,16 +41,16 @@ static char	*get_the_line(int fd, char *stack)
 		if (read_size <= 0)
 			return (NULL);
 	}
-	first_occ = ft_strchr_gnl(stack, '\n');
+	first_occ = ft_strchr(stack, '\n');
 	line = NULL;
 	while (first_occ == NULL && stack[0] != '\0')
 	{
 		line = ft_addnstack(line, stack, BUFFER_SIZE);
-		ft_memset_gnl(stack, '\0', BUFFER_SIZE);
+		ft_memset(stack, '\0', BUFFER_SIZE);
 		read_size = read(fd, stack, BUFFER_SIZE);
 		if (read_size < 0)
 			return (NULL);
-		first_occ = ft_strchr_gnl(stack, '\n');
+		first_occ = ft_strchr(stack, '\n');
 	}
 	line = ft_addnstack(line, stack, (first_occ - stack + 1));
 	ft_stackmove(stack);
@@ -78,7 +78,7 @@ static char	*slow_get_line(int fd)
 		stack[fd] = (char *)malloc(stack_size * sizeof(char));
 		if (stack[fd] == NULL)
 			return (NULL);
-		ft_memset_gnl(stack[fd], '\0', stack_size);
+		ft_memset(stack[fd], '\0', stack_size);
 	}
 	if (read(fd, 0, 0) < 0)
 	{

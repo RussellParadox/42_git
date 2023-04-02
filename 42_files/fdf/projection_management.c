@@ -1,23 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   projection_management.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/01 18:21:24 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/02 05:55:28 by gdornic          ###   ########.fr       */
+/*   Created: 2023/04/02 05:23:00 by gdornic           #+#    #+#             */
+/*   Updated: 2023/04/02 05:54:29 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include <stdio.h>
 
-int	main(int argc, char *argv[])
+t_coord2D	isometric_projection(int x, int y, int z)
 {
-	t_map	*map;
+	t_coord2D	proj;
 
-	map = get_the_map(argc, argv);
-	//print_map(map);
-	printf("x: %f\ny: %f\n", isometric_projection(1,1,1).x, isometric_projection(1,1,1).y);
+	proj.x = x * (-1 / sqrt(2)) + y * (1 / sqrt(2)) + z * (0);
+	proj.y = x * (1 / sqrt(6)) + y * (1 / sqrt(6)) + z * (-sqrt(2/3));
+	return (proj);
 }
