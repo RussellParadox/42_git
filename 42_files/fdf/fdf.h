@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 20:00:43 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/02 07:37:36 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/02 21:00:04 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,24 @@ typedef struct s_int2D
 
 typedef struct s_set
 {
-	t_coord2D	offset;
+	t_double2D	offset;
 	double		scale;
 	int		xmax;
 	int		ymax;
+	double		thickness;
 }	t_set;
+
+typedef struct s_segment
+{
+	double	intercept;
+	double	slope_coef;
+	double	xmax;
+	double	xmin;
+}	t_segment;
 
 t_map	*get_the_map(int argc, char *argv[]);
 void	print_map(t_map *map);
-t_coord2D	isometric_projection(int x, int y, int z);
+void	put_pixel(t_img *data, int x, int y, int color);
+void	map_projection(t_map *map, t_img *img, t_set settings);
 
 #endif

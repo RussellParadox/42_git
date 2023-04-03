@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 05:23:00 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/02 07:39:19 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/02 21:13:32 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,30 @@
 
 void	draw_segment(t_img *img, t_double2D coord1, t_double2D coord2, t_set settings)
 {
-	t_int2D	round1;
-	t_int2D	round2;
+	t_segment	segment;
+	t_int2D	i;
 
-	round1.x = round(coord1.x * settings.scale) + (settings.offset).x;
-	round1.y = round(coord1.y * settings.scale) + (settings.offset).y;
-	round2.x = round(coord2.x * settings.scale) + (settings.offset).x;
-	round2.y = round(coord2.y * settings.scale) + (settings.offset).y;
+	coord1.x = coord1.x * settings.scale + (settings.offset).x;
+	coord1.y = coord1.y * settings.scale + (settings.offset).y;
+	coord2.x = coord2.x * settings.scale + (settings.offset).x;
+	coord2.y = coord2.y * settings.scale + (settings.offset).y;
+	segment.slope_coef = (coord2.y - coord1.y) / (coord2.x - coord1.x);
+	segment.intercept = coord1.y - segment.slope_coef * coord1.x;
+	segment.xmax = fmax(coord1.x, coord2.x);
+	segment.xmin = fmin(coord1.x, coord2.x);
+	i.x = 0;
+	while (i.x < settings.xmax)
+	{
+		i.y = 0;
+		while (i.y < settings.ymax)
+		{
+			if (fabs(i.y - segment.slope_coef * i.x - segment.intercept) < settings.thickness && i.x <= segment.xmax && i.x >= segment.xmin)
+				put_pixel(img, i.x, i.y, 0xFF0000);
+			(i.y)++;
+		}
+		(i.x)++;
+	}
+}
 
 t_double2D	isometric_projection(int x, int y, int z)
 {
@@ -37,24 +54,25 @@ void	recursive_projection(t_map *map, t_img *img, int x, int y, t_set settings)
 	t_double2D	proj2;
 	t_double2D	proj3;
 
-	proj1 = isometric_projection(x, y, (map->height)[x][y], scale);
+	proj1 = isometric_projection(x, y, (map->height)[x][y]);
 	if (x < map->xmax)
 	{
 		proj2 = isometric_projection(x, y, (map->height)[x+1][y]);
-		recursive_projection(map, img, x+1, y, settings);
 		draw_segment(img, proj1, proj2, settings);
 	}
 	if (y < map->ymax)
 	{
 		proj3 = isometric_projection(x, y, (map->height)[x][y+1]);
-		recursive_projection(map, img, x, y+1, settings);
 		draw_segment(img, proj1, proj3, settings);
 	}
+	if (x < map->xmax && y < map->ymax)
+		recursive_projection(map, img, x+1, y, settings);
 }
 
 void	map_projection(t_map *map, t_img *img, t_set settings)
 {
 	(settings.offset).x = 200;
 	(settings.offset).y = 200;
+	settings.scale = fmin(i
 	recursive_projection(map, img, 0, 0, settings);
 }

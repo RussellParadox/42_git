@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 21:31:06 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/02 01:57:57 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/02 20:40:13 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	draw_segment(void *mlx, void *mlx_win, int x1, int y1, int x2, int y2)
 		j = 0;
 		while (j < 1080)
 		{
-			if (ft_abs(j - slope_coef * i - intercept) < 1.0 && j <= ft_max(x2, x1) && j >= ft_min(x2, x1) && i <= ft_max(x2, x1) && i >= ft_min(x2, x1))
+			if (ft_abs(j - slope_coef * i - intercept) < 1.0 && i <= ft_max(x2, x1) && i >= ft_min(x2, x1))
 				mlx_pixel_put(mlx, mlx_win, i, j, 0xFF0000);
 			j++;
 		}
