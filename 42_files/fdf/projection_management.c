@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 05:23:00 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/04 03:15:35 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/04 04:21:01 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,12 @@ void	draw_segment(t_img *img, t_double2D coord1, t_double2D coord2, t_set settin
 	}
 }
 
-t_double2D	isometric_projection(int x, int y, int z)
+t_double2D	isometric_projection(double x, double y, double z)
 {
 	t_double2D	proj;
 
-	proj.x = x * (1 / sqrt(2)) + y * (-1 / sqrt(2)) + z * (0);
-	proj.y = x * (1 / sqrt(6)) + y * (1 / sqrt(6)) + z * (-sqrt(2/3));
+	proj.x = x * (1. / sqrt(2.)) + y * (-1. / sqrt(2.)) + z * (0.);
+	proj.y = x * (1. / sqrt(6.)) + y * (1 / sqrt(6.)) + z * (-sqrt(2./3.)) / 10.;
 	return (proj);
 }
 
@@ -90,7 +90,7 @@ void	recursive_projection(t_map *map, t_img *img, t_int2D i, t_set settings)
 void	map_projection(t_map *map, t_img *img, t_set settings)
 {
 	(settings.offset).x = 600;
-	(settings.offset).y = 200;
-	settings.scale = 50;
+	(settings.offset).y = 400;
+	settings.scale = 40;
 	recursive_projection(map, img, (t_int2D) { .x = 0, .y = 0 }, settings);
 }

@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 20:00:43 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/03 23:05:30 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/04 03:54:33 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,6 @@ void	print_map(t_map *map);
 void	put_pixel(t_img *data, int x, int y, int color);
 void	map_projection(t_map *map, t_img *img, t_set settings);
 void	draw_segment(t_img *img, t_double2D coord1, t_double2D coord2, t_set settings);
-t_double2D	isometric_projection(int x, int y, int z);
+t_double2D	isometric_projection(double x, double y, double z);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 04:58:56 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/04 02:52:31 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/04 03:56:25 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	print_map(t_map *map)
 	mlx_win_glob = mlx_new_window(mlx_glob, 1920, 1080, "Hello world !");
 	settings.xmax = 1920;
 	settings.ymax = 1080;
-	settings.thickness = 0.3;
+	settings.thickness = 1.0;
 	//(settings.offset).x = 200;
 	//(settings.offset).y = 200;
 	//settings.scale = 100;
