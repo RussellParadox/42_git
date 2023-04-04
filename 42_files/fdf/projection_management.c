@@ -6,14 +6,11 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 05:23:00 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/04 04:21:01 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/04 05:47:25 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-void	*mlx_glob;
-void	*mlx_win_glob;
 
 void	draw_segment(t_img *img, t_double2D coord1, t_double2D coord2, t_set settings)
 {
@@ -83,7 +80,6 @@ void	recursive_projection(t_map *map, t_img *img, t_int2D i, t_set settings)
 		proj_to = isometric_projection(i.x, i.y+1, (map->height)[i.y+1][i.x]);
 		draw_segment(img, proj_from, proj_to, settings);
 	}
-	mlx_put_image_to_window(mlx_glob, mlx_win_glob, img->img, 0, 0);
 	recursive_projection(map, img, new_set(map->ymax), settings);
 }
 
