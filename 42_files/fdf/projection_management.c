@@ -6,45 +6,56 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 05:23:00 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/04 05:47:25 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/04 23:59:48 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	draw_segment(t_img *img, t_double2D coord1, t_double2D coord2, t_set settings)
+void	draw_segment(t_img *img, t_double2D coord1, t_double2D coord2, \
+		t_set settings)
 {
 	t_segment	segment;
-	t_int2D	i;
+	t_int2D		i;
+	int		color;
 
-	coord1.x = coord1.x * settings.scale + (settings.offset).x;
-	coord1.y = coord1.y * settings.scale + (settings.offset).y;
-	coord2.x = coord2.x * settings.scale + (settings.offset).x;
-	coord2.y = coord2.y * settings.scale + (settings.offset).y;
+	coord1.x = coord1.x * settings.scale + settings.offset.x;
+	coord1.y = coord1.y * settings.scale + settings.offset.y;
+	coord2.x = coord2.x * settings.scale + settings.offset.x;
+	coord2.y = coord2.y * settings.scale + settings.offset.y;
 	segment.slope_coef = (coord2.y - coord1.y) / (coord2.x - coord1.x);
 	segment.intercept = coord1.y - segment.slope_coef * coord1.x;
-	segment.xmax = fmax(coord1.x, coord2.x);
-	segment.xmin = fmin(coord1.x, coord2.x);
-	i.x = 0;
-	while (i.x < settings.xmax)
+	segment.max.x = (int)ceil(fmax(coord1.x, coord2.x));
+	segment.min.x = (int)ceil(fmin(coord1.x, coord2.x));
+	segment.max.y = (int)ceil(fmax(coord1.y, coord2.y));
+	segment.min.y = (int)ceil(fmin(coord1.y, coord2.y));
+	i.x = segment.min.x;
+	while (i.x < segment.max.x)
 	{
-		i.y = 0;
-		while (i.y < settings.ymax)
+		i.y = segment.min.y;
+		while (i.y < segment.max.y)
 		{
-			if (fabs(i.y - segment.slope_coef * i.x - segment.intercept) < settings.thickness && i.x <= segment.xmax && i.x >= segment.xmin)
-				put_pixel(img, i.x, i.y, 0xFFFFFF);
+			if (fabs(i.y - segment.slope_coef * i.x - \
+			segment.intercept) < settings.thickness)
+				put_pixel(img, i.x, i.y, );
 			(i.y)++;
 		}
 		(i.x)++;
 	}
 }
 
-t_double2D	isometric_projection(double x, double y, double z)
+t_double2D	isometric_projection(double x, double y, double z, int zmax)
 {
 	t_double2D	proj;
 
 	proj.x = x * (1. / sqrt(2.)) + y * (-1. / sqrt(2.)) + z * (0.);
 	proj.y = x * (1. / sqrt(6.)) + y * (1 / sqrt(6.)) + z * (-sqrt(2./3.)) / 10.;
+	if (z < 0.1)
+		proj.color = to_trgb(0, 255, 255, 255);
+	else if (zmax - z < 0.1)
+		proj.color = to_trgb(0, 255, 255, 0);
+	else
+		proj.color = to_trgb(0, (int)(z / zmax * 255), (int)((1 - z / zmax) * 255));
 	return (proj);
 }
 

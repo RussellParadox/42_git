@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 21:59:04 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/02 04:45:45 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/04 22:46:37 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	**load_heights(t_map *map, char ***splited_map)
 	int	j;
 
 	height = (int **)malloc((map->ymax + 1) * sizeof(int *));
+	map->zmax = 0;
 	i = 0;
 	while (i < map->ymax + 1)
 	{
@@ -27,6 +28,8 @@ int	**load_heights(t_map *map, char ***splited_map)
 		while (j < map->xmax + 1)
 		{
 			height[i][j] = ft_atoi(splited_map[i][j]);
+			if (height[i][j] > map->zmax)
+				map->zmax = height[i][j];
 			free(splited_map[i][j]);
 			j++;
 		}

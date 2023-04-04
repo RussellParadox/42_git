@@ -6,7 +6,7 @@
 #    By: gdornic <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 21:58:09 by gdornic           #+#    #+#              #
-#    Updated: 2023/04/02 21:06:05 by gdornic          ###   ########.fr        #
+#    Updated: 2023/04/04 21:15:30 by gdornic          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ OBJ = $(SRC:.c=.o)
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -g
+CFLAGS = -Wall -Wextra -Werror
 
 define make_dep
 	for d in $(DEP) ; do \
@@ -36,10 +36,10 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	$(call make_dep,all)
-	$(CC) $(OBJ) $(HEADERS) $(LIB_LINK) -o $(NAME)
+	$(CC) $(OBJ) $(HEADERS) $(LIB_LINK) -O3 -o $(NAME) -pg
 
 %.o: %.c
-	$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@
+	$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@ -pg
 
 clean:
 	rm -f $(OBJ)
