@@ -6,16 +6,11 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 04:58:56 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/04 22:50:09 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/05 00:21:58 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-int	to_trgb(int t, int r, int g, int b)
-{
-	return (t << 24 | r << 16 | g << 8 | b);
-}
 
 void	put_pixel(t_img *data, int x, int y, int color)
 {

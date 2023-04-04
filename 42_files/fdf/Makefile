@@ -6,7 +6,7 @@
 #    By: gdornic <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 21:58:09 by gdornic           #+#    #+#              #
-#    Updated: 2023/04/04 21:15:30 by gdornic          ###   ########.fr        #
+#    Updated: 2023/04/05 00:25:40 by gdornic          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ HEADERS = -I/usr/include -Imlx_linux -Ilib42
 
 LIB_LINK = -Lmlx_linux -lmlx_Linux -Llib42 -l42 -L/usr/lib -lXext -lX11 -lm
 
-SRC = main.c map_management.c window_management.c projection_management.c
+SRC = main.c map_management.c window_management.c projection_management.c color_management.c
 
 OBJ = $(SRC:.c=.o)
 
