@@ -6,11 +6,14 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 05:23:00 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/02 21:13:32 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/04 03:15:35 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+void	*mlx_glob;
+void	*mlx_win_glob;
 
 void	draw_segment(t_img *img, t_double2D coord1, t_double2D coord2, t_set settings)
 {
@@ -32,7 +35,7 @@ void	draw_segment(t_img *img, t_double2D coord1, t_double2D coord2, t_set settin
 		while (i.y < settings.ymax)
 		{
 			if (fabs(i.y - segment.slope_coef * i.x - segment.intercept) < settings.thickness && i.x <= segment.xmax && i.x >= segment.xmin)
-				put_pixel(img, i.x, i.y, 0xFF0000);
+				put_pixel(img, i.x, i.y, 0xFFFFFF);
 			(i.y)++;
 		}
 		(i.x)++;
@@ -43,36 +46,51 @@ t_double2D	isometric_projection(int x, int y, int z)
 {
 	t_double2D	proj;
 
-	proj.x = x * (-1 / sqrt(2)) + y * (1 / sqrt(2)) + z * (0);
+	proj.x = x * (1 / sqrt(2)) + y * (-1 / sqrt(2)) + z * (0);
 	proj.y = x * (1 / sqrt(6)) + y * (1 / sqrt(6)) + z * (-sqrt(2/3));
 	return (proj);
 }
 
-void	recursive_projection(t_map *map, t_img *img, int x, int y, t_set settings)
+t_int2D	new_set(int ymax)
 {
-	t_double2D	proj1;
-	t_double2D	proj2;
-	t_double2D	proj3;
+	static t_int2D	i = { .x = 0, .y = 0 };
+	
+	if (i.y == ymax)
+	{
+		i.y = 0;
+		(i.x)++;
+	}
+	else
+		(i.y)++;
+	return (i);
+}
 
-	proj1 = isometric_projection(x, y, (map->height)[x][y]);
-	if (x < map->xmax)
+void	recursive_projection(t_map *map, t_img *img, t_int2D i, t_set settings)
+{
+	t_double2D	proj_from;
+	t_double2D	proj_to;
+
+	if (i.x > map->xmax || i.y > map->ymax)
+		return ;
+	proj_from = isometric_projection(i.x, i.y, (map->height)[i.y][i.x]);
+	if (i.x < map->xmax)
 	{
-		proj2 = isometric_projection(x, y, (map->height)[x+1][y]);
-		draw_segment(img, proj1, proj2, settings);
+		proj_to = isometric_projection(i.x+1, i.y, (map->height)[i.y][i.x+1]);
+		draw_segment(img, proj_from, proj_to, settings);
 	}
-	if (y < map->ymax)
+	if (i.y < map->ymax)
 	{
-		proj3 = isometric_projection(x, y, (map->height)[x][y+1]);
-		draw_segment(img, proj1, proj3, settings);
+		proj_to = isometric_projection(i.x, i.y+1, (map->height)[i.y+1][i.x]);
+		draw_segment(img, proj_from, proj_to, settings);
 	}
-	if (x < map->xmax && y < map->ymax)
-		recursive_projection(map, img, x+1, y, settings);
+	mlx_put_image_to_window(mlx_glob, mlx_win_glob, img->img, 0, 0);
+	recursive_projection(map, img, new_set(map->ymax), settings);
 }
 
 void	map_projection(t_map *map, t_img *img, t_set settings)
 {
-	(settings.offset).x = 200;
+	(settings.offset).x = 600;
 	(settings.offset).y = 200;
-	settings.scale = fmin(i
-	recursive_projection(map, img, 0, 0, settings);
+	settings.scale = 50;
+	recursive_projection(map, img, (t_int2D) { .x = 0, .y = 0 }, settings);
 }
