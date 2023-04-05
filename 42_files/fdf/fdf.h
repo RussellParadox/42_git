@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 20:00:43 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/05 01:16:13 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/05 22:48:45 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct s_set
 	double		scale;
 	int		xmax;
 	int		ymax;
+	t_int2D		border;
 	double		thickness;
 }	t_set;
 
@@ -66,8 +67,7 @@ typedef struct s_segment
 	double	slope_coef;
 	t_int2D	max;
 	t_int2D	min;
-	int	color_max;
-	int	color_min;
+	double	dist;
 }	t_segment;
 
 t_map	*get_the_map(int argc, char *argv[]);
