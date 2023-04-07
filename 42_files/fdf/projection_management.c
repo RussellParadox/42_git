@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 05:23:00 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/06 20:05:10 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/07 15:41:16 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,15 @@ void	draw_segment(t_img *img, t_double2D coord1, t_double2D coord2, \
 t_double2D	isometric_projection(double x, double y, double z, int zmax)
 {
 	t_double2D	proj;
+	double		ratio;
 
 	proj.x = x * (1. / sqrt(2.)) + y * (-1. / sqrt(2.)) + z * (0.);
 	proj.y = x * (1. / sqrt(6.)) + y * (1 / sqrt(6.)) + z * (-sqrt(2./3.)) / 10.;
+	ratio = z / zmax;
 	if (z < 0.5)
 		proj.color = to_trgb(0, 255, 255, 255);
 	else
-		proj.color = to_trgb(0, 255, 51 + (int)((1. - z / zmax) * 204), (int)(z / zmax * 255));
+		proj.color = to_trgb(0, 255, (int)((1. - ratio) * 204), (int)(ratio * 100));
 	return (proj);
 }
 
