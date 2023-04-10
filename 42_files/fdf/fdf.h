@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 20:00:43 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/06 15:39:01 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/10 16:39:31 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,11 @@ typedef struct s_set
 
 typedef struct s_segment
 {
-	double	intercept;
-	double	slope_coef;
+	t_double2D	coef;
 	t_int2D	max;
 	t_int2D	min;
 	double	dist;
+	double	angle;
 }	t_segment;
 
 t_map	*get_the_map(int argc, char *argv[]);

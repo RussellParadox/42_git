@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 04:58:56 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/05 15:39:49 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/10 14:10:42 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ void	print_map(t_map *map)
 	t_img	img;
 
 	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world !");
 	settings.xmax = 1920;
 	settings.ymax = 1080;
+	mlx_win = mlx_new_window(mlx, settings.xmax, settings.ymax, "Hello world !");
 	settings.thickness = 1.0;
 	img.img = mlx_new_image(mlx, settings.xmax, settings.ymax);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);

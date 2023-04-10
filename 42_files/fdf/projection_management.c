@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 05:23:00 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/07 15:41:16 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/10 18:18:22 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,21 +40,22 @@ void	draw_segment(t_img *img, t_double2D coord1, t_double2D coord2, \
 	coord1.y = coord1.y * settings.scale + settings.offset.y;
 	coord2.x = coord2.x * settings.scale + settings.offset.x;
 	coord2.y = coord2.y * settings.scale + settings.offset.y;
-	segment.slope_coef = (coord2.y - coord1.y) / (coord2.x - coord1.x);
-	segment.intercept = coord1.y - segment.slope_coef * coord1.x;
+	segment.coef.x = coord2.y - coord1.y;
+	segment.coef.y = coord1.x - coord2.x;
 	segment.max.x = (int)ceil(fmax(coord1.x, coord2.x));
 	segment.min.x = (int)ceil(fmin(coord1.x, coord2.x));
 	segment.max.y = (int)ceil(fmax(coord1.y, coord2.y));
 	segment.min.y = (int)ceil(fmin(coord1.y, coord2.y));
 	segment.dist = hypot(coord1.x - coord2.x, coord1.y - coord2.y);
+	segment.angle = atan((coord2.y - coord1.y) / (coord2.x - coord1.x));
+	settings.thickness = 0.5;
 	i.x = (int)fmax(0, segment.min.x);
 	while (i.x < segment.max.x && i.x < settings.xmax)
 	{
 		i.y = (int)fmax(0, segment.min.y);
 		while (i.y < segment.max.y && i.y < settings.ymax)
 		{
-			if (fabs(i.y - segment.slope_coef * i.x - \
-			segment.intercept) < settings.thickness)
+			if (fabs((segment.coef.x * (i.x - coord1.x) + segment.coef.y * (i.y - coord1.y))) < fmax(fabs(segment.coef.y), fabs(segment.coef.x)))
 			{
 				put_pixel(img, i.x, i.y, pixel_color(coord1, coord2, i, segment));
 			}
@@ -75,7 +76,7 @@ t_double2D	isometric_projection(double x, double y, double z, int zmax)
 	if (z < 0.5)
 		proj.color = to_trgb(0, 255, 255, 255);
 	else
-		proj.color = to_trgb(0, 255, (int)((1. - ratio) * 204), (int)(ratio * 100));
+		proj.color = to_trgb(0, 255, 51 + (int)((1. - ratio) * 180), (int)(ratio * 150));
 	return (proj);
 }
 
