@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 20:00:43 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/11 08:34:57 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/11 14:45:26 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,12 @@ typedef struct s_map
 	int	ymax;
 	int	zmax;
 }	t_map;
+
+typedef struct s_mlx
+{
+	void	*instance;
+	void	*win;
+}	t_mlx;
 
 typedef struct s_img
 {
@@ -51,7 +57,7 @@ typedef struct s_int2D
 	int	y;
 }	t_int2D;
 
-typedef struct s_set
+typedef struct s_settings
 {
 	t_double2D	offset;
 	double		scale;
@@ -59,7 +65,7 @@ typedef struct s_set
 	int		ymax;
 	t_int2D		border;
 	double		thickness;
-}	t_set;
+}	t_settings;
 
 typedef struct s_segment
 {
@@ -80,10 +86,10 @@ void	print_map(t_map *map);
 void	put_pixel(t_img *data, int x, int y, int color);
 
 //projection
-void	map_projection(t_map *map, t_img *img, t_set settings);
+void	map_projection(t_map *map, t_img *img, t_settings settings);
 
 //segment
-void	draw_segment(t_img *img, t_double2D coord1, t_double2D coord2, t_set settings);
+void	draw_segment(t_img *img, t_double2D coord1, t_double2D coord2, t_settings settings);
 
 //color
 int	to_trgb(int t, int r, int g, int b);

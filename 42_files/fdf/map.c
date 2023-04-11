@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_the_map.c                                      :+:      :+:    :+:   */
+/*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 21:59:04 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/11 08:26:20 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/11 15:46:36 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,8 @@ char	*get_the_file(char *file_name)
 t_map	*get_the_map(int argc, char *argv[])
 {
 	t_map		*map;
-	char	*file;
-	char	***splited_file;
+	char		*file;
+	char		***splited_file;
 
 	map = (t_map *)malloc(sizeof(t_map));
 	file = get_the_file(argv[argc - 1]);
