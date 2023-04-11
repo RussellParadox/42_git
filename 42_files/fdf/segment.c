@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 08:14:36 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/11 08:26:33 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/11 10:27:26 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	pixel_color(t_double2D coord1, t_double2D coord2, t_int2D i, t_segment segme
 		return (color1);
 	ratio = hypot(i.x - coord1.x, i.y - coord1.y) / segment.dist;
 	if (color1 == 0x00FFFFFF)
-		color2 = to_trgb(0, 255, 255, 0);
+		color1 = to_trgb(0, 255, 255, 0);
 	if (color2 == 0x00FFFFFF)
 		color2 = to_trgb(0, 255, 255, 0);
 	return (to_trgb(0, 255, (int)(to_g(color1) - ratio * (to_g(color1) - to_g(color2))), (int)(to_b(color1) - ratio * (to_b(color1) - to_b(color2)))));
