@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 20:00:43 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/10 16:39:31 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/11 08:28:13 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,17 @@ typedef struct s_segment
 	double	angle;
 }	t_segment;
 
+//map
 t_map	*get_the_map(int argc, char *argv[]);
+
+//main
 void	print_map(t_map *map);
+
+//window
 void	put_pixel(t_img *data, int x, int y, int color);
 void	map_projection(t_map *map, t_img *img, t_set settings);
+
+//segment
 void	draw_segment(t_img *img, t_double2D coord1, t_double2D coord2, t_set settings);
 
 //color
