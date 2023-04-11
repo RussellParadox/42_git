@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 20:00:43 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/11 08:28:13 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/11 08:34:57 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ void	print_map(t_map *map);
 
 //window
 void	put_pixel(t_img *data, int x, int y, int color);
+
+//projection
 void	map_projection(t_map *map, t_img *img, t_set settings);
 
 //segment
