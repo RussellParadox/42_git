@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 08:14:36 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/11 15:44:04 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/12 19:29:24 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ int	pixel_color(t_double2D coord1, t_double2D coord2, t_int2D i, \
 
 	color1 = coord1.color;
 	color2 = coord2.color;
-	if (color1 == color2)
+	if (abs(to_r(color1) - to_r(color2)) < 5 || abs(to_g(color1) - \
+		to_g(color2)) < 5 || abs(to_b(color1) - to_b(color2)) < 5)
 		return (color1);
 	ratio = hypot(i.x - coord1.x, i.y - coord1.y) / segment.dist;
 	if (color1 == 0x00FFFFFF)

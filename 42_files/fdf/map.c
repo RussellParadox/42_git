@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 21:59:04 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/11 15:46:36 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/12 19:27:52 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	**load_heights(t_map *map, char ***splited_map)
 	int	j;
 
 	height = (int **)malloc((map->ymax + 1) * sizeof(int *));
-	map->zmax = 0;
 	i = 0;
 	while (i < map->ymax + 1)
 	{
@@ -30,6 +29,8 @@ int	**load_heights(t_map *map, char ***splited_map)
 			height[i][j] = ft_atoi(splited_map[i][j]);
 			if (height[i][j] > map->zmax)
 				map->zmax = height[i][j];
+			else if (height[i][j] < map->zmin)
+				map->zmin = height[i][j];
 			free(splited_map[i][j]);
 			j++;
 		}
@@ -112,6 +113,8 @@ t_map	*get_the_map(int argc, char *argv[])
 	file = get_the_file(argv[argc - 1]);
 	map->ymax = chr_count_until(file, "\n", '\0') - 1;
 	map->xmax = chr_count_until(file, "-0123456789", '\n') - 1;
+	map->zmax = 0;
+	map->zmin = 0;
 	splited_file = split_the_file(file, map->ymax + 1);
 	free(file);
 	map->height = load_heights(map, splited_file);

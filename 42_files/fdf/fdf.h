@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 20:00:43 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/11 14:45:26 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/12 18:29:52 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct s_map
 	int	xmax;
 	int	ymax;
 	int	zmax;
+	int	zmin;
 }	t_map;
 
 typedef struct s_mlx
