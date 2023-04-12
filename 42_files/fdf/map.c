@@ -6,31 +6,31 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 21:59:04 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/12 22:38:42 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/13 00:16:33 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	**load_heights(t_map *map, char ***splited_map)
+t_map	*load_heights(t_map *map, char ***splited_map)
 {
 	int	**height;
 	int	i;
 	int	j;
 
-	height = (int **)malloc((map->ymax + 1) * sizeof(int *));
+	height = (int **)malloc((map->max.y + 1) * sizeof(int *));
 	i = 0;
-	while (i < map->ymax + 1)
+	while (i < map->max.y + 1)
 	{
-		height[i] = (int *)malloc((map->xmax + 1) * sizeof(int));
+		height[i] = (int *)malloc((map->max.x + 1) * sizeof(int));
 		j = 0;
-		while (j < map->xmax + 1)
+		while (j < map->max.x + 1)
 		{
 			height[i][j] = ft_atoi(splited_map[i][j]);
-			if (height[i][j] > map->zmax)
-				map->zmax = height[i][j];
-			else if (height[i][j] < map->zmin)
-				map->zmin = height[i][j];
+			if (height[i][j] > map->apex.z)
+				map->apex = (t_int3D){.x=i, .y=j, .z=height[i][j]};
+			else if (height[i][j] < map->abyss.z)
+				map->abyss = (t_int3D){.x=i, .y=j, .z=height[i][j]};
 			free(splited_map[i][j]);
 			j++;
 		}
@@ -38,7 +38,8 @@ int	**load_heights(t_map *map, char ***splited_map)
 		i++;
 	}
 	free(splited_map);
-	return (height);
+	map->height = height;
+	return (map);
 }
 
 int	chr_count_until(char *file, char *set, char lim)
@@ -111,12 +112,12 @@ t_map	*get_the_map(int argc, char *argv[])
 
 	map = (t_map *)malloc(sizeof(t_map));
 	file = get_the_file(argv[argc - 1]);
-	map->ymax = chr_count_until(file, "\n", '\0') - 1;
-	map->xmax = chr_count_until(file, ",x-0123456789", '\n') - 1;
-	map->zmax = 0;
-	map->zmin = 0;
-	splited_file = split_the_file(file, map->ymax + 1);
+	map->max.y = chr_count_until(file, "\n", '\0') - 1;
+	map->max.x = chr_count_until(file, ",x-0123456789", '\n') - 1;
+	map->apex = (t_int3D){.x=0,.y=0,.z=0};
+	map->abyss = (t_int3D){.x=0,.y=0,.z=0};
+	splited_file = split_the_file(file, map->max.y + 1);
 	free(file);
-	map->height = load_heights(map, splited_file);
+	map = load_heights(map, splited_file);
 	return (map);
 }

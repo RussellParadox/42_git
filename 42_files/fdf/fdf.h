@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 20:00:43 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/12 18:29:52 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/13 00:14:38 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,6 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 # include <math.h>
-
-typedef struct s_map
-{
-	int	**height;
-	int	xmax;
-	int	ymax;
-	int	zmax;
-	int	zmin;
-}	t_map;
 
 typedef struct s_mlx
 {
@@ -58,12 +49,26 @@ typedef struct s_int2D
 	int	y;
 }	t_int2D;
 
+typedef struct s_int3D
+{
+	int	x;
+	int	y;
+	int	z;
+}	t_int3D;
+
+typedef struct s_map
+{
+	int	**height;
+	t_int2D	max;
+	t_int3D	apex;
+	t_int3D	abyss;
+}	t_map;
+
 typedef struct s_settings
 {
 	t_double2D	offset;
 	double		scale;
-	int		xmax;
-	int		ymax;
+	t_int2D		max;
 	t_int2D		border;
 	double		thickness;
 }	t_settings;

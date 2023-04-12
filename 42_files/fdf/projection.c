@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 05:23:00 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/12 23:02:46 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/13 00:37:46 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ t_double2D	isometric_projection(double x, double y, double z, t_map *map)
 		proj.color = to_trgb(0, 255, 255, 255);
 	else if (z >= 0.)
 	{
-		ratio = z / map->zmax;
+		ratio = z / map->apex.z;
 		proj.color = to_trgb(0, 255, 51 + (int)((1. - ratio) * 180), \
 			(int)(ratio * 150));
 	}
 	else
 	{
-		ratio = z / map->zmin;
+		ratio = z / map->abyss.z;
 		proj.color = to_trgb(0, 51, 51 + (int)((1. - ratio) * 100), \
 			100 + (int)(ratio * 150));
 	}
@@ -57,42 +57,40 @@ void	recursive_projection(t_map *map, t_img *img, t_int2D i, \
 	t_double2D	proj_from;
 	t_double2D	proj_to;
 
-	if (i.x > map->xmax || i.y > map->ymax)
+	if (i.x > map->max.x || i.y > map->max.y)
 		return ;
 	proj_from = isometric_projection(i.x, i.y, \
 		(map->height)[i.y][i.x], map);
-	if (i.x < map->xmax)
+	if (i.x < map->max.x)
 	{
 		proj_to = isometric_projection(i.x + 1, \
 			i.y, (map->height)[i.y][i.x + 1], map);
 		draw_segment(img, proj_from, proj_to, settings);
 	}
-	if (i.y < map->ymax)
+	if (i.y < map->max.y)
 	{
 		proj_to = isometric_projection(i.x, \
 			i.y + 1, (map->height)[i.y + 1][i.x], map);
 		draw_segment(img, proj_from, proj_to, settings);
 	}
-	recursive_projection(map, img, new_set(map->ymax), settings);
+	recursive_projection(map, img, new_set(map->max.y), settings);
 }
 
 void	map_projection(t_map *map, t_img *img, t_settings settings)
 {
-	t_double2D	proj_xmax;
-	t_double2D	proj_ymax;
 	t_double2D	proj_xymax;
+	t_double2D	proj_apex;
+	t_double2D	proj_abyss;
 
-	settings.border.x = settings.xmax / 15.;
-	settings.border.y = settings.ymax / 15.;
-	proj_xmax = isometric_projection(map->xmax, 0, 0, map);
-	proj_ymax = isometric_projection(0, map->ymax, 0, map);
-	proj_xymax = isometric_projection(map->xmax, map->ymax, 0, map);
-	settings.scale = fmin((double)(settings.xmax - 2 * settings.border.x) / \
-		(fabs(proj_xmax.x) + fabs(proj_ymax.x)), (double)(settings.ymax - \
-		2 * settings.border.y) / fabs(proj_xymax.y));
-	settings.offset.x = (int)(0.5 * (settings.xmax - settings.scale * \
-		proj_xymax.x));
-	settings.offset.y = (int)(0.5 * (settings.ymax - settings.scale * \
-		proj_xymax.y));
+	settings.border.x = settings.max.x / 15.;
+	settings.border.y = settings.max.y / 15.;
+	proj_xymax = isometric_projection(map->max.x, map->max.y, 0, map);
+	proj_apex = isometric_projection(map->apex.x, map->apex.y, map->apex.z, map);
+	proj_abyss = isometric_projection(map->abyss.x, map->abyss.y, map->abyss.z, map);
+	settings.scale = fmin((double)(settings.max.x - 2 * settings.border.x) / (fabs(isometric_projection(map->max.x, 0, 0, map).x) + fabs(isometric_projection(0, map->max.y, 0, map).x)), (double)(settings.max.y - 2 * settings.border.y) / (fmax(fabs(proj_xymax.y), fabs(proj_abyss.y)) + fmax(fabs(isometric_projection(0, 0, 0, map).y), fabs(proj_apex.y))));
+	settings.offset.x = (int)(0.5 * (settings.max.x - settings.scale * \
+		isometric_projection(map->max.x, map->max.y, map->apex.z, map).x));
+	settings.offset.y = (int)(0.5 * (settings.max.y - settings.scale * \
+		isometric_projection(map->max.x, map->max.y, map->apex.z, map).y));
 	recursive_projection(map, img, (t_int2D){.x = 0, .y = 0}, settings);
 }
