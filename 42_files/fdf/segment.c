@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 08:14:36 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/12 19:29:24 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/12 22:51:37 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,14 @@ int	pixel_color(t_double2D coord1, t_double2D coord2, t_int2D i, \
 
 	color1 = coord1.color;
 	color2 = coord2.color;
-	if (abs(to_r(color1) - to_r(color2)) < 5 || abs(to_g(color1) - \
-		to_g(color2)) < 5 || abs(to_b(color1) - to_b(color2)) < 5)
+	if (color1 == color2)
 		return (color1);
 	ratio = hypot(i.x - coord1.x, i.y - coord1.y) / segment.dist;
 	if (color1 == 0x00FFFFFF)
 		color1 = to_trgb(0, 255, 255, 0);
 	if (color2 == 0x00FFFFFF)
 		color2 = to_trgb(0, 255, 255, 0);
-	return (to_trgb(0, 255, (int)(to_g(color1) - ratio * (to_g(color1) - \
-		to_g(color2))), (int)(to_b(color1) - ratio * (to_b(color1) - \
-		to_b(color2)))));
+	return (to_trgb(0, (int)(to_r(color1) - ratio * (to_r(color1) - to_r(color2))), (int)(to_g(color1) - ratio * (to_g(color1) - to_g(color2))), (int)(to_b(color1) - ratio * (to_b(color1) - to_b(color2)))));
 }
 
 t_segment	segment_init(t_double2D coord1, t_double2D coord2)

@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 21:59:04 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/12 19:27:52 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/12 22:38:42 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	chr_count_until(char *file, char *set, char lim)
 		if (ft_strchr(set, file[i]))
 		{
 			chr_qt++;
-			while (ft_strchr(set, file[i]))
+			while (file[i] && ft_strchr(set, file[i]))
 				i++;
 		}
 		else
@@ -112,7 +112,7 @@ t_map	*get_the_map(int argc, char *argv[])
 	map = (t_map *)malloc(sizeof(t_map));
 	file = get_the_file(argv[argc - 1]);
 	map->ymax = chr_count_until(file, "\n", '\0') - 1;
-	map->xmax = chr_count_until(file, "-0123456789", '\n') - 1;
+	map->xmax = chr_count_until(file, ",x-0123456789", '\n') - 1;
 	map->zmax = 0;
 	map->zmin = 0;
 	splited_file = split_the_file(file, map->ymax + 1);
