@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 08:14:36 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/12 22:51:37 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/13 18:35:43 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,18 @@ int	pixel_color(t_double2D coord1, t_double2D coord2, t_int2D i, \
 	if (color1 == color2)
 		return (color1);
 	ratio = hypot(i.x - coord1.x, i.y - coord1.y) / segment.dist;
-	if (color1 == 0x00FFFFFF)
-		color1 = to_trgb(0, 255, 255, 0);
-	if (color2 == 0x00FFFFFF)
-		color2 = to_trgb(0, 255, 255, 0);
-	return (to_trgb(0, (int)(to_r(color1) - ratio * (to_r(color1) - to_r(color2))), (int)(to_g(color1) - ratio * (to_g(color1) - to_g(color2))), (int)(to_b(color1) - ratio * (to_b(color1) - to_b(color2)))));
+	if (segment.color_profile)
+	{	
+		if (color1 == 0x00FFFFFF)
+			color1 = to_trgb(0, 255, 255, 0);
+		if (color2 == 0x00FFFFFF)
+			color2 = to_trgb(0, 255, 255, 0);
+		return (to_trgb(0, (int)(to_r(color1) - ratio * (to_r(color1) - to_r(color2))), (int)(to_g(color1) - ratio * (to_g(color1) - to_g(color2))), (int)(to_b(color1) - ratio * (to_b(color1) - to_b(color2)))));
+	}
+	return (color1);
 }
 
-t_segment	segment_init(t_double2D coord1, t_double2D coord2)
+t_segment	segment_init(t_double2D coord1, t_double2D coord2, int color_profile)
 {
 	t_segment	segment;
 
@@ -42,6 +46,7 @@ t_segment	segment_init(t_double2D coord1, t_double2D coord2)
 	segment.max.y = (int)ceil(fmax(coord1.y, coord2.y));
 	segment.min.y = (int)ceil(fmin(coord1.y, coord2.y));
 	segment.dist = hypot(coord1.x - coord2.x, coord1.y - coord2.y);
+	segment.color_profile = color_profile;
 	return (segment);
 }
 
@@ -55,12 +60,12 @@ void	draw_segment(t_img *img, t_double2D coord1, t_double2D coord2, \
 	coord1.y = coord1.y * settings.scale + settings.offset.y;
 	coord2.x = coord2.x * settings.scale + settings.offset.x;
 	coord2.y = coord2.y * settings.scale + settings.offset.y;
-	segment = segment_init(coord1, coord2);
+	segment = segment_init(coord1, coord2, settings.color_profile);
 	i.x = (int)fmax(0, segment.min.x);
-	while (i.x < segment.max.x && i.x < settings.xmax)
+	while (i.x < segment.max.x && i.x < settings.max.x)
 	{
 		i.y = (int)fmax(0, segment.min.y);
-		while (i.y < segment.max.y && i.y < settings.ymax)
+		while (i.y < segment.max.y && i.y < settings.max.y)
 		{
 			if (fabs((segment.coef.x * (i.x - coord1.x) + \
 				segment.coef.y * (i.y - coord1.y))) < settings.thickness \

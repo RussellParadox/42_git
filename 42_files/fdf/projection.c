@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 05:23:00 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/13 00:37:46 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/13 17:13:08 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,25 @@ t_double2D	isometric_projection(double x, double y, double z, t_map *map)
 	proj.x = x * (1. / sqrt(2.)) + y * (-1. / sqrt(2.)) + z * (0.);
 	proj.y = x * (1. / sqrt(6.)) + y * (1 / sqrt(6.)) + z * (-sqrt(2. / \
 		3.));
-	if (fabs(z) < 0.1)
-		proj.color = to_trgb(0, 255, 255, 255);
-	else if (z >= 0.)
+	if (map->color_profile)
 	{
-		ratio = z / map->apex.z;
-		proj.color = to_trgb(0, 255, 51 + (int)((1. - ratio) * 180), \
-			(int)(ratio * 150));
+		if (fabs(z) < 0.1)
+			proj.color = 0x00FFFFFF;
+		else if (z >= 0.)
+		{
+			ratio = z / map->apex.z;
+			proj.color = to_trgb(0, 255, 51 + (int)((1. - ratio) * 180), \
+				(int)(ratio * 150));
+		}
+		else
+		{
+			ratio = z / map->abyss.z;
+			proj.color = to_trgb(0, 51, 51 + (int)((1. - ratio) * 100), \
+				100 + (int)(ratio * 150));
+		}
 	}
-	else
-	{
-		ratio = z / map->abyss.z;
-		proj.color = to_trgb(0, 51, 51 + (int)((1. - ratio) * 100), \
-			100 + (int)(ratio * 150));
-	}
+	else if (map->color[(int)y][(int)x] == -1)
+		proj.color = 0x00FFFFFF;
 	return (proj);
 }
 

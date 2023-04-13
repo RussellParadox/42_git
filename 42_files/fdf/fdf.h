@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 20:00:43 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/13 00:14:38 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/13 18:24:22 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ typedef struct s_int3D
 typedef struct s_map
 {
 	int	**height;
+	int	**color;
+	int	color_profile;
 	t_int2D	max;
 	t_int3D	apex;
 	t_int3D	abyss;
@@ -71,6 +73,7 @@ typedef struct s_settings
 	t_int2D		max;
 	t_int2D		border;
 	double		thickness;
+	int		color_profile;
 }	t_settings;
 
 typedef struct s_segment
@@ -80,6 +83,7 @@ typedef struct s_segment
 	t_int2D	min;
 	double	dist;
 	double	angle;
+	int	color_profile;
 }	t_segment;
 
 //map

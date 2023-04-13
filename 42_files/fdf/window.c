@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 04:58:56 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/13 00:10:18 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/13 18:23:35 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	print_map(t_map *map)
 	settings.max.x = 1920;
 	settings.max.y = 1080;
 	settings.thickness = 1.0;
+	settings.color_profile = map->color_profile;
 	mlx.win = mlx_new_window(mlx.instance, settings.max.x, settings.max.y, "fdf");
 	img.img = mlx_new_image(mlx.instance, settings.max.x, settings.max.y);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, \

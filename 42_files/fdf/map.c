@@ -6,31 +6,61 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 21:59:04 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/13 00:16:33 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/13 17:42:17 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
+int	get_map_color(char *cptr)
+{
+	char	*comma_occ;
+	int	exponent;
+	int	color;
+
+	comma_occ = ft_strchr(cptr, ',');
+	if (comma_occ == NULL)
+		return (-1);
+	comma_occ = ft_strchr(comma_occ, '\0');
+	comma_occ--;
+	color = 0;
+	exponent = 0;
+	while (*comma_occ != 'x')
+	{
+		if (!ft_isdigit(*comma_occ))
+			color += (*comma_occ - 'A' + 10) * pow(16, exponent);
+		else
+			color += (*comma_occ - '0') * pow(16, exponent);
+		comma_occ--;
+		exponent++;
+	}
+	return (color);
+}
+
 t_map	*load_heights(t_map *map, char ***splited_map)
 {
-	int	**height;
 	int	i;
 	int	j;
 
-	height = (int **)malloc((map->max.y + 1) * sizeof(int *));
+	map->height = (int **)malloc((map->max.y + 1) * sizeof(int *));
+	map->color = (int **)malloc((map->max.y + 1) * sizeof(int *));
+	map->color_profile = 1;
 	i = 0;
 	while (i < map->max.y + 1)
 	{
-		height[i] = (int *)malloc((map->max.x + 1) * sizeof(int));
+		map->height[i] = (int *)malloc((map->max.x + 1) * sizeof(int));
+		map->color[i] = (int *)malloc((map->max.x + 1) * sizeof(int));
 		j = 0;
 		while (j < map->max.x + 1)
 		{
-			height[i][j] = ft_atoi(splited_map[i][j]);
-			if (height[i][j] > map->apex.z)
-				map->apex = (t_int3D){.x=i, .y=j, .z=height[i][j]};
-			else if (height[i][j] < map->abyss.z)
-				map->abyss = (t_int3D){.x=i, .y=j, .z=height[i][j]};
+			map->height[i][j] = ft_atoi(splited_map[i][j]);
+			map->color[i][j] = get_map_color(splited_map[i][j]);
+			if (map->color[i][j] != -1)
+				map->color_profile = 0;
+			if (map->height[i][j] > map->apex.z)
+				map->apex = (t_int3D){.x=i, .y=j, .z=map->height[i][j]};
+			else if (map->height[i][j] < map->abyss.z)
+				map->abyss = (t_int3D){.x=i, .y=j, .z=map->height[i][j]};
 			free(splited_map[i][j]);
 			j++;
 		}
@@ -38,7 +68,6 @@ t_map	*load_heights(t_map *map, char ***splited_map)
 		i++;
 	}
 	free(splited_map);
-	map->height = height;
 	return (map);
 }
 
