@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 05:23:00 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/14 19:48:42 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/15 00:45:27 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,8 +121,6 @@ void	map_projection(t_map *map, t_img *img, t_settings settings)
 	t_double2D	proj_apex;
 	t_double2D	proj_abyss;
 
-	settings.border.x = settings.max.x / 15.;
-	settings.border.y = settings.max.y / 15.;
 	proj_xymax = isometric_projection(map->max.x, map->max.y, 0, map);
 	proj_apex = isometric_projection(map->apex.x, map->apex.y, map->apex.z, map);
 	proj_abyss = isometric_projection(map->abyss.x, map->abyss.y, map->abyss.z, map);

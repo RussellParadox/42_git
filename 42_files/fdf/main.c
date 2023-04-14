@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 18:21:24 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/11 22:52:33 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/14 22:55:20 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,4 +18,6 @@ int	main(int argc, char *argv[])
 
 	map = get_the_map(argc, argv);
 	print_map(map);
+	free_map(map);
+	return (0);
 }

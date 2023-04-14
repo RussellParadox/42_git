@@ -6,11 +6,27 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 21:59:04 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/13 17:42:17 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/14 23:22:31 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+void	free_map(t_map *map)
+{
+	int	i;
+
+	i = 0;
+	while (i <= map->max.y)
+	{
+		free(map->height[i]);
+		free(map->color[i]);
+		i++;
+	}
+	free(map->height);
+	free(map->color);
+	free(map);
+}
 
 int	get_map_color(char *cptr)
 {

@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 20:00:43 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/14 18:03:18 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/15 01:05:08 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,14 +85,20 @@ typedef struct s_segment
 	int	color_profile;
 }	t_segment;
 
+typedef struct s_param
+{
+	t_mlx	*mlx;
+	t_map	*map;
+	t_settings	*settings;
+}	t_param;
+
 //map
 t_map	*get_the_map(int argc, char *argv[]);
-
-//main
-void	print_map(t_map *map);
+void	free_map(t_map *map);
 
 //window
 void	put_pixel(t_img *data, int x, int y, int color);
+int	print_map(t_map *map);
 
 //projection
 void	map_projection(t_map *map, t_img *img, t_settings settings);
