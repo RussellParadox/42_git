@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 05:23:00 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/13 17:13:08 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/14 19:48:42 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_double2D	isometric_projection(double x, double y, double z, t_map *map)
 	if (map->color_profile)
 	{
 		if (fabs(z) < 0.1)
-			proj.color = 0x00FFFFFF;
+			proj.color = to_trgb(0, 255, 255, 255);
 		else if (z >= 0.)
 		{
 			ratio = z / map->apex.z;
@@ -38,7 +38,9 @@ t_double2D	isometric_projection(double x, double y, double z, t_map *map)
 		}
 	}
 	else if (map->color[(int)y][(int)x] == -1)
-		proj.color = 0x00FFFFFF;
+		proj.color = to_trgb(0, 255, 255, 255);
+	else
+		proj.color = map->color[(int)y][(int)x];
 	return (proj);
 }
 
@@ -81,6 +83,38 @@ void	recursive_projection(t_map *map, t_img *img, t_int2D i, \
 	recursive_projection(map, img, new_set(map->max.y), settings);
 }
 
+void	iterative_projection(t_map *map, t_img *img, t_settings settings)
+{
+	t_double2D	proj_from;
+	t_double2D	proj_to;
+	t_int2D		i;
+
+	i.y = 0;
+	while (i.y <= map->max.y)
+	{
+		i.x = 0;
+		while (i.x <= map->max.x)
+		{
+			proj_from = isometric_projection(i.x, i.y, \
+				(map->height)[i.y][i.x], map);
+			if (i.x < map->max.x)
+			{
+				proj_to = isometric_projection(i.x + 1, \
+					i.y, (map->height)[i.y][i.x + 1], map);
+				draw_segment(img, proj_from, proj_to, settings);
+			}
+			if (i.y < map->max.y)
+			{
+				proj_to = isometric_projection(i.x, \
+					i.y + 1, (map->height)[i.y + 1][i.x], map);
+				draw_segment(img, proj_from, proj_to, settings);
+			}
+			(i.x)++;
+		}
+		(i.y)++;
+	}
+}
+
 void	map_projection(t_map *map, t_img *img, t_settings settings)
 {
 	t_double2D	proj_xymax;
@@ -97,5 +131,6 @@ void	map_projection(t_map *map, t_img *img, t_settings settings)
 		isometric_projection(map->max.x, map->max.y, map->apex.z, map).x));
 	settings.offset.y = (int)(0.5 * (settings.max.y - settings.scale * \
 		isometric_projection(map->max.x, map->max.y, map->apex.z, map).y));
-	recursive_projection(map, img, (t_int2D){.x = 0, .y = 0}, settings);
+	//recursive_projection(map, img, (t_int2D){.x = 0, .y = 0}, settings);
+	iterative_projection(map, img, settings);
 }

@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 20:00:43 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/13 18:24:22 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/14 18:03:18 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ typedef struct s_segment
 	t_int2D	max;
 	t_int2D	min;
 	double	dist;
-	double	angle;
 	int	color_profile;
 }	t_segment;
 
