@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 05:23:00 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/15 00:45:27 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/15 01:27:12 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,18 +117,6 @@ void	iterative_projection(t_map *map, t_img *img, t_settings settings)
 
 void	map_projection(t_map *map, t_img *img, t_settings settings)
 {
-	t_double2D	proj_xymax;
-	t_double2D	proj_apex;
-	t_double2D	proj_abyss;
-
-	proj_xymax = isometric_projection(map->max.x, map->max.y, 0, map);
-	proj_apex = isometric_projection(map->apex.x, map->apex.y, map->apex.z, map);
-	proj_abyss = isometric_projection(map->abyss.x, map->abyss.y, map->abyss.z, map);
-	settings.scale = fmin((double)(settings.max.x - 2 * settings.border.x) / (fabs(isometric_projection(map->max.x, 0, 0, map).x) + fabs(isometric_projection(0, map->max.y, 0, map).x)), (double)(settings.max.y - 2 * settings.border.y) / (fmax(fabs(proj_xymax.y), fabs(proj_abyss.y)) + fmax(fabs(isometric_projection(0, 0, 0, map).y), fabs(proj_apex.y))));
-	settings.offset.x = (int)(0.5 * (settings.max.x - settings.scale * \
-		isometric_projection(map->max.x, map->max.y, map->apex.z, map).x));
-	settings.offset.y = (int)(0.5 * (settings.max.y - settings.scale * \
-		isometric_projection(map->max.x, map->max.y, map->apex.z, map).y));
 	//recursive_projection(map, img, (t_int2D){.x = 0, .y = 0}, settings);
 	iterative_projection(map, img, settings);
 }
