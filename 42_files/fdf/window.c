@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 04:58:56 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/15 01:40:42 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/15 02:33:19 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int	key_hook(int keycode, t_mlx *mlx)
 
 int	mouse_hook(int button, int x, int y, t_param *param)
 {
-	ft_printf("x=%d, y=%d\n", x, y);
 	if (button == 4)
 	{
 		param->settings->scale = param->settings->scale + 0.2;
@@ -51,6 +50,33 @@ int	mouse_hook(int button, int x, int y, t_param *param)
 		param->settings->scale = fmax(0., param->settings->scale - 0.2);
 		put_map_to_window(param->map, param->mlx, *(param->settings));
 	}
+	return (0);
+}
+
+int	mouse_move(int x, int y, t_param *param)
+{
+	static int	prev_x = WIN_X / 2;
+	static int	prev_y = WIN_Y / 2;
+	int		xdiff;
+	int		ydiff;
+
+	ft_printf("x=%d, y=%d\n", x, y);
+	xdiff = prev_x - x;
+	ydiff = prev_y - y;
+	if (abs(xdiff) > 3 || abs(ydiff) > 3)
+	{
+		if (xdiff < -3)
+			param->settings->offset.x += 5.;
+		else if (xdiff > 3)
+			param->settings->offset.x -= 5.;
+		if (ydiff < -3)
+			param->settings->offset.y += 5.;
+		else if (ydiff > 3)
+			param->settings->offset.y -= 5.;
+		put_map_to_window(param->map, param->mlx, *(param->settings));
+	}
+	prev_x = x;
+	prev_y = y;
 	return (0);
 }
 
@@ -116,12 +142,13 @@ int	print_map(t_map *map)
 	t_param		*hook_param;
 
 	hook_param = (t_param *)malloc(sizeof(t_param));
-	hook_param->settings = settings_init((t_double2D){.x=1920, .y=1080}, 1.0, map);
+	hook_param->settings = settings_init((t_double2D){.x=WIN_X, .y=WIN_Y}, 1.0, map);
 	hook_param->mlx = init_mlx(hook_param->settings);
 	hook_param->map = map;
 	put_map_to_window(map, hook_param->mlx, *(hook_param->settings));
 	mlx_key_hook(hook_param->mlx->win, key_hook, hook_param->mlx);
 	mlx_mouse_hook(hook_param->mlx->win, mouse_hook, hook_param);
+	mlx_hook(hook_param->mlx->win, 6, (1L<<8), mouse_move, hook_param);
 	mlx_hook(hook_param->mlx->win, 17, 0L, destroy_hook, hook_param->mlx);
 	mlx_loop(hook_param->mlx->instance);
 	free_param(hook_param);

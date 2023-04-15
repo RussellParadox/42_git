@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 20:00:43 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/15 01:28:16 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/15 02:12:02 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 # include <math.h>
+# define WIN_X 1920
+# define WIN_Y 1080
 
 typedef struct s_mlx
 {
