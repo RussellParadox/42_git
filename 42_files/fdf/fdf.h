@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 20:00:43 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/15 02:12:02 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/15 13:43:59 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ typedef struct s_settings
 	t_int2D		border;
 	double		thickness;
 	int		color_profile;
+	t_double2D	cursor_to_map;
 }	t_settings;
 
 typedef struct s_segment

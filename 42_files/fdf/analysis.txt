@@ -1,0 +1,33 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  ms/call  ms/call  name    
+ 67.90      7.27     7.27   378300     0.02     0.03  draw_segment
+ 16.53      9.04     1.77 92740436     0.00     0.00  pixel_color
+ 11.21     10.24     1.20 92740436     0.00     0.00  put_pixel
+  1.07     10.36     0.12 207564813     0.00     0.00  to_g
+  1.03     10.47     0.11 207564813     0.00     0.00  to_r
+  0.75     10.55     0.08 138958625     0.00     0.00  to_trgb
+  0.70     10.62     0.08 207564813     0.00     0.00  to_b
+  0.28     10.65     0.03                             _init
+  0.28     10.68     0.03      975     0.03    10.94  iterative_projection
+  0.19     10.70     0.02                             to_t
+  0.09     10.71     0.01   582083     0.00     0.00  isometric_projection
+  0.00     10.71     0.00   378300     0.00     0.00  segment_init
+  0.00     10.71     0.00      975     0.00    10.94  map_projection
+  0.00     10.71     0.00      975     0.00    10.94  put_map_to_window
+  0.00     10.71     0.00      681     0.00    10.94  translation_hook
+  0.00     10.71     0.00      308     0.00    10.40  mouse_hook
+  0.00     10.71     0.00      209     0.00     0.00  get_map_color
+  0.00     10.71     0.00        2     0.00     0.00  chr_count_until
+  0.00     10.71     0.00        1     0.00     0.00  destroy_hook
+  0.00     10.71     0.00        1     0.00     0.00  free_map
+  0.00     10.71     0.00        1     0.00     0.00  free_param
+  0.00     10.71     0.00        1     0.00     0.00  get_the_file
+  0.00     10.71     0.00        1     0.00     0.00  get_the_map
+  0.00     10.71     0.00        1     0.00     0.00  init_mlx
+  0.00     10.71     0.00        1     0.00     0.00  load_heights
+  0.00     10.71     0.00        1     0.00    10.94  print_map
+  0.00     10.71     0.00        1     0.00     0.00  settings_init
+  0.00     10.71     0.00        1     0.00     0.00  split_the_file
