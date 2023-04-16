@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 05:23:00 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/15 01:27:12 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/16 03:09:22 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,13 +101,15 @@ void	iterative_projection(t_map *map, t_img *img, t_settings settings)
 			{
 				proj_to = isometric_projection(i.x + 1, \
 					i.y, (map->height)[i.y][i.x + 1], map);
-				draw_segment(img, proj_from, proj_to, settings);
+				//draw_segment(img, proj_from, proj_to, settings);
+				bresenham_segment(img, double_to_int2D(proj_from, settings), double_to_int2D(proj_to, settings), settings);
 			}
 			if (i.y < map->max.y)
 			{
 				proj_to = isometric_projection(i.x, \
 					i.y + 1, (map->height)[i.y + 1][i.x], map);
-				draw_segment(img, proj_from, proj_to, settings);
+				//draw_segment(img, proj_from, proj_to, settings);
+				bresenham_segment(img, double_to_int2D(proj_from, settings), double_to_int2D(proj_to, settings), settings);
 			}
 			(i.x)++;
 		}

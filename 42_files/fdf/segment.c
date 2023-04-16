@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 08:14:36 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/14 19:15:35 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/16 03:23:18 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,42 @@ void	draw_segment(t_img *img, t_double2D coord1, t_double2D coord2, \
 			(i.y)++;
 		}
 		(i.x)++;
+	}
+}
+
+t_int2D	double_to_int2D(t_double2D double_coord, t_settings settings)
+{
+	t_int2D	int_coord;
+
+	double_coord.x = double_coord.x * settings.scale + settings.offset.x;
+	double_coord.y = double_coord.y * settings.scale + settings.offset.y;
+	int_coord.x = (int)(double_coord.x);
+	int_coord.y = (int)(double_coord.y);
+	return (int_coord);
+}
+
+void	bresenham_segment(t_img *img, t_int2D coord1, t_int2D coord2, t_settings settings)
+{
+	t_int2D		pixel;
+	t_int2D		diff;
+	int		error;
+	t_int2D		increment;
+
+	diff.y = coord2.y - coord1.y;
+	diff.x = coord2.x - coord1.x;
+	pixel.y = coord1.y;
+	pixel.x = coord1.x;
+	increment.x = diff.y * 2;
+	increment.y = -diff.x * 2;
+	while (pixel.x <= coord2.x)
+	{
+		put_pixel(img, pixel.x, pixel.y, 0x00FFFFFF);
+		error += increment.x;
+		if (error <= 0)
+		{
+			pixel.y++;
+			error += increment.y;
+		}
+		pixel.x++;
 	}
 }

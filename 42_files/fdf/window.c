@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 04:58:56 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/15 15:11:52 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/16 00:19:33 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,14 @@ int	mouse_hook(int button, int x, int y, t_param *param)
 	return (0);
 }
 
-int	translation_hook(int x, int y, t_param *param)
+int	mouse_translation(int x, int y, t_param *param)
 {
-	param->settings->offset.x = x + param->settings->cursor_to_map.x;
-	param->settings->offset.y = y + param->settings->cursor_to_map.y;
-	put_map_to_window(param);
+	if (hypot(x - param->settings->offset.x, y - param->settings->offset.y) > 10.)
+	{
+		param->settings->offset.x = x + param->settings->cursor_to_map.x;
+		param->settings->offset.y = y + param->settings->cursor_to_map.y;
+		put_map_to_window(param);
+	}
 	return (0);
 }
 
@@ -129,7 +132,7 @@ int	print_map(t_map *map)
 	put_map_to_window(param);
 	mlx_key_hook(param->mlx->win, key_hook, param->mlx);
 	mlx_mouse_hook(param->mlx->win, mouse_hook, param);
-	mlx_hook(param->mlx->win, 6, (1L<<8), translation_hook, param);
+	mlx_hook(param->mlx->win, 6, (1L<<8), mouse_translation, param);
 	mlx_hook(param->mlx->win, 17, 0L, destroy_hook, param->mlx);
 	mlx_loop(param->mlx->instance);
 	free_param(param);
