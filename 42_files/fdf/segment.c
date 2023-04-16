@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 08:14:36 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/16 03:23:18 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/16 19:52:27 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,33 +85,93 @@ t_int2D	double_to_int2D(t_double2D double_coord, t_settings settings)
 
 	double_coord.x = double_coord.x * settings.scale + settings.offset.x;
 	double_coord.y = double_coord.y * settings.scale + settings.offset.y;
-	int_coord.x = (int)(double_coord.x);
-	int_coord.y = (int)(double_coord.y);
+	int_coord.x = (int)round(double_coord.x);
+	int_coord.y = (int)round(double_coord.y);
 	return (int_coord);
+}
+
+//slope coef belong to [-1, 1] for positive quadrant
+//diff = difference
+void	low_segment(t_img *img, t_int2D coord1, t_int2D coord2, t_settings settings)
+{
+	t_int2D	pixel;
+	t_int2D	diff;
+	int	mid_point_diff;
+	int	y_increment;
+
+	diff.x = coord2.x - coord1.x;
+	diff.y = coord2.y - coord1.y;
+	y_increment = 1;
+	if (diff.y < 0)
+	{
+		y_increment = -1;
+		diff.y = -diff.y;
+	}
+	mid_point_diff = 2 * diff.y - diff.x;
+	pixel.y = coord1.y;
+	pixel.x = coord1.x;
+	while (pixel.x <= coord2.x)
+	{
+		put_pixel(img, pixel.x, pixel.y, 0x00FFFFFF);
+		if (mid_point_diff)
+		{
+			pixel.y += y_increment;
+			mid_point_diff += 2 * (diff.y - diff.x);
+		}
+		else
+			mid_point_diff += 2 * diff.y;
+		pixel.x++;
+	}
+}
+
+//slope coef belong to ]-inf, -1[ U ]1, +inf[ for positive quadrant
+//diff = difference
+void	high_segment(t_img *img, t_int2D coord1, t_int2D coord2, t_settings settings)
+{
+	t_int2D	pixel;
+	t_int2D	diff;
+	int	mid_point_diff;
+	int	x_increment;
+
+	diff.x = coord2.x - coord1.x;
+	diff.y = coord2.y - coord1.y;
+	x_increment = 1;
+	if (diff.x < 0)
+	{
+		x_increment = -1;
+		diff.y = -diff.y;
+	}
+	mid_point_diff = 2 * diff.x - diff.y;
+	pixel.x = coord1.x;
+	pixel.y = coord1.y;
+	while (pixel.y <= coord2.y)
+	{
+		put_pixel(img, pixel.x, pixel.y, 0x00FFFFFF);
+		if (mid_point_diff)
+		{
+			pixel.x += x_increment;
+			mid_point_diff += 2 * (diff.x - diff.y);
+		}
+		else
+			mid_point_diff += 2 * diff.x;
+		pixel.y++;
+	}
 }
 
 void	bresenham_segment(t_img *img, t_int2D coord1, t_int2D coord2, t_settings settings)
 {
-	t_int2D		pixel;
-	t_int2D		diff;
-	int		error;
-	t_int2D		increment;
-
-	diff.y = coord2.y - coord1.y;
-	diff.x = coord2.x - coord1.x;
-	pixel.y = coord1.y;
-	pixel.x = coord1.x;
-	increment.x = diff.y * 2;
-	increment.y = -diff.x * 2;
-	while (pixel.x <= coord2.x)
+	if (abs(coord1.y - coord2.y) < abs(coord1.x - coord2.x))
 	{
-		put_pixel(img, pixel.x, pixel.y, 0x00FFFFFF);
-		error += increment.x;
-		if (error <= 0)
-		{
-			pixel.y++;
-			error += increment.y;
-		}
-		pixel.x++;
+		if (coord1.x > coord2.x)
+			low_segment(img, coord2, coord1, settings);
+		else
+			low_segment(img, coord1, coord2, settings);
+	}
+	else
+	{
+		if (coord1.y > coord2.y)
+			low_segment(img, coord2, coord1, settings);
+		else
+			low_segment(img, coord1, coord2, settings);
 	}
 }
