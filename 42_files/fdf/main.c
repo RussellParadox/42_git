@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 18:21:24 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/16 02:34:24 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/16 21:11:01 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,93 @@ int	main(int argc, char *argv[])
 	free_map(map);
 	return (0);
 }
-
 /*
+//slope coef belong to [-1, 1] for positive quadrant
+//diff = difference
+void	low_segment(t_img *img, t_int2D coord1, t_int2D coord2)
+{
+	t_int2D	pixel;
+	t_int2D	diff;
+	int	mid_point_diff;
+	int	y_increment;
+
+	diff.x = coord2.x - coord1.x;
+	diff.y = coord2.y - coord1.y;
+	y_increment = 1;
+	if (diff.y < 0)
+	{
+		y_increment = -1;
+		diff.y = -diff.y;
+	}
+	mid_point_diff = 2 * diff.y - diff.x;
+	pixel.y = coord1.y;
+	pixel.x = coord1.x;
+	while (pixel.x <= coord2.x)
+	{
+		put_pixel(img, pixel.x, pixel.y, 0x00FFFFFF);
+		if (mid_point_diff > 0)
+		{
+			pixel.y += y_increment;
+			mid_point_diff += 2 * (diff.y - diff.x);
+		}
+		else
+			mid_point_diff += 2 * diff.y;
+		pixel.x++;
+	}
+}
+
+//slope coef belong to ]-inf, -1[ U ]1, +inf[ for positive quadrant
+//diff = difference
+void	high_segment(t_img *img, t_int2D coord1, t_int2D coord2)
+{
+	t_int2D	pixel;
+	t_int2D	diff;
+	int	mid_point_diff;
+	int	x_increment;
+
+	diff.x = coord2.x - coord1.x;
+	diff.y = coord2.y - coord1.y;
+	x_increment = 1;
+	if (diff.x < 0)
+	{
+		x_increment = -1;
+		diff.y = -diff.y;
+	}
+	mid_point_diff = 2 * diff.x - diff.y;
+	pixel.x = coord1.x;
+	pixel.y = coord1.y;
+	while (pixel.y <= coord2.y)
+	{
+		put_pixel(img, pixel.x, pixel.y, 0x00FFFFFF);
+		if (mid_point_diff > 0)
+		{
+			pixel.x += x_increment;
+			mid_point_diff += 2 * (diff.x - diff.y);
+		}
+		else
+			mid_point_diff += 2 * diff.x;
+		pixel.y++;
+	}
+}
+
+void	bresenham_segment(t_img *img, t_int2D coord1, t_int2D coord2)
+{
+	if (abs(coord1.y - coord2.y) < abs(coord1.x - coord2.x))
+	{
+		if (coord1.x > coord2.x)
+			low_segment(img, coord2, coord1);
+		else
+			low_segment(img, coord1, coord2);
+	}
+	else
+	{
+		if (coord1.y > coord2.y)
+			high_segment(img, coord2, coord1);
+		else
+			high_segment(img, coord1, coord2);
+	}
+}
+
 void	draw_circle(t_img *img, t_int2D center, int radius, int color)
 {
 	t_int2D	i;
@@ -56,7 +141,8 @@ int	render_next_frame(t_mlx *mlx)
 
 	img.img = mlx_new_image(mlx->instance, 1920, 1080);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
-	draw_circle(&img, (t_int2D){WIN_X / 2, WIN_Y / 2}, 300, color);
+	//draw_circle(&img, (t_int2D){WIN_X / 2, WIN_Y / 2}, 300, color);
+	bresenham_segment(&img, (t_int2D){50,50}, (t_int2D){300,400});
 	mlx_put_image_to_window(mlx->instance, mlx->win, img.img, 0, 0);
 	mlx_destroy_image(mlx->instance, img.img);
 	if (color == 0x00FF0000)

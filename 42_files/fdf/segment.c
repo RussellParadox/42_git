@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 08:14:36 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/16 19:52:27 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/16 21:10:48 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ void	low_segment(t_img *img, t_int2D coord1, t_int2D coord2, t_settings settings
 	while (pixel.x <= coord2.x)
 	{
 		put_pixel(img, pixel.x, pixel.y, 0x00FFFFFF);
-		if (mid_point_diff)
+		if (mid_point_diff > 0)
 		{
 			pixel.y += y_increment;
 			mid_point_diff += 2 * (diff.y - diff.x);
@@ -147,7 +147,7 @@ void	high_segment(t_img *img, t_int2D coord1, t_int2D coord2, t_settings setting
 	while (pixel.y <= coord2.y)
 	{
 		put_pixel(img, pixel.x, pixel.y, 0x00FFFFFF);
-		if (mid_point_diff)
+		if (mid_point_diff > 0)
 		{
 			pixel.x += x_increment;
 			mid_point_diff += 2 * (diff.x - diff.y);
@@ -170,8 +170,8 @@ void	bresenham_segment(t_img *img, t_int2D coord1, t_int2D coord2, t_settings se
 	else
 	{
 		if (coord1.y > coord2.y)
-			low_segment(img, coord2, coord1, settings);
+			high_segment(img, coord2, coord1, settings);
 		else
-			low_segment(img, coord1, coord2, settings);
+			high_segment(img, coord1, coord2, settings);
 	}
 }

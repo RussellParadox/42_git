@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 20:00:43 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/16 03:13:00 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/16 20:08:36 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void	map_projection(t_map *map, t_img *img, t_settings settings);
 //segment
 void	draw_segment(t_img *img, t_double2D coord1, t_double2D coord2, t_settings settings);
 t_int2D	double_to_int2D(t_double2D double_coord, t_settings settings);
-void	bresenham_segment(t_img *img, t_int2D coord1, t_int2D coord2, t_settings settings);
+//void	bresenham_segment(t_img *img, t_int2D coord1, t_int2D coord2, t_settings settings);
 
 //color
 int	to_trgb(int t, int r, int g, int b);
