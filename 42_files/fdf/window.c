@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 04:58:56 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/16 00:19:33 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/17 02:12:46 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,9 @@ int	mouse_hook(int button, int x, int y, t_param *param)
 
 int	mouse_translation(int x, int y, t_param *param)
 {
-	if (hypot(x - param->settings->offset.x, y - param->settings->offset.y) > 10.)
-	{
-		param->settings->offset.x = x + param->settings->cursor_to_map.x;
-		param->settings->offset.y = y + param->settings->cursor_to_map.y;
-		put_map_to_window(param);
-	}
+	param->settings->offset.x = x + param->settings->cursor_to_map.x;
+	param->settings->offset.y = y + param->settings->cursor_to_map.y;
+	put_map_to_window(param);
 	return (0);
 }
 
@@ -91,9 +88,9 @@ t_mlx	*init_mlx(t_settings *settings)
 t_settings	*settings_init(t_double2D max, double thickness, t_map *map)
 {
 	t_settings	*settings;
-	t_double2D	proj_xymax;
-	t_double2D	proj_apex;
-	t_double2D	proj_abyss;
+	t_int2D	proj_xymax;
+	t_int2D	proj_apex;
+	t_int2D	proj_abyss;
 
 	settings = (t_settings *)malloc(sizeof(t_settings));
 	settings->max.x = max.x;
@@ -102,14 +99,14 @@ t_settings	*settings_init(t_double2D max, double thickness, t_map *map)
 	settings->border.y = settings->max.y / 15.;
 	settings->thickness = thickness;
 	settings->color_profile = map->color_profile;
-	proj_xymax = isometric_projection(map->max.x, map->max.y, 0, map);
-	proj_apex = isometric_projection(map->apex.x, map->apex.y, map->apex.z, map);
-	proj_abyss = isometric_projection(map->abyss.x, map->abyss.y, map->abyss.z, map);
-	settings->scale = fmin((double)(settings->max.x - 2 * settings->border.x) / (fabs(isometric_projection(map->max.x, 0, 0, map).x) + fabs(isometric_projection(0, map->max.y, 0, map).x)), (double)(settings->max.y - 2 * settings->border.y) / (fmax(fabs(proj_xymax.y), fabs(proj_abyss.y)) + fmax(fabs(isometric_projection(0, 0, 0, map).y), fabs(proj_apex.y))));
+	proj_xymax = isometric_projection((t_int3D){map->max.x, map->max.y, 0}, map);
+	proj_apex = isometric_projection((t_int3D){map->apex.x, map->apex.y, map->apex.z}, map);
+	proj_abyss = isometric_projection((t_int3D){map->abyss.x, map->abyss.y, map->abyss.z}, map);
+	settings->scale = fmin((double)(settings->max.x - 2 * settings->border.x) / (abs(isometric_projection((t_int3D){map->max.x, 0, 0}, map).x) + abs(isometric_projection((t_int3D){0, map->max.y, 0}, map).x)), (double)(settings->max.y - 2 * settings->border.y) / (fmax(abs(proj_xymax.y), abs(proj_abyss.y)) + fmax(abs(isometric_projection((t_int3D){0, 0, 0}, map).y), abs(proj_apex.y))));
 	settings->offset.x = 0.5 * (settings->max.x - settings->scale * \
-		isometric_projection(map->max.x, map->max.y, map->apex.z, map).x);
+		isometric_projection((t_int3D){map->max.x, map->max.y, map->apex.z}, map).x);
 	settings->offset.y = 0.5 * (settings->max.y - settings->scale * \
-		isometric_projection(map->max.x, map->max.y, map->apex.z, map).y);
+		isometric_projection((t_int3D){map->max.x, map->max.y, map->apex.z}, map).y);
 	return (settings);
 }
 

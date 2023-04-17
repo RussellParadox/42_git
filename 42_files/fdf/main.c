@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 18:21:24 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/16 21:11:01 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/17 01:29:14 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,18 @@ void	low_segment(t_img *img, t_int2D coord1, t_int2D coord2)
 	t_int2D	diff;
 	int	mid_point_diff;
 	int	y_increment;
+	int	diff_sign;
 
 	diff.x = coord2.x - coord1.x;
 	diff.y = coord2.y - coord1.y;
+	diff_sign = 1;
 	y_increment = 1;
 	if (diff.y < 0)
 	{
 		y_increment = -1;
 		diff.y = -diff.y;
+		if (diff.x < 0)
+			diff_sign = -1;
 	}
 	mid_point_diff = 2 * diff.y - diff.x;
 	pixel.y = coord1.y;
@@ -45,7 +49,7 @@ void	low_segment(t_img *img, t_int2D coord1, t_int2D coord2)
 	while (pixel.x <= coord2.x)
 	{
 		put_pixel(img, pixel.x, pixel.y, 0x00FFFFFF);
-		if (mid_point_diff > 0)
+		if (diff_sign * mid_point_diff > 0)
 		{
 			pixel.y += y_increment;
 			mid_point_diff += 2 * (diff.y - diff.x);
@@ -64,14 +68,18 @@ void	high_segment(t_img *img, t_int2D coord1, t_int2D coord2)
 	t_int2D	diff;
 	int	mid_point_diff;
 	int	x_increment;
+	int	diff_sign;
 
 	diff.x = coord2.x - coord1.x;
 	diff.y = coord2.y - coord1.y;
+	diff_sign = 1;
 	x_increment = 1;
 	if (diff.x < 0)
 	{
 		x_increment = -1;
 		diff.y = -diff.y;
+		if (diff.y < 0)
+			diff_sign = -1;
 	}
 	mid_point_diff = 2 * diff.x - diff.y;
 	pixel.x = coord1.x;
@@ -79,7 +87,7 @@ void	high_segment(t_img *img, t_int2D coord1, t_int2D coord2)
 	while (pixel.y <= coord2.y)
 	{
 		put_pixel(img, pixel.x, pixel.y, 0x00FFFFFF);
-		if (mid_point_diff > 0)
+		if (diff_sign * mid_point_diff > 0)
 		{
 			pixel.x += x_increment;
 			mid_point_diff += 2 * (diff.x - diff.y);
@@ -142,7 +150,7 @@ int	render_next_frame(t_mlx *mlx)
 	img.img = mlx_new_image(mlx->instance, 1920, 1080);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
 	//draw_circle(&img, (t_int2D){WIN_X / 2, WIN_Y / 2}, 300, color);
-	bresenham_segment(&img, (t_int2D){50,50}, (t_int2D){300,400});
+	bresenham_segment(&img, (t_int2D){300,300}, (t_int2D){100,50});
 	mlx_put_image_to_window(mlx->instance, mlx->win, img.img, 0, 0);
 	mlx_destroy_image(mlx->instance, img.img);
 	if (color == 0x00FF0000)
