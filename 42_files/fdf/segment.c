@@ -6,11 +6,12 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 08:14:36 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/17 15:39:32 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/17 18:41:38 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
 
 int	pixel_color(t_int2D coord1, t_int2D coord2, t_int2D i, \
 		t_settings settings)
