@@ -6,14 +6,14 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 08:14:36 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/16 21:10:48 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/17 15:23:11 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	pixel_color(t_double2D coord1, t_double2D coord2, t_int2D i, \
-		t_segment segment)
+int	pixel_color(t_int2D coord1, t_double2D coord2, t_int2D i, \
+		t_settings settings)
 {
 	int			color1;
 	int			color2;
@@ -23,8 +23,8 @@ int	pixel_color(t_double2D coord1, t_double2D coord2, t_int2D i, \
 	color2 = coord2.color;
 	if (color1 == color2)
 		return (color1);
-	ratio = hypot(i.x - coord1.x, i.y - coord1.y) / segment.dist;
-	if (segment.color_profile)
+	ratio = hypot(i.x - coord1.x, i.y - coord1.y) / settings.dist;
+	if (settings.color_profile)
 	{	
 		if (color1 == 0x00FFFFFF)
 			color1 = to_trgb(0, 255, 255, 0);
@@ -33,7 +33,7 @@ int	pixel_color(t_double2D coord1, t_double2D coord2, t_int2D i, \
 	}
 	return (to_trgb(0, (int)(to_r(color1) - ratio * (to_r(color1) - to_r(color2))), (int)(to_g(color1) - ratio * (to_g(color1) - to_g(color2))), (int)(to_b(color1) - ratio * (to_b(color1) - to_b(color2)))));
 }
-
+/*
 t_segment	segment_init(t_double2D coord1, t_double2D coord2, int color_profile)
 {
 	t_segment	segment;
@@ -78,8 +78,8 @@ void	draw_segment(t_img *img, t_double2D coord1, t_double2D coord2, \
 		(i.x)++;
 	}
 }
-
-t_int2D	double_to_int2D(t_double2D double_coord, t_settings settings)
+*/
+t_int2D	scaling(t_double2D double_coord, t_settings settings)
 {
 	t_int2D	int_coord;
 
@@ -87,6 +87,14 @@ t_int2D	double_to_int2D(t_double2D double_coord, t_settings settings)
 	double_coord.y = double_coord.y * settings.scale + settings.offset.y;
 	int_coord.x = (int)round(double_coord.x);
 	int_coord.y = (int)round(double_coord.y);
+	if (int_coord.x < 0)
+		int_coord.x = 0;
+	if (int_coord.y < 0)
+		int_coord.y = 0;
+	if (int_coord.x > settings.max.x)
+		int_coord.x = settings.max.x;
+	if (int_coord.y > settings.max.y)
+		int_coord.y = settings.max.y;
 	return (int_coord);
 }
 
@@ -98,14 +106,18 @@ void	low_segment(t_img *img, t_int2D coord1, t_int2D coord2, t_settings settings
 	t_int2D	diff;
 	int	mid_point_diff;
 	int	y_increment;
+	int	diff_sign;
 
 	diff.x = coord2.x - coord1.x;
 	diff.y = coord2.y - coord1.y;
+	diff_sign = 1;
 	y_increment = 1;
 	if (diff.y < 0)
 	{
 		y_increment = -1;
 		diff.y = -diff.y;
+		if (diff.x < 0)
+			diff_sign = -1;
 	}
 	mid_point_diff = 2 * diff.y - diff.x;
 	pixel.y = coord1.y;
@@ -113,7 +125,7 @@ void	low_segment(t_img *img, t_int2D coord1, t_int2D coord2, t_settings settings
 	while (pixel.x <= coord2.x)
 	{
 		put_pixel(img, pixel.x, pixel.y, 0x00FFFFFF);
-		if (mid_point_diff > 0)
+		if (diff_sign * mid_point_diff > 0)
 		{
 			pixel.y += y_increment;
 			mid_point_diff += 2 * (diff.y - diff.x);
@@ -132,14 +144,18 @@ void	high_segment(t_img *img, t_int2D coord1, t_int2D coord2, t_settings setting
 	t_int2D	diff;
 	int	mid_point_diff;
 	int	x_increment;
+	int	diff_sign;
 
 	diff.x = coord2.x - coord1.x;
 	diff.y = coord2.y - coord1.y;
+	diff_sign = 1;
 	x_increment = 1;
 	if (diff.x < 0)
 	{
 		x_increment = -1;
 		diff.y = -diff.y;
+		if (diff.y < 0)
+			diff_sign = -1;
 	}
 	mid_point_diff = 2 * diff.x - diff.y;
 	pixel.x = coord1.x;
@@ -147,7 +163,7 @@ void	high_segment(t_img *img, t_int2D coord1, t_int2D coord2, t_settings setting
 	while (pixel.y <= coord2.y)
 	{
 		put_pixel(img, pixel.x, pixel.y, 0x00FFFFFF);
-		if (mid_point_diff > 0)
+		if (diff_sign * mid_point_diff > 0)
 		{
 			pixel.x += x_increment;
 			mid_point_diff += 2 * (diff.x - diff.y);

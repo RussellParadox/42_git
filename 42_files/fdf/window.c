@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 04:58:56 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/17 02:12:46 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/17 15:19:58 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,9 @@ t_mlx	*init_mlx(t_settings *settings)
 t_settings	*settings_init(t_double2D max, double thickness, t_map *map)
 {
 	t_settings	*settings;
-	t_int2D	proj_xymax;
-	t_int2D	proj_apex;
-	t_int2D	proj_abyss;
+	t_double2D	proj_xymax;
+	t_double2D	proj_apex;
+	t_double2D	proj_abyss;
 
 	settings = (t_settings *)malloc(sizeof(t_settings));
 	settings->max.x = max.x;

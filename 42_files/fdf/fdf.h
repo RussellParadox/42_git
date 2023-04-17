@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 20:00:43 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/17 02:29:56 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/17 15:17:05 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_double2D
 {
 	double	x;
 	double	y;
+	int	color;
 }	t_double2D;
 
 typedef struct s_int2D
@@ -105,12 +106,12 @@ void	put_pixel(t_img *data, int x, int y, int color);
 int	print_map(t_map *map);
 
 //projection
-t_int2D	isometric_projection(t_int3D coord, t_map *map);
+t_double2D	isometric_projection(t_int3D coord, t_map *map);
 void	map_projection(t_map *map, t_img *img, t_settings settings);
 
 //segment
 void	draw_segment(t_img *img, t_double2D coord1, t_double2D coord2, t_settings settings);
-t_int2D	double_to_int2D(t_double2D double_coord, t_settings settings);
+t_int2D	scaling(t_double2D double_coord, t_settings settings);
 void	bresenham_segment(t_img *img, t_int2D coord1, t_int2D coord2, t_settings settings);
 
 //color

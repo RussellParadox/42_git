@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 05:23:00 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/17 15:03:35 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/17 15:19:03 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,19 +98,19 @@ void	iterative_projection(t_map *map, t_img *img, t_settings settings)
 		i.x = 0;
 		while (i.x <= map->max.x)
 		{
-			proj_from = isometric_projection((t_int3D){i.x, i.y, \
-				map->height[i.y][i.x]}, map), settings;
+			proj_from = scaling(isometric_projection((t_int3D){i.x, i.y, \
+				map->height[i.y][i.x]}, map), settings);
 			if (i.x < map->max.x)
 			{
-				proj_to = isometric_projection((t_int3D){i.x + 1, \
-					i.y, map->height[i.y][i.x + 1]}, map);
+				proj_to = scaling(isometric_projection((t_int3D){i.x + 1, \
+					i.y, map->height[i.y][i.x + 1]}, map), settings);
 				//draw_segment(img, proj_from, proj_to, settings);
 				bresenham_segment(img, proj_from, proj_to, settings);
 			}
 			if (i.y < map->max.y)
 			{
-				proj_to = isometric_projection((t_int3D){i.x, \
-					i.y + 1, map->height[i.y + 1][i.x]}, map);
+				proj_to = scaling(isometric_projection((t_int3D){i.x, \
+					i.y + 1, map->height[i.y + 1][i.x]}, map), settings);
 				//draw_segment(img, proj_from, proj_to, settings);
 				bresenham_segment(img, proj_from, proj_to, settings);
 			}
