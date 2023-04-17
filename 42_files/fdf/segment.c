@@ -6,13 +6,13 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 08:14:36 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/17 15:23:11 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/17 15:39:32 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	pixel_color(t_int2D coord1, t_double2D coord2, t_int2D i, \
+int	pixel_color(t_int2D coord1, t_int2D coord2, t_int2D i, \
 		t_settings settings)
 {
 	int			color1;
@@ -87,6 +87,7 @@ t_int2D	scaling(t_double2D double_coord, t_settings settings)
 	double_coord.y = double_coord.y * settings.scale + settings.offset.y;
 	int_coord.x = (int)round(double_coord.x);
 	int_coord.y = (int)round(double_coord.y);
+	int_coord.color = double_coord.color;
 	if (int_coord.x < 0)
 		int_coord.x = 0;
 	if (int_coord.y < 0)
@@ -110,6 +111,7 @@ void	low_segment(t_img *img, t_int2D coord1, t_int2D coord2, t_settings settings
 
 	diff.x = coord2.x - coord1.x;
 	diff.y = coord2.y - coord1.y;
+	settings.dist = hypot(diff.x, diff.y);
 	diff_sign = 1;
 	y_increment = 1;
 	if (diff.y < 0)
@@ -124,7 +126,7 @@ void	low_segment(t_img *img, t_int2D coord1, t_int2D coord2, t_settings settings
 	pixel.x = coord1.x;
 	while (pixel.x <= coord2.x)
 	{
-		put_pixel(img, pixel.x, pixel.y, 0x00FFFFFF);
+		put_pixel(img, pixel.x, pixel.y, pixel_color(coord1, coord2, pixel, settings));
 		if (diff_sign * mid_point_diff > 0)
 		{
 			pixel.y += y_increment;
@@ -148,6 +150,7 @@ void	high_segment(t_img *img, t_int2D coord1, t_int2D coord2, t_settings setting
 
 	diff.x = coord2.x - coord1.x;
 	diff.y = coord2.y - coord1.y;
+	settings.dist = hypot(diff.x, diff.y);
 	diff_sign = 1;
 	x_increment = 1;
 	if (diff.x < 0)
@@ -162,7 +165,7 @@ void	high_segment(t_img *img, t_int2D coord1, t_int2D coord2, t_settings setting
 	pixel.y = coord1.y;
 	while (pixel.y <= coord2.y)
 	{
-		put_pixel(img, pixel.x, pixel.y, 0x00FFFFFF);
+		put_pixel(img, pixel.x, pixel.y, pixel_color(coord1, coord2, pixel, settings));
 		if (diff_sign * mid_point_diff > 0)
 		{
 			pixel.x += x_increment;
