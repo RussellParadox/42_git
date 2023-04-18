@@ -6,13 +6,12 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 18:21:24 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/17 19:38:17 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/18 23:27:59 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-/*
 int	main(int argc, char *argv[])
 {
 	t_map	*map;
@@ -23,6 +22,7 @@ int	main(int argc, char *argv[])
 	return (0);
 }
 
+/*
 //slope coef belong to [-1, 1] for positive quadrant
 //diff = difference
 void	low_segment(t_img *img, t_int2D coord1, t_int2D coord2)
@@ -116,7 +116,6 @@ void	bresenham_segment(t_img *img, t_int2D coord1, t_int2D coord2)
 			high_segment(img, coord1, coord2);
 	}
 }
-*/
 
 void	draw_circle(t_img *img, t_int2D center, int radius, int color)
 {
@@ -136,6 +135,21 @@ void	draw_circle(t_img *img, t_int2D center, int radius, int color)
 		}
 		i.x++;
 	}
+}
+
+int	key_thing(int keycode, t_mlx *mlx)
+{
+	if (keycode == 0xff1b)
+		return (destroy_hook(mlx));
+	if (keycode == 0x61)
+		mlx->circle->center.x--;
+	if (keycode == 0x64)
+		mlx->circle->center.x++;
+	if (keycode == 0x77)
+		mlx->circle->center.y--;
+	if (keycode == 0x73)
+		mlx->circle->center.y++;
+	return (0);
 }
 
 int	mouse_thing(int button, int x, int y, t_mlx *mlx)
@@ -159,7 +173,7 @@ int	render_next_frame(t_mlx *mlx)
 
 	img.img = mlx_new_image(mlx->instance, 1920, 1080);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
-	draw_circle(&img, (t_int2D){WIN_X / 2, WIN_Y / 2}, 300, color);
+	draw_circle(&img, mlx->circle->center, mlx->circle->radius, color);
 	//bresenham_segment(&img, (t_int2D){300,300}, (t_int2D){100,50});
 	mlx_put_image_to_window(mlx->instance, mlx->win, img.img, 0, 0);
 	ft_printf("render count:%d\n", count++);
@@ -173,13 +187,26 @@ int	render_next_frame(t_mlx *mlx)
 	return (0);
 }
 
+t_circle	*init_circle(t_int2D center, int radius)
+{
+	t_circle	*circle;
+
+	circle = (t_circle *)malloc(sizeof(t_circle));
+	circle->center = center;
+	circle->radius = radius;
+	return (circle);
+}
+
 int	main(void)
 {
 	t_mlx	mlx;
 
 	mlx.instance = mlx_init();
 	mlx.win = mlx_new_window(mlx.instance, 1920, 1080, "fdf");
-	mlx_mouse_hook(mlx.win, mouse_thing, &mlx);
+	mlx.circle = init_circle((t_int2D){WIN_X / 2, WIN_Y / 2}, 300);
+	mlx_hook(mlx.win, 2, (1L<<0), key_thing, &mlx);
+	mlx_hook(mlx.win, 6, (1L<<13), print_thing, &mlx);
 	mlx_loop_hook(mlx.instance, render_next_frame, &mlx);
 	mlx_loop(mlx.instance);
 }
+*/

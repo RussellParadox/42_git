@@ -3,34 +3,33 @@ Flat profile:
 Each sample counts as 0.01 seconds.
   %   cumulative   self              self     total           
  time   seconds   seconds    calls  ms/call  ms/call  name    
- 38.70      2.19     2.19 68890560     0.00     0.00  put_pixel
- 23.51      3.52     1.33   130375     0.01     0.03  high_segment
- 23.33      4.84     1.32 68890560     0.00     0.00  pixel_color
-  6.72      5.22     0.38   480725     0.00     0.00  low_segment
-  2.65      5.37     0.15 99709121     0.00     0.00  to_trgb
-  1.94      5.48     0.11 148153257     0.00     0.00  to_g
-  1.77      5.58     0.10 148153257     0.00     0.00  to_r
-  0.53      5.61     0.03     1575     0.02     3.58  iterative_projection
-  0.18      5.62     0.01 148153257     0.00     0.00  to_b
-  0.18      5.63     0.01   940283     0.00     0.00  isometric_projection
-  0.18      5.64     0.01     1574     0.01     3.58  mouse_translation
-  0.18      5.65     0.01                             _init
-  0.18      5.66     0.01                             mlx_int_new_image
-  0.00      5.66     0.00   940275     0.00     0.00  scaling
-  0.00      5.66     0.00   611100     0.00     0.01  bresenham_segment
-  0.00      5.66     0.00     1575     0.00     3.58  map_projection
-  0.00      5.66     0.00     1575     0.00     3.58  put_map_to_window
-  0.00      5.66     0.00      209     0.00     0.00  get_map_color
-  0.00      5.66     0.00        7     0.00     0.00  mouse_hook
-  0.00      5.66     0.00        2     0.00     0.00  chr_count_until
-  0.00      5.66     0.00        1     0.00     0.00  destroy_hook
-  0.00      5.66     0.00        1     0.00     0.00  free_map
-  0.00      5.66     0.00        1     0.00     0.00  free_param
-  0.00      5.66     0.00        1     0.00     0.00  get_the_file
-  0.00      5.66     0.00        1     0.00     0.00  get_the_map
-  0.00      5.66     0.00        1     0.00     0.00  init_mlx
-  0.00      5.66     0.00        1     0.00     0.00  key_hook
-  0.00      5.66     0.00        1     0.00     0.00  load_heights
-  0.00      5.66     0.00        1     0.00     3.58  print_map
-  0.00      5.66     0.00        1     0.00     0.00  settings_init
-  0.00      5.66     0.00        1     0.00     0.00  split_the_file
+ 86.92      5.62     5.62 35135863     0.00     0.00  put_pixel
+  5.10      5.95     0.33   476096     0.00     0.01  low_segment
+  2.78      6.13     0.18    69432     0.00     0.02  high_segment
+  2.01      6.26     0.13 35135863     0.00     0.00  pixel_color
+  0.85      6.32     0.06 25710312     0.00     0.00  to_b
+  0.85      6.37     0.06 25710312     0.00     0.00  to_r
+  0.39      6.40     0.03 25710312     0.00     0.00  to_g
+  0.31      6.42     0.02 17979598     0.00     0.00  to_trgb
+  0.31      6.44     0.02   839390     0.00     0.00  isometric_projection
+  0.15      6.45     0.01   545528     0.00     0.01  bresenham_segment
+  0.15      6.46     0.01     1406     0.01     4.59  iterative_projection
+  0.15      6.47     0.01                             mlx_int_new_xshm_image
+  0.00      6.47     0.00   839382     0.00     0.00  scaling
+  0.00      6.47     0.00     1406     0.00     4.59  map_projection
+  0.00      6.47     0.00     1406     0.00     4.59  put_map_to_window
+  0.00      6.47     0.00     1405     0.00     4.59  mouse_translation
+  0.00      6.47     0.00      209     0.00     0.00  get_map_color
+  0.00      6.47     0.00        4     0.00     0.00  mouse_hook
+  0.00      6.47     0.00        2     0.00     0.00  chr_count_until
+  0.00      6.47     0.00        1     0.00     0.00  destroy_hook
+  0.00      6.47     0.00        1     0.00     0.00  free_map
+  0.00      6.47     0.00        1     0.00     0.00  free_param
+  0.00      6.47     0.00        1     0.00     0.00  get_the_file
+  0.00      6.47     0.00        1     0.00     0.00  get_the_map
+  0.00      6.47     0.00        1     0.00     0.00  init_mlx
+  0.00      6.47     0.00        1     0.00     0.00  key_hook
+  0.00      6.47     0.00        1     0.00     0.00  load_heights
+  0.00      6.47     0.00        1     0.00     4.59  print_map
+  0.00      6.47     0.00        1     0.00     0.00  settings_init
+  0.00      6.47     0.00        1     0.00     0.00  split_the_file
