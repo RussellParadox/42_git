@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 20:00:43 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/18 23:23:00 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/19 21:54:21 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ typedef struct s_map
 
 typedef struct s_settings
 {
-	t_double2D	offset;
+	t_int2D	offset;
 	double		scale;
 	t_int2D		max;
 	t_int2D		border;
@@ -86,6 +86,7 @@ typedef struct s_settings
 	int		color_profile;
 	t_double2D	cursor_to_map;
 	double		dist;
+	t_double2D	obj_center;
 }	t_settings;
 
 typedef struct s_segment
@@ -109,6 +110,7 @@ t_map	*get_the_map(int argc, char *argv[]);
 void	free_map(t_map *map);
 
 //init
+void	make_offset(t_map *map, t_settings *settings);
 t_mlx	*init_mlx(t_settings *settings);
 t_settings	*settings_init(t_double2D max, double thickness, t_map *map);
 

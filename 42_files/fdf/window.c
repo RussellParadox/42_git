@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 04:58:56 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/18 23:34:53 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/19 21:48:38 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,12 @@ int	mouse_hook(int button, int x, int y, t_param *param)
 	}
 	if (button == 4)
 	{
-		param->settings->scale = param->settings->scale + 0.2;
+		param->settings->scale = param->settings->scale + 0.4;
 		put_map_to_window(param);
 	}
 	if (button == 5)
 	{
-		param->settings->scale = fmax(0., param->settings->scale - 0.2);
+		param->settings->scale = fmax(0., param->settings->scale - 0.4);
 		put_map_to_window(param);
 	}
 	return (0);
