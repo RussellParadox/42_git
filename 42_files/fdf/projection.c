@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 05:23:00 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/19 20:48:48 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/21 22:36:42 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,38 @@ t_double2D	isometric_projection(t_int3D coord, t_map *map)
 	return (proj);
 }
 
+void	reverse_iterative_projection(t_map *map, t_img *img, t_settings settings)
+{
+	t_int2D	proj_from;
+	t_int2D	proj_to;
+	t_int2D		i;
+
+	i.y = map->max.y;
+	while (i.y >= 0)
+	{
+		i.x = map->max.x;
+		while (i.x >= 0)
+		{
+			proj_from = scaling(isometric_projection((t_int3D){i.x, i.y, \
+				map->height[i.y][i.x]}, map), settings);
+			if (i.x > 0)
+			{
+				proj_to = scaling(isometric_projection((t_int3D){i.x - 1, \
+					i.y, map->height[i.y][i.x - 1]}, map), settings);
+				bresenham_segment(img, proj_from, proj_to, settings);
+			}
+			if (i.y > 0)
+			{
+				proj_to = scaling(isometric_projection((t_int3D){i.x, \
+					i.y - 1, map->height[i.y - 1][i.x]}, map), settings);
+				bresenham_segment(img, proj_from, proj_to, settings);
+			}
+			i.x--;
+		}
+		i.y--;
+	}
+}
+
 void	iterative_projection(t_map *map, t_img *img, t_settings settings)
 {
 	t_int2D	proj_from;
@@ -79,4 +111,5 @@ void	iterative_projection(t_map *map, t_img *img, t_settings settings)
 void	map_projection(t_map *map, t_img *img, t_settings settings)
 {
 	iterative_projection(map, img, settings);
+	//reverse_iterative_projection(map, img, settings);
 }

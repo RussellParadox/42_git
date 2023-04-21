@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 04:58:56 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/20 05:35:10 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/21 22:37:32 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,9 @@ int	key_hook(int keycode, t_mlx *mlx)
 
 int	mouse_hook(int button, int x, int y, t_param *param)
 {
+	t_int2D	diff;
+	double	scale_ratio;
+
 	if (button == 1)
 	{
 		param->settings->cursor_to_map.x = param->settings->offset.x - x;
@@ -49,11 +52,21 @@ int	mouse_hook(int button, int x, int y, t_param *param)
 	if (button == 4)
 	{
 		param->settings->scale += 10;
+		diff.x = param->settings->offset.x - x;
+		diff.y = param->settings->offset.y - y;
+		scale_ratio = param->settings->scale / (param->settings->scale - 10);
+		param->settings->offset.x = x + (diff.x) * scale_ratio;
+		param->settings->offset.y = y + (diff.y) * scale_ratio;
 		put_map_to_window(param);
 	}
 	if (button == 5)
 	{
-		param->settings->scale = fmax(0., param->settings->scale - 10);
+		param->settings->scale = fmax(0.1, param->settings->scale - 10);
+		diff.x = param->settings->offset.x - x;
+		diff.y = param->settings->offset.y - y;
+		scale_ratio = param->settings->scale / (param->settings->scale + 10);
+		param->settings->offset.x = x + (diff.x) * scale_ratio;
+		param->settings->offset.y = y + (diff.y) * scale_ratio;
 		put_map_to_window(param);
 	}
 	return (0);
