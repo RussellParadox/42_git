@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 04:58:56 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/21 22:37:32 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/21 23:01:13 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,19 @@ int	put_map_to_window(t_param *param)
 	return (0);
 }
 
-int	key_hook(int keycode, t_mlx *mlx)
+int	key_up_hook(int keycode, t_param *param)
 {
 	if (keycode == 0xff1b)
-		return (destroy_hook(mlx));
+		return (destroy_hook(param->mlx));
+	if (keycode == 0xffe3)
+		param->translation = 1;
+	return (0);
+}
+
+int	key_down_hook(int keycode, t_param *param)
+{
+	if (keycode == 0xffe3)
+		param->translation = 0;
 	return (0);
 }
 
@@ -76,7 +85,7 @@ int	mouse_translation(int x, int y, t_param *param)
 {
 	static t_int2D	previous;
 
-	if (hypot(previous.x - x, previous.y - y) > 3)
+	if (hypot(previous.x - x, previous.y - y) > 3 && param->translation)
 	{
 		param->settings->offset.x = x + param->settings->cursor_to_map.x;
 		param->settings->offset.y = y + param->settings->cursor_to_map.y;
@@ -111,11 +120,13 @@ int	print_map(t_map *map)
 	param->settings = settings_init((t_double2D){.x=WIN_X, .y=WIN_Y}, 1.0, map);
 	param->mlx = init_mlx(param->settings);
 	param->map = map;
+	param->translation = 1;
 	put_map_to_window(param);
-	mlx_key_hook(param->mlx->win, key_hook, param->mlx);
+	mlx_hook(param->mlx->win, 17, 0L, destroy_hook, param->mlx);
+	mlx_hook(param->mlx->win, 2, (1L<<0), key_down_hook, param);
+	mlx_key_hook(param->mlx->win, key_up_hook, param);
 	mlx_mouse_hook(param->mlx->win, mouse_hook, param);
 	mlx_hook(param->mlx->win, 6, (1L<<8), mouse_translation, param);
-	mlx_hook(param->mlx->win, 17, 0L, destroy_hook, param->mlx);
 	mlx_loop(param->mlx->instance);
 	free_param(param);
 	return (0);

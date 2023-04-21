@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 20:00:43 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/19 21:54:21 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/21 22:45:07 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ typedef struct s_param
 	t_mlx	*mlx;
 	t_map	*map;
 	t_settings	*settings;
+	int	translation;
 }	t_param;
 
 //map
