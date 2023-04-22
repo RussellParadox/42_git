@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 20:00:43 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/22 05:42:41 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/22 07:55:19 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,27 @@ typedef struct s_int2D
 	int	color;
 }	t_int2D;
 
+typedef struct s_double2D
+{
+	double	x;
+	double	y;
+	int	color;
+}	t_double2D;
+
+typedef struct s_int3D
+{
+	int	x;
+	int	y;
+	int	z;
+}	t_int3D;
+
+typedef struct s_double3D
+{
+	double	x;
+	double	y;
+	double	z;
+}	t_double3D;
+
 typedef struct s_circle
 {
 	t_int2D	center;
@@ -51,20 +72,6 @@ typedef struct s_img
 	int		line_length;
 	int		endian;
 }	t_img;
-
-typedef struct s_double2D
-{
-	double	x;
-	double	y;
-	int	color;
-}	t_double2D;
-
-typedef struct s_int3D
-{
-	int	x;
-	int	y;
-	int	z;
-}	t_int3D;
 
 typedef struct s_map
 {
