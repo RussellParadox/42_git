@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 04:58:56 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/21 23:01:13 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/22 05:42:51 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	put_map_to_window(t_param *param)
 	img.img = mlx_new_image(param->mlx->instance, param->settings->max.x, param->settings->max.y);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, \
 		&img.line_length, &img.endian);
-	map_projection(param->map, &img, *(param->settings));
+	iterative_projection(param->map, &img, *(param->settings));
 	mlx_put_image_to_window(param->mlx->instance, param->mlx->win, img.img, 0, 0);
 	mlx_destroy_image(param->mlx->instance, img.img);
 	return (0);
@@ -81,15 +81,18 @@ int	mouse_hook(int button, int x, int y, t_param *param)
 	return (0);
 }
 
-int	mouse_translation(int x, int y, t_param *param)
+int	mouse_transformation(int x, int y, t_param *param)
 {
 	static t_int2D	previous;
 
-	if (hypot(previous.x - x, previous.y - y) > 3 && param->translation)
+	if (hypot(previous.x - x, previous.y - y) > 3)
 	{
-		param->settings->offset.x = x + param->settings->cursor_to_map.x;
-		param->settings->offset.y = y + param->settings->cursor_to_map.y;
-		put_map_to_window(param);
+		if (param->translation)
+		{
+			param->settings->offset.x = x + param->settings->cursor_to_map.x;
+			param->settings->offset.y = y + param->settings->cursor_to_map.y;
+			put_map_to_window(param);
+		}
 	}
 	previous.x = x;
 	previous.y = y;
@@ -126,7 +129,7 @@ int	print_map(t_map *map)
 	mlx_hook(param->mlx->win, 2, (1L<<0), key_down_hook, param);
 	mlx_key_hook(param->mlx->win, key_up_hook, param);
 	mlx_mouse_hook(param->mlx->win, mouse_hook, param);
-	mlx_hook(param->mlx->win, 6, (1L<<8), mouse_translation, param);
+	mlx_hook(param->mlx->win, 6, (1L<<8), mouse_transformation, param);
 	mlx_loop(param->mlx->instance);
 	free_param(param);
 	return (0);

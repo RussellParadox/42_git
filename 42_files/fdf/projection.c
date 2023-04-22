@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 05:23:00 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/21 22:36:42 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/22 06:20:57 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,8 @@ t_double2D	isometric_projection(t_int3D coord, t_map *map)
 	t_double2D	proj;
 	double		ratio;
 
-	proj.x = coord.x * (1. / sqrt(2.)) + coord.y * (-1. / sqrt(2.));
-	proj.y = coord.x * (1. / sqrt(6.)) + coord.y * (1 / sqrt(6.)) + coord.z * (-sqrt(2. / \
-		3.));
+	proj.x = coord.x * (-1. / sqrt(2.)) + coord.y * (1. / sqrt(2.));
+	proj.y = coord.x * (1. / sqrt(6.)) + coord.y * (1 / sqrt(6.)) + coord.z * (-sqrt(2. / 3.));
 	if (map->color_profile)
 	{
 		if (abs(coord.z) < 0.1)
@@ -89,27 +88,21 @@ void	iterative_projection(t_map *map, t_img *img, t_settings settings)
 		while (i.x <= map->max.x)
 		{
 			proj_from = scaling(isometric_projection((t_int3D){i.x, i.y, \
-				map->height[i.y][i.x]}, map), settings);
+				map->height[i.x][i.y]}, map), settings);
 			if (i.x < map->max.x)
 			{
 				proj_to = scaling(isometric_projection((t_int3D){i.x + 1, \
-					i.y, map->height[i.y][i.x + 1]}, map), settings);
+					i.y, map->height[i.x + 1][i.y]}, map), settings);
 				bresenham_segment(img, proj_from, proj_to, settings);
 			}
 			if (i.y < map->max.y)
 			{
 				proj_to = scaling(isometric_projection((t_int3D){i.x, \
-					i.y + 1, map->height[i.y + 1][i.x]}, map), settings);
+					i.y + 1, map->height[i.x][i.y + 1]}, map), settings);
 				bresenham_segment(img, proj_from, proj_to, settings);
 			}
 			i.x++;
 		}
 		i.y++;
 	}
-}
-
-void	map_projection(t_map *map, t_img *img, t_settings settings)
-{
-	iterative_projection(map, img, settings);
-	//reverse_iterative_projection(map, img, settings);
 }

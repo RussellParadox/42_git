@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 21:59:04 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/19 21:54:03 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/22 06:22:39 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	free_map(t_map *map)
 	int	i;
 
 	i = 0;
-	while (i <= map->max.y)
+	while (i <= map->max.x)
 	{
 		free(map->height[i]);
 		free(map->color[i]);
@@ -58,16 +58,16 @@ t_map	*load_heights(t_map *map, char ***splited_map)
 	int	i;
 	int	j;
 
-	map->height = (int **)malloc((map->max.y + 1) * sizeof(int *));
-	map->color = (int **)malloc((map->max.y + 1) * sizeof(int *));
+	map->height = (int **)malloc((map->max.x + 1) * sizeof(int *));
+	map->color = (int **)malloc((map->max.x + 1) * sizeof(int *));
 	map->color_profile = 1;
 	i = 0;
-	while (i < map->max.y + 1)
+	while (i < map->max.x + 1)
 	{
-		map->height[i] = (int *)malloc((map->max.x + 1) * sizeof(int));
-		map->color[i] = (int *)malloc((map->max.x + 1) * sizeof(int));
+		map->height[i] = (int *)malloc((map->max.y + 1) * sizeof(int));
+		map->color[i] = (int *)malloc((map->max.y + 1) * sizeof(int));
 		j = 0;
-		while (j < map->max.x + 1)
+		while (j < map->max.y + 1)
 		{
 			map->height[i][j] = ft_atoi(splited_map[i][j]);
 			map->color[i][j] = get_map_color(splited_map[i][j]);
@@ -157,11 +157,11 @@ t_map	*get_the_map(int argc, char *argv[])
 
 	map = (t_map *)malloc(sizeof(t_map));
 	file = get_the_file(argv[argc - 1]);
-	map->max.y = chr_count_until(file, "\n", '\0') - 1;
-	map->max.x = chr_count_until(file, ",x-0123456789", '\n') - 1;
+	map->max.x = chr_count_until(file, "\n", '\0') - 1;
+	map->max.y = chr_count_until(file, ",x-0123456789", '\n') - 1;
 	map->apex = (t_int3D){.x=0,.y=0,.z=0};
 	map->abyss = (t_int3D){.x=0,.y=0,.z=0};
-	splited_file = split_the_file(file, map->max.y + 1);
+	splited_file = split_the_file(file, map->max.x + 1);
 	free(file);
 	map = load_heights(map, splited_file);
 	return (map);
