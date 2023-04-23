@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 05:23:00 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/22 08:01:24 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/23 03:38:17 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ t_double2D	isometric_projection(t_int3D coord, t_map *map, t_double3D phi, t_dou
 	return (proj);
 }
 
+/*
 void	reverse_iterative_projection(t_map *map, t_img *img, t_settings settings)
 {
 	t_int2D	proj_from;
@@ -76,6 +77,7 @@ void	reverse_iterative_projection(t_map *map, t_img *img, t_settings settings)
 		i.y--;
 	}
 }
+*/
 
 void	iterative_projection(t_map *map, t_img *img, t_settings settings)
 {
@@ -89,18 +91,15 @@ void	iterative_projection(t_map *map, t_img *img, t_settings settings)
 		i.x = 0;
 		while (i.x <= map->max.x)
 		{
-			proj_from = scaling(isometric_projection((t_int3D){i.x, i.y, \
-				map->height[i.x][i.y]}, map), settings);
+			proj_from = scaling(isometric_projection((t_int3D){i.x, i.y, map->height[i.x][i.y]}, map, settings.phi, settings.theta), settings);
 			if (i.x < map->max.x)
 			{
-				proj_to = scaling(isometric_projection((t_int3D){i.x + 1, \
-					i.y, map->height[i.x + 1][i.y]}, map), settings);
+				proj_to = scaling(isometric_projection((t_int3D){i.x + 1, i.y, map->height[i.x + 1][i.y]}, map, settings.phi, settings.theta), settings);
 				bresenham_segment(img, proj_from, proj_to, settings);
 			}
 			if (i.y < map->max.y)
 			{
-				proj_to = scaling(isometric_projection((t_int3D){i.x, \
-					i.y + 1, map->height[i.x][i.y + 1]}, map), settings);
+				proj_to = scaling(isometric_projection((t_int3D){i.x, i.y + 1, map->height[i.x][i.y + 1]}, map, settings.phi, settings.theta), settings);
 				bresenham_segment(img, proj_from, proj_to, settings);
 			}
 			i.x++;

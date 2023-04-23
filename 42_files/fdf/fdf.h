@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 20:00:43 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/22 07:55:19 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/23 03:40:11 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,16 +94,9 @@ typedef struct s_settings
 	t_double2D	cursor_to_map;
 	double		dist;
 	t_double2D	obj_center;
+	t_double3D	phi;
+	t_double3D	theta;
 }	t_settings;
-
-typedef struct s_segment
-{
-	t_double2D	coef;
-	t_int2D	max;
-	t_int2D	min;
-	double	dist;
-	int	color_profile;
-}	t_segment;
 
 typedef struct s_param
 {
@@ -127,11 +120,10 @@ int	print_map(t_map *map);
 int	destroy_hook(t_mlx *mlx);
 
 //projection
-t_double2D	isometric_projection(t_int3D coord, t_map *map);
+t_double2D	isometric_projection(t_int3D coord, t_map *map, t_double3D phi, t_double3D theta);
 void	iterative_projection(t_map *map, t_img *img, t_settings settings);
 
 //segment
-void	draw_segment(t_img *img, t_double2D coord1, t_double2D coord2, t_settings settings);
 t_int2D	scaling(t_double2D double_coord, t_settings settings);
 void	bresenham_segment(t_img *img, t_int2D coord1, t_int2D coord2, t_settings settings);
 
