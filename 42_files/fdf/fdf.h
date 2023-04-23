@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 20:00:43 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/23 03:40:11 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/23 03:45:58 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ typedef struct s_settings
 	double		scale;
 	t_int2D		max;
 	t_int2D		border;
-	double		thickness;
 	int		color_profile;
 	t_double2D	cursor_to_map;
 	double		dist;
@@ -112,7 +111,7 @@ void	free_map(t_map *map);
 
 //init
 t_mlx	*init_mlx(t_settings *settings);
-t_settings	*settings_init(t_double2D max, double thickness, t_map *map);
+t_settings	*settings_init(t_double2D max, t_map *map);
 
 //window
 void	put_pixel(t_img *data, int x, int y, int color);

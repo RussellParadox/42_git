@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 04:58:56 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/22 05:42:51 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/23 05:47:11 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,12 @@ int	mouse_transformation(int x, int y, t_param *param)
 			param->settings->offset.y = y + param->settings->cursor_to_map.y;
 			put_map_to_window(param);
 		}
+		else
+		{
+			param->settings->theta.x += M_PI / 120;
+			param->settings->theta.y -= M_PI / 120;
+			put_map_to_window(param);
+		}
 	}
 	previous.x = x;
 	previous.y = y;
@@ -120,7 +126,7 @@ int	print_map(t_map *map)
 	t_param		*param;
 
 	param = (t_param *)malloc(sizeof(t_param));
-	param->settings = settings_init((t_double2D){.x=WIN_X, .y=WIN_Y}, 1.0, map);
+	param->settings = settings_init((t_double2D){.x=WIN_X, .y=WIN_Y}, map);
 	param->mlx = init_mlx(param->settings);
 	param->map = map;
 	param->translation = 1;

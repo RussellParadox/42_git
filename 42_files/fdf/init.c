@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:26:07 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/23 03:43:26 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/04/23 03:45:12 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	make_offset(t_settings *settings)
 	settings->offset.y = 0.5 * (settings->max.y - settings->scale * settings->obj_center.y);
 }
 
-t_settings	*settings_init(t_double2D max, double thickness, t_map *map)
+t_settings	*settings_init(t_double2D max, t_map *map)
 {
 	t_settings	*settings;
 	t_double2D	proj_xymax;
@@ -42,7 +42,6 @@ t_settings	*settings_init(t_double2D max, double thickness, t_map *map)
 	settings->border.y = settings->max.y / 15.;
 	settings->phi = (t_double3D){M_PI - acos(1 / sqrt(3)), M_PI - acos(1 / sqrt(3)), M_PI - acos(1 / sqrt(3))}; 
 	settings->theta = (t_double3D){5 * M_PI / 6, M_PI / 6, -M_PI / 2};
-	settings->thickness = thickness;
 	settings->color_profile = map->color_profile;
 	proj_xymax = isometric_projection((t_int3D){map->max.x, map->max.y, 0}, map, settings->phi, settings->theta);
 	proj_apex = isometric_projection((t_int3D){map->apex.x, map->apex.y, map->apex.z}, map, settings->phi, settings->theta);
