@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 04:58:56 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/23 05:47:11 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/05/08 08:24:58 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	mouse_transformation(int x, int y, t_param *param)
 {
 	static t_int2D	previous;
 
-	if (hypot(previous.x - x, previous.y - y) > 3)
+	if (hypot(previous.x - x, previous.y - y) > 5)
 	{
 		if (param->translation)
 		{
@@ -95,8 +95,9 @@ int	mouse_transformation(int x, int y, t_param *param)
 		}
 		else
 		{
-			param->settings->theta.x += M_PI / 120;
-			param->settings->theta.y -= M_PI / 120;
+			param->settings->theta.x += M_PI / 1200;
+			param->settings->theta.y += M_PI / 1200;
+			param->settings->theta.z += M_PI / 1200;
 			put_map_to_window(param);
 		}
 	}

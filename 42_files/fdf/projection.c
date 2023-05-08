@@ -6,21 +6,20 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 05:23:00 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/23 03:38:17 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/05/08 08:59:45 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
+//replace angle with base
 t_double2D	isometric_projection(t_int3D coord, t_map *map, t_double3D phi, t_double3D theta)
 {
 	t_double2D	proj;
 	double		ratio;
 
-	//proj.x = coord.x * (-1. / sqrt(2.)) + coord.y * (1. / sqrt(2.));
-	//proj.y = coord.x * (1. / sqrt(6.)) + coord.y * (1 / sqrt(6.)) + coord.z * (-sqrt(2. / 3.));
 	proj.x = coord.x * sin(phi.x) * cos(theta.x) + coord.y * sin(phi.y) * cos(theta.y) + coord.z * sin(phi.z) * cos(theta.z);
-	proj.y = coord.x * sin(phi.x) * sin(theta.x) + coord.y * sin(phi.y) * sin(theta.y) + coord.z * sin(phi.z) * sin(theta.z);
+	proj.y = coord.x * cos(phi.x) + coord.y * cos(phi.y) + coord.z * cos(phi.z);
 	if (map->color_profile)
 	{
 		if (abs(coord.z) < 0.1)
@@ -81,9 +80,9 @@ void	reverse_iterative_projection(t_map *map, t_img *img, t_settings settings)
 
 void	iterative_projection(t_map *map, t_img *img, t_settings settings)
 {
-	t_int2D	proj_from;
-	t_int2D	proj_to;
-	t_int2D		i;
+	register t_int2D	proj_from;
+	register t_int2D	proj_to;
+	register t_int2D		i;
 
 	i.y = 0;
 	while (i.y <= map->max.y)
