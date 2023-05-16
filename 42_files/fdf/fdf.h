@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 20:00:43 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/23 03:45:58 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/05/16 15:50:24 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,13 @@ typedef struct s_map
 	t_int3D	abyss;
 }	t_map;
 
+typedef struct s_base3D
+{
+	t_double3D	e1;
+	t_double3D	e2;
+	t_double3D	e3;
+}	t_base3D;
+
 typedef struct s_settings
 {
 	t_int2D	offset;
@@ -93,8 +100,8 @@ typedef struct s_settings
 	t_double2D	cursor_to_map;
 	double		dist;
 	t_double2D	obj_center;
-	t_double3D	phi;
-	t_double3D	theta;
+	t_base3D	map_base;
+	t_double3D	map_center;
 }	t_settings;
 
 typedef struct s_param
@@ -112,6 +119,7 @@ void	free_map(t_map *map);
 //init
 t_mlx	*init_mlx(t_settings *settings);
 t_settings	*settings_init(t_double2D max, t_map *map);
+void	base_rotation(t_base3D *base, t_double2D u, double dtheta, t_double3D center);
 
 //window
 void	put_pixel(t_img *data, int x, int y, int color);
@@ -119,7 +127,7 @@ int	print_map(t_map *map);
 int	destroy_hook(t_mlx *mlx);
 
 //projection
-t_double2D	isometric_projection(t_int3D coord, t_map *map, t_double3D phi, t_double3D theta);
+t_double2D	isometric_projection(t_int3D coord, t_map *map, t_base3D base);
 void	iterative_projection(t_map *map, t_img *img, t_settings settings);
 
 //segment

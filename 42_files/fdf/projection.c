@@ -6,20 +6,19 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 05:23:00 by gdornic           #+#    #+#             */
-/*   Updated: 2023/05/08 08:59:45 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/05/14 10:32:32 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-//replace angle with base
-t_double2D	isometric_projection(t_int3D coord, t_map *map, t_double3D phi, t_double3D theta)
+t_double2D	isometric_projection(t_int3D coord, t_map *map, t_base3D base)
 {
 	t_double2D	proj;
 	double		ratio;
 
-	proj.x = coord.x * sin(phi.x) * cos(theta.x) + coord.y * sin(phi.y) * cos(theta.y) + coord.z * sin(phi.z) * cos(theta.z);
-	proj.y = coord.x * cos(phi.x) + coord.y * cos(phi.y) + coord.z * cos(phi.z);
+	proj.x = coord.x * base.e1.x + coord.y * base.e2.x + coord.z * base.e3.x;
+	proj.y = coord.x * base.e1.y + coord.y * base.e2.y + coord.z * base.e3.y;
 	if (map->color_profile)
 	{
 		if (abs(coord.z) < 0.1)
@@ -90,15 +89,15 @@ void	iterative_projection(t_map *map, t_img *img, t_settings settings)
 		i.x = 0;
 		while (i.x <= map->max.x)
 		{
-			proj_from = scaling(isometric_projection((t_int3D){i.x, i.y, map->height[i.x][i.y]}, map, settings.phi, settings.theta), settings);
+			proj_from = scaling(isometric_projection((t_int3D){i.x, i.y, map->height[i.x][i.y]}, map, settings.map_base), settings);
 			if (i.x < map->max.x)
 			{
-				proj_to = scaling(isometric_projection((t_int3D){i.x + 1, i.y, map->height[i.x + 1][i.y]}, map, settings.phi, settings.theta), settings);
+				proj_to = scaling(isometric_projection((t_int3D){i.x + 1, i.y, map->height[i.x + 1][i.y]}, map, settings.map_base), settings);
 				bresenham_segment(img, proj_from, proj_to, settings);
 			}
 			if (i.y < map->max.y)
 			{
-				proj_to = scaling(isometric_projection((t_int3D){i.x, i.y + 1, map->height[i.x][i.y + 1]}, map, settings.phi, settings.theta), settings);
+				proj_to = scaling(isometric_projection((t_int3D){i.x, i.y + 1, map->height[i.x][i.y + 1]}, map, settings.map_base), settings);
 				bresenham_segment(img, proj_from, proj_to, settings);
 			}
 			i.x++;

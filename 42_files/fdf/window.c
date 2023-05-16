@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 04:58:56 by gdornic           #+#    #+#             */
-/*   Updated: 2023/05/08 08:24:58 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/05/16 15:48:30 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,14 @@ int	mouse_hook(int button, int x, int y, t_param *param)
 int	mouse_transformation(int x, int y, t_param *param)
 {
 	static t_int2D	previous;
+	t_double2D	v;
+	t_double2D	u;
+	double		magnitude;
 
-	if (hypot(previous.x - x, previous.y - y) > 5)
+	v.x = previous.x - x;
+	v.y = previous.y - y;
+	magnitude = hypot(v.x, v.y);
+	if (magnitude > 5)
 	{
 		if (param->translation)
 		{
@@ -95,9 +101,11 @@ int	mouse_transformation(int x, int y, t_param *param)
 		}
 		else
 		{
-			param->settings->theta.x += M_PI / 1200;
-			param->settings->theta.y += M_PI / 1200;
-			param->settings->theta.z += M_PI / 1200;
+			v.x = v.x / magnitude;
+			v.y = v.y / magnitude;
+			u.x = v.y;
+			u.y = -v.x;
+			base_rotation(&(param->settings->map_base), u, M_PI / 120, param->settings->map_center);
 			put_map_to_window(param);
 		}
 	}
