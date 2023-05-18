@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:26:07 by gdornic           #+#    #+#             */
-/*   Updated: 2023/05/18 16:49:08 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/05/18 21:58:38 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ t_settings	*settings_init(t_double2D max, t_map *map)
 	settings->map_base.e1 = (t_double3D){1, 0, 0}; 
 	settings->map_base.e2 = (t_double3D){0, 1, 0}; 
 	settings->map_base.e3 = (t_double3D){0, 0, 1}; 
+	base_rotation(&(settings->map_base), (t_double3D){0, 0, 1}, 3 * M_PI / 4.);
+	base_rotation(&(settings->map_base), (t_double3D){1, 0, 0}, acos(1/sqrt(3)));
 	settings->color_profile = map->color_profile;
 	proj_xymax = isometric_projection((t_int3D){map->max.x, map->max.y, 0}, map, settings->map_base);
 	proj_apex = isometric_projection((t_int3D){map->apex.x, map->apex.y, map->apex.z}, map, settings->map_base);
