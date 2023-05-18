@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 20:00:43 by gdornic           #+#    #+#             */
-/*   Updated: 2023/05/16 15:50:24 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/05/18 16:06:02 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ typedef struct s_map
 	t_int2D	max;
 	t_int3D	apex;
 	t_int3D	abyss;
+	t_double3D	center;
 }	t_map;
 
 typedef struct s_base3D
@@ -101,7 +102,6 @@ typedef struct s_settings
 	double		dist;
 	t_double2D	obj_center;
 	t_base3D	map_base;
-	t_double3D	map_center;
 }	t_settings;
 
 typedef struct s_param
@@ -119,7 +119,7 @@ void	free_map(t_map *map);
 //init
 t_mlx	*init_mlx(t_settings *settings);
 t_settings	*settings_init(t_double2D max, t_map *map);
-void	base_rotation(t_base3D *base, t_double2D u, double dtheta, t_double3D center);
+void	base_rotation(t_base3D *base, t_double3D u, double dtheta);
 
 //window
 void	put_pixel(t_img *data, int x, int y, int color);
