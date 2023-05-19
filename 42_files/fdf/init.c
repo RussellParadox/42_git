@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:26:07 by gdornic           #+#    #+#             */
-/*   Updated: 2023/05/18 21:58:38 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/05/19 14:24:45 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,6 @@ t_double3D	rotation(t_double3D v1, t_double3D u, double dtheta)
 
 	c = cos(dtheta);
 	s = sin(dtheta);
-	//v2.x = (c + (1 - c) * pow(u.x, 2)) * v1.x + ((1 - c) * u.y * u.x) * v1.y + (s * u.y) * v1.z;
-	//v2.y = ((1 - c) * u.x * u.y) * v1.x + (c + (1 - c) * pow(u.y, 2)) * v1.y + (-s * u.x) * v1.z;
-	//v2.z = (-s * u.y) * v1.x + (s * u.x) * v1.y + (c) * v1.z;
 	v2.x = (c + (1 - c) * pow(u.x, 2)) * v1.x + ((1 - c) * u.y * u.x - s * u.z) * v1.y + ((1 - c) * u.z * u.x + s * u.y) * v1.z;
 	v2.y = ((1 - c) * u.x * u.y + s * u.z) * v1.x + (c + (1 - c) * pow(u.y, 2)) * v1.y + ((1 - c) * u.z * u.y - s * u.x) * v1.z;
 	v2.z = ((1 - c) * u.x * u.z - s * u.y) * v1.x + ((1 - c) * u.y * u.z + s * u.x) * v1.y + (c + (1 - c) * pow(u.z, 2)) * v1.z;
@@ -70,8 +67,8 @@ t_settings	*settings_init(t_double2D max, t_map *map)
 	settings->map_base.e1 = (t_double3D){1, 0, 0}; 
 	settings->map_base.e2 = (t_double3D){0, 1, 0}; 
 	settings->map_base.e3 = (t_double3D){0, 0, 1}; 
-	base_rotation(&(settings->map_base), (t_double3D){0, 0, 1}, 3 * M_PI / 4.);
-	base_rotation(&(settings->map_base), (t_double3D){1, 0, 0}, acos(1/sqrt(3)));
+	base_rotation(&(settings->map_base), (t_double3D){0, 0, 1}, -3 * M_PI / 4.);
+	base_rotation(&(settings->map_base), (t_double3D){1, 0, 0}, M_PI-acos(1/sqrt(3)));
 	settings->color_profile = map->color_profile;
 	proj_xymax = isometric_projection((t_int3D){map->max.x, map->max.y, 0}, map, settings->map_base);
 	proj_apex = isometric_projection((t_int3D){map->apex.x, map->apex.y, map->apex.z}, map, settings->map_base);

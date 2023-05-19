@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 04:58:56 by gdornic           #+#    #+#             */
-/*   Updated: 2023/05/19 12:56:46 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/05/19 13:49:59 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,8 @@ int	mouse_transformation(int x, int y, t_param *param)
 		{
 			if (param->rotation)
 			{
-				u.x = v.y / magnitude;
-				u.y = -v.x / magnitude;
+				u.x = -v.y / magnitude;
+				u.y = v.x / magnitude;
 				u.z = 0;
 			}
 			else
