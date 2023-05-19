@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 04:58:56 by gdornic           #+#    #+#             */
-/*   Updated: 2023/05/18 17:05:33 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/05/19 12:56:46 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,23 @@ int	key_up_hook(int keycode, t_param *param)
 {
 	if (keycode == 0xff1b)
 		return (destroy_hook(param->mlx));
-	if (keycode == 0xffe3)
-		param->transformation = 0;
+	if (keycode == 0xffe3 || keycode == 0xffe9)
+		param->translation = 1;
 	return (0);
 }
 
 int	key_down_hook(int keycode, t_param *param)
 {
 	if (keycode == 0xffe3)
-		param->transformation = 1;
+	{
+		param->translation = 0;
+		param->rotation = 1;
+	}
+	if (keycode == 0xffe9)
+	{
+		param->translation = 0;
+		param->rotation = 0;
+	}
 	return (0);
 }
 
@@ -91,24 +99,28 @@ int	mouse_transformation(int x, int y, t_param *param)
 	v.x = previous.x - x;
 	v.y = previous.y - y;
 	magnitude = hypot(v.x, v.y);
-	if (magnitude > 5)
+	if (magnitude > 3)
 	{
-		if (param->transformation == 0)
+		if (param->translation)
 		{
 			param->settings->offset.x = x + param->settings->cursor_to_map.x;
 			param->settings->offset.y = y + param->settings->cursor_to_map.y;
 			put_map_to_window(param);
 		}
-		else if (param->transformation == 1)
+		else
 		{
-			v.x = v.x / magnitude;
-			v.y = v.y / magnitude;
-			//u.x = v.y;
-			//u.y = -v.x;
-			//u.z = 0;
-			u.x = 0;
-			u.y = 0;
-			u.z = 1;
+			if (param->rotation)
+			{
+				u.x = v.y / magnitude;
+				u.y = -v.x / magnitude;
+				u.z = 0;
+			}
+			else
+			{
+				u.x = 0;
+				u.y = 0;
+				u.z = v.x / fabs(v.x);
+			}
 			base_rotation(&(param->settings->map_base), u, M_PI / 120);
 			put_map_to_window(param);
 		}
@@ -142,7 +154,8 @@ int	print_map(t_map *map)
 	param->settings = settings_init((t_double2D){.x=WIN_X, .y=WIN_Y}, map);
 	param->mlx = init_mlx(param->settings);
 	param->map = map;
-	param->transformation = 0;
+	param->translation = 1;
+	param->rotation = 1;
 	put_map_to_window(param);
 	mlx_hook(param->mlx->win, 17, 0L, destroy_hook, param->mlx);
 	mlx_hook(param->mlx->win, 2, (1L<<0), key_down_hook, param);
