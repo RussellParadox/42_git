@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 04:58:56 by gdornic           #+#    #+#             */
-/*   Updated: 2023/05/19 13:49:59 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/05/20 13:14:47 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,13 @@ int	mouse_hook(int button, int x, int y, t_param *param)
 	return (0);
 }
 
+int	signof(double nb)
+{
+	if (nb < 0)
+		return (-1);
+	return (1);
+}
+
 int	mouse_transformation(int x, int y, t_param *param)
 {
 	static t_int2D	previous;
@@ -119,7 +126,7 @@ int	mouse_transformation(int x, int y, t_param *param)
 			{
 				u.x = 0;
 				u.y = 0;
-				u.z = v.x / fabs(v.x);
+				u.z = signof(v.x);
 			}
 			base_rotation(&(param->settings->map_base), u, M_PI / 120);
 			put_map_to_window(param);

@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 21:59:04 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/22 06:22:39 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/05/20 18:07:38 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,13 @@ t_map	*load_heights(t_map *map, char ***splited_map)
 	int	i;
 	int	j;
 
-	map->height = (int **)malloc((map->max.x + 1) * sizeof(int *));
+	map->height = (double **)malloc((map->max.x + 1) * sizeof(double *));
 	map->color = (int **)malloc((map->max.x + 1) * sizeof(int *));
 	map->color_profile = 1;
 	i = 0;
 	while (i < map->max.x + 1)
 	{
-		map->height[i] = (int *)malloc((map->max.y + 1) * sizeof(int));
+		map->height[i] = (double *)malloc((map->max.y + 1) * sizeof(double));
 		map->color[i] = (int *)malloc((map->max.y + 1) * sizeof(int));
 		j = 0;
 		while (j < map->max.y + 1)
@@ -149,6 +149,30 @@ char	*get_the_file(char *file_name)
 	return (file);
 }
 
+int	check_map_format(char *file, int xmax, int ymax)
+{
+	int	i;
+	int	y;
+	int	x;
+
+	i = 0;
+	x = 0;
+	while (x < xmax)
+	{
+		y = chr_count_until(&file[i], ",x-0123456789", '\n') - 1;
+		if (y != ymax)
+		{
+			ft_printf("Wrong map: error at line %d\n", x);
+			return (1);
+		}
+		while (file[i] && file[i] != '\n')
+			i++;
+		i++;
+		x++;
+	}
+	return (0);
+}
+
 t_map	*get_the_map(int argc, char *argv[])
 {
 	t_map		*map;
@@ -157,12 +181,24 @@ t_map	*get_the_map(int argc, char *argv[])
 
 	map = (t_map *)malloc(sizeof(t_map));
 	file = get_the_file(argv[argc - 1]);
-	map->max.x = chr_count_until(file, "\n", '\0') - 1;
-	map->max.y = chr_count_until(file, ",x-0123456789", '\n') - 1;
+	if (file == NULL)
+	{
+		free(map);
+		return (NULL);
+	}
 	map->apex = (t_int3D){.x=0,.y=0,.z=0};
 	map->abyss = (t_int3D){.x=0,.y=0,.z=0};
+	map->max.x = chr_count_until(file, "\n", '\0') - 1;
+	map->max.y = chr_count_until(file, ",x-0123456789", '\n') - 1;
+	if (check_map_format(file, map->max.x, map->max.y))
+	{
+		free(map);
+		return (NULL);
+	}
 	splited_file = split_the_file(file, map->max.x + 1);
 	free(file);
+	if (splited_file == NULL)
+		return (NULL);
 	map = load_heights(map, splited_file);
 	return (map);
 }

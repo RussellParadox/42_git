@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 20:00:43 by gdornic           #+#    #+#             */
-/*   Updated: 2023/05/19 12:44:06 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/05/20 12:52:44 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ typedef struct s_img
 
 typedef struct s_map
 {
-	int	**height;
+	double	**height;
 	int	**color;
 	int	color_profile;
 	t_int2D	max;

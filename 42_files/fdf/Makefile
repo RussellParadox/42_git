@@ -6,7 +6,7 @@
 #    By: gdornic <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 21:58:09 by gdornic           #+#    #+#              #
-#    Updated: 2023/04/18 22:28:41 by gdornic          ###   ########.fr        #
+#    Updated: 2023/05/19 14:47:33 by gdornic          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,10 +36,10 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	$(call make_dep,all)
-	$(CC) $(OBJ) $(HEADERS) $(LIB_LINK) -o $(NAME) -fsanitize=address -pg
+	$(CC) $(OBJ) $(HEADERS) $(LIB_LINK) -o $(NAME) -fsanitize=address -g
 
 %.o: %.c
-	$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@ -pg
+	$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@ -g
 
 clean:
 	rm -f $(OBJ)
