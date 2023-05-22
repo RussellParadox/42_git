@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 18:21:24 by gdornic           #+#    #+#             */
-/*   Updated: 2023/05/20 13:09:09 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/05/22 13:57:58 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,7 @@ int	main(int argc, char *argv[])
 		print_map(map);
 		free_map(map);
 	}
+	else
+		ft_printf("Wrong amount of argument(s)\n");
 	return (0);
 }

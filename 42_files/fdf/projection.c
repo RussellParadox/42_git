@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 05:23:00 by gdornic           #+#    #+#             */
-/*   Updated: 2023/05/20 12:49:20 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/05/22 13:27:01 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ t_double2D	isometric_projection(t_int3D coord, t_map *map, t_base3D base)
 	t_double2D	proj;
 	double		ratio;
 
-	proj.x = (coord.x - map->center.x) * base.e1.x + (coord.y - map->center.y) * base.e2.x + (coord.z - map->center.z) * base.e3.x;
-	proj.y = (coord.x - map->center.x) * base.e1.y + (coord.y - map->center.y) * base.e2.y + (coord.z - map->center.z) * base.e3.y;
+	proj.x = (coord.x - map->center.x) * base.e1.x + (coord.y - map->center.y) * base.e2.x + (coord.z - map->center.z) / 10. * base.e3.x;
+	proj.y = (coord.x - map->center.x) * base.e1.y + (coord.y - map->center.y) * base.e2.y + (coord.z - map->center.z) / 10. * base.e3.y;
 	if (map->color_profile)
 	{
 		if (abs(coord.z) < 0.1)

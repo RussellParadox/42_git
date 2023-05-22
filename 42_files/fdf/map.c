@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 21:59:04 by gdornic           #+#    #+#             */
-/*   Updated: 2023/05/20 18:07:38 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/05/22 13:55:58 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,11 @@ char	*get_the_file(char *file_name)
 	char	*tmp;
 
 	fd = open(file_name, O_RDONLY);
+	if (fd < 0)
+	{
+		ft_printf("File doesn't exist\n");
+		return (NULL);
+	}
 	line = get_next_line(fd);
 	file = ft_strdup("");
 	while (line != NULL && file != NULL)
@@ -159,7 +164,7 @@ int	check_map_format(char *file, int xmax, int ymax)
 	x = 0;
 	while (x < xmax)
 	{
-		y = chr_count_until(&file[i], ",x-0123456789", '\n') - 1;
+		y = chr_count_until(&file[i], ",x-0123456789abcdefABCDEF", '\n') - 1;
 		if (y != ymax)
 		{
 			ft_printf("Wrong map: error at line %d\n", x);
@@ -189,7 +194,7 @@ t_map	*get_the_map(int argc, char *argv[])
 	map->apex = (t_int3D){.x=0,.y=0,.z=0};
 	map->abyss = (t_int3D){.x=0,.y=0,.z=0};
 	map->max.x = chr_count_until(file, "\n", '\0') - 1;
-	map->max.y = chr_count_until(file, ",x-0123456789", '\n') - 1;
+	map->max.y = chr_count_until(file, ",x-0123456789abcdefABCDEF", '\n') - 1;
 	if (check_map_format(file, map->max.x, map->max.y))
 	{
 		free(map);
