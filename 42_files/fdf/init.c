@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:26:07 by gdornic           #+#    #+#             */
-/*   Updated: 2023/05/22 14:09:38 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/05/22 19:55:30 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,11 @@ t_settings	*settings_init(t_double2D max, t_map *map)
 	base_rotation(&(settings->map_base), (t_double3D){0, 0, 1}, -3 * M_PI / 4.);
 	base_rotation(&(settings->map_base), (t_double3D){1, 0, 0}, M_PI-acos(1/sqrt(3)));
 	settings->color_profile = map->color_profile;
-	proj_xymax = isometric_projection((t_int3D){map->max.x, map->max.y, 0}, map, settings->map_base);
-	proj_apex = isometric_projection((t_int3D){map->apex.x, map->apex.y, map->apex.z}, map, settings->map_base);
-	proj_abyss = isometric_projection((t_int3D){map->abyss.x, map->abyss.y, map->abyss.z}, map, settings->map_base);
-	settings->scale = fmin((double)(settings->max.x - 2 * settings->border.x) / (fabs(isometric_projection((t_int3D){map->max.x, 0, 0}, map, settings->map_base).x) + fabs(isometric_projection((t_int3D){0, map->max.y, 0}, map, settings->map_base).x)), (double)(settings->max.y - 2 * settings->border.y) / (fmax(fabs(proj_xymax.y), fabs(proj_abyss.y)) + fmax(fabs(isometric_projection((t_int3D){0, 0, 0}, map, settings->map_base).y), fabs(proj_apex.y))));
-	settings->obj_center = isometric_projection((t_int3D){map->max.x, map->max.y, map->apex.z}, map, settings->map_base);
+	proj_xymax = orthogonal_projection((t_int3D){map->max.x, map->max.y, 0}, map, settings->map_base);
+	proj_apex = orthogonal_projection((t_int3D){map->apex.x, map->apex.y, map->apex.z}, map, settings->map_base);
+	proj_abyss = orthogonal_projection((t_int3D){map->abyss.x, map->abyss.y, map->abyss.z}, map, settings->map_base);
+	settings->scale = fmin((double)(settings->max.x - 2 * settings->border.x) / (fabs(orthogonal_projection((t_int3D){map->max.x, 0, 0}, map, settings->map_base).x) + fabs(orthogonal_projection((t_int3D){0, map->max.y, 0}, map, settings->map_base).x)), (double)(settings->max.y - 2 * settings->border.y) / (fmax(fabs(proj_xymax.y), fabs(proj_abyss.y)) + fmax(fabs(orthogonal_projection((t_int3D){0, 0, 0}, map, settings->map_base).y), fabs(proj_apex.y))));
+	settings->obj_center = orthogonal_projection((t_int3D){map->max.x, map->max.y, map->apex.z}, map, settings->map_base);
 	make_offset(settings, map);
 	return (settings);
 }

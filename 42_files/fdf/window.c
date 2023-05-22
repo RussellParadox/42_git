@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 04:58:56 by gdornic           #+#    #+#             */
-/*   Updated: 2023/05/20 13:14:47 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/05/22 20:21:00 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ int	mouse_hook(int button, int x, int y, t_param *param)
 		param->settings->offset.x = x + (diff.x) * scale_ratio;
 		param->settings->offset.y = y + (diff.y) * scale_ratio;
 		put_map_to_window(param);
+		ft_printf("Frame count : %d\n", param->frame_count);
+		param->frame_count++;
 	}
 	if (button == 5)
 	{
@@ -85,6 +87,8 @@ int	mouse_hook(int button, int x, int y, t_param *param)
 		param->settings->offset.x = x + (diff.x) * scale_ratio;
 		param->settings->offset.y = y + (diff.y) * scale_ratio;
 		put_map_to_window(param);
+		ft_printf("Frame count : %d\n", param->frame_count);
+		param->frame_count++;
 	}
 	return (0);
 }
@@ -106,13 +110,15 @@ int	mouse_transformation(int x, int y, t_param *param)
 	v.x = previous.x - x;
 	v.y = previous.y - y;
 	magnitude = hypot(v.x, v.y);
-	if (magnitude > 3)
+	if (magnitude > 5)
 	{
 		if (param->translation)
 		{
 			param->settings->offset.x = x + param->settings->cursor_to_map.x;
 			param->settings->offset.y = y + param->settings->cursor_to_map.y;
 			put_map_to_window(param);
+			ft_printf("Frame count : %d\n", param->frame_count);
+			param->frame_count++;
 		}
 		else
 		{
@@ -130,6 +136,8 @@ int	mouse_transformation(int x, int y, t_param *param)
 			}
 			base_rotation(&(param->settings->map_base), u, M_PI / 120);
 			put_map_to_window(param);
+			ft_printf("Frame count : %d\n", param->frame_count);
+			param->frame_count++;
 		}
 	}
 	previous.x = x;
@@ -139,7 +147,7 @@ int	mouse_transformation(int x, int y, t_param *param)
 
 void	put_pixel(t_img *data, int x, int y, int color)
 {
-	char	*dst;
+	register char	*dst;
 
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
@@ -164,6 +172,7 @@ int	print_map(t_map *map)
 	param->translation = 1;
 	param->rotation = 1;
 	put_map_to_window(param);
+	param->frame_count = 1;
 	mlx_hook(param->mlx->win, 17, 0L, destroy_hook, param->mlx);
 	mlx_hook(param->mlx->win, 2, (1L<<0), key_down_hook, param);
 	mlx_key_hook(param->mlx->win, key_up_hook, param);

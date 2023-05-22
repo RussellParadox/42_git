@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 20:00:43 by gdornic           #+#    #+#             */
-/*   Updated: 2023/05/20 12:52:44 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/05/22 20:06:10 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ typedef struct s_param
 	t_settings	*settings;
 	int	translation;
 	int	rotation;
+	int	frame_count;
 }	t_param;
 
 //map
@@ -128,7 +129,7 @@ int	print_map(t_map *map);
 int	destroy_hook(t_mlx *mlx);
 
 //projection
-t_double2D	isometric_projection(t_int3D coord, t_map *map, t_base3D base);
+t_double2D	orthogonal_projection(t_int3D coord, t_map *map, t_base3D base);
 void	iterative_projection(t_map *map, t_img *img, t_settings settings);
 
 //segment

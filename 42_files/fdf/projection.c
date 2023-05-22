@@ -6,13 +6,13 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 05:23:00 by gdornic           #+#    #+#             */
-/*   Updated: 2023/05/22 13:27:01 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/05/22 19:51:47 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-t_double2D	isometric_projection(t_int3D coord, t_map *map, t_base3D base)
+t_double2D	orthogonal_projection(t_int3D coord, t_map *map, t_base3D base)
 {
 	t_double2D	proj;
 	double		ratio;
@@ -55,15 +55,15 @@ void	iterative_projection(t_map *map, t_img *img, t_settings settings)
 		i.x = 0;
 		while (i.x <= map->max.x)
 		{
-			proj_from = scaling(isometric_projection((t_int3D){i.x, i.y, map->height[i.x][i.y]}, map, settings.map_base), settings);
+			proj_from = scaling(orthogonal_projection((t_int3D){i.x, i.y, map->height[i.x][i.y]}, map, settings.map_base), settings);
 			if (i.x < map->max.x)
 			{
-				proj_to = scaling(isometric_projection((t_int3D){i.x + 1, i.y, map->height[i.x + 1][i.y]}, map, settings.map_base), settings);
+				proj_to = scaling(orthogonal_projection((t_int3D){i.x + 1, i.y, map->height[i.x + 1][i.y]}, map, settings.map_base), settings);
 				bresenham_segment(img, proj_from, proj_to, settings);
 			}
 			if (i.y < map->max.y)
 			{
-				proj_to = scaling(isometric_projection((t_int3D){i.x, i.y + 1, map->height[i.x][i.y + 1]}, map, settings.map_base), settings);
+				proj_to = scaling(orthogonal_projection((t_int3D){i.x, i.y + 1, map->height[i.x][i.y + 1]}, map, settings.map_base), settings);
 				bresenham_segment(img, proj_from, proj_to, settings);
 			}
 			i.x++;
