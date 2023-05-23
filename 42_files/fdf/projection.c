@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 05:23:00 by gdornic           #+#    #+#             */
-/*   Updated: 2023/05/22 19:51:47 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/05/23 21:26:15 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ t_double2D	orthogonal_projection(t_int3D coord, t_map *map, t_base3D base)
 				100 + (int)(ratio * 150));
 		}
 	}
-	else if (map->color[coord.y][coord.x] == -1)
+	else if (map->color[coord.x][coord.y] == -1)
 		proj.color = to_trgb(0, 255, 255, 255);
 	else
-		proj.color = map->color[coord.y][coord.x];
+		proj.color = map->color[coord.x][coord.y];
 	return (proj);
 }
 
