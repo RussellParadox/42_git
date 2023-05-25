@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 20:00:43 by gdornic           #+#    #+#             */
-/*   Updated: 2023/05/22 20:06:10 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/05/25 18:32:21 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,17 +51,10 @@ typedef struct s_double3D
 	double	z;
 }	t_double3D;
 
-typedef struct s_circle
-{
-	t_int2D	center;
-	int	radius;
-}	t_circle;
-
 typedef struct s_mlx
 {
 	void	*instance;
 	void	*win;
-	t_circle	*circle;
 }	t_mlx;
 
 typedef struct s_img

@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 04:58:56 by gdornic           #+#    #+#             */
-/*   Updated: 2023/05/22 20:21:00 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/05/25 22:07:09 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,6 @@ int	mouse_hook(int button, int x, int y, t_param *param)
 		scale_ratio = param->settings->scale / (param->settings->scale - 10);
 		param->settings->offset.x = x + (diff.x) * scale_ratio;
 		param->settings->offset.y = y + (diff.y) * scale_ratio;
-		put_map_to_window(param);
-		ft_printf("Frame count : %d\n", param->frame_count);
-		param->frame_count++;
 	}
 	if (button == 5)
 	{
@@ -86,9 +83,6 @@ int	mouse_hook(int button, int x, int y, t_param *param)
 		scale_ratio = param->settings->scale / (param->settings->scale + 10);
 		param->settings->offset.x = x + (diff.x) * scale_ratio;
 		param->settings->offset.y = y + (diff.y) * scale_ratio;
-		put_map_to_window(param);
-		ft_printf("Frame count : %d\n", param->frame_count);
-		param->frame_count++;
 	}
 	return (0);
 }
@@ -110,15 +104,12 @@ int	mouse_transformation(int x, int y, t_param *param)
 	v.x = previous.x - x;
 	v.y = previous.y - y;
 	magnitude = hypot(v.x, v.y);
-	if (magnitude > 5)
+	if (magnitude > 2)
 	{
 		if (param->translation)
 		{
 			param->settings->offset.x = x + param->settings->cursor_to_map.x;
 			param->settings->offset.y = y + param->settings->cursor_to_map.y;
-			put_map_to_window(param);
-			ft_printf("Frame count : %d\n", param->frame_count);
-			param->frame_count++;
 		}
 		else
 		{
@@ -135,9 +126,6 @@ int	mouse_transformation(int x, int y, t_param *param)
 				u.z = signof(v.x);
 			}
 			base_rotation(&(param->settings->map_base), u, M_PI / 120);
-			put_map_to_window(param);
-			ft_printf("Frame count : %d\n", param->frame_count);
-			param->frame_count++;
 		}
 	}
 	previous.x = x;
@@ -172,12 +160,12 @@ int	print_map(t_map *map)
 	param->translation = 1;
 	param->rotation = 1;
 	put_map_to_window(param);
-	param->frame_count = 1;
 	mlx_hook(param->mlx->win, 17, 0L, destroy_hook, param->mlx);
 	mlx_hook(param->mlx->win, 2, (1L<<0), key_down_hook, param);
 	mlx_key_hook(param->mlx->win, key_up_hook, param);
 	mlx_mouse_hook(param->mlx->win, mouse_hook, param);
 	mlx_hook(param->mlx->win, 6, (1L<<8), mouse_transformation, param);
+	mlx_loop_hook(param->mlx->instance, put_map_to_window, param);
 	mlx_loop(param->mlx->instance);
 	free_param(param);
 	return (0);

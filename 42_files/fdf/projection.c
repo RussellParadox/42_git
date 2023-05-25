@@ -6,11 +6,34 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 05:23:00 by gdornic           #+#    #+#             */
-/*   Updated: 2023/05/23 21:26:15 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/05/25 17:34:14 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+t_double3D	cross_product(t_double3D v1, t_double3D v2)
+{
+	t_double3D	result;
+
+	result.x = v1.y * v2.z - v2.y * v1.z;
+	result.y = v1.z * v2.x - v2.z * v1.x;
+	result.z = v1.x * v2.y - v2.x * v1.y;
+	return (result);
+}
+
+double	scalar_product(t_double3D v1, t_double3D v2)
+{
+	double	result;
+
+	result = v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
+	return (result);
+}
+
+//u is the direction vector of the straight line
+t_double2D	parallele_projection(t_int3D coord, t_map *map, t_base3D base, t_double3D u)
+{
+}
 
 t_double2D	orthogonal_projection(t_int3D coord, t_map *map, t_base3D base)
 {
