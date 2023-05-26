@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 21:59:04 by gdornic           #+#    #+#             */
-/*   Updated: 2023/05/22 13:55:58 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/05/26 10:00:41 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,18 @@ int	get_map_color(char *cptr)
 	comma_occ = ft_strchr(cptr, ',');
 	if (comma_occ == NULL)
 		return (-1);
-	comma_occ = ft_strchr(comma_occ, '\0');
-	comma_occ--;
+	comma_occ = ft_strchr(comma_occ, '\0') - 1;
 	color = 0;
 	exponent = 0;
 	while (*comma_occ != 'x')
 	{
 		if (!ft_isdigit(*comma_occ))
-			color += (*comma_occ - 'A' + 10) * pow(16, exponent);
+		{
+			if (*comma_occ >= 'a')
+				color += (*comma_occ - 'a' + 10) * pow(16, exponent);
+			else
+				color += (*comma_occ - 'A' + 10) * pow(16, exponent);
+		}
 		else
 			color += (*comma_occ - '0') * pow(16, exponent);
 		comma_occ--;
