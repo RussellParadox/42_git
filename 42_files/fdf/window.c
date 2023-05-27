@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 04:58:56 by gdornic           #+#    #+#             */
-/*   Updated: 2023/05/25 22:07:09 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/05/27 17:28:30 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	destroy_hook(t_mlx *mlx)
 {
 	mlx_destroy_window(mlx->instance, mlx->win);
 	mlx_loop_end(mlx->instance);
+	mlx->loop_state = 0;
 	return (0);
 }
 
@@ -23,12 +24,15 @@ int	put_map_to_window(t_param *param)
 {
 	t_img		img;
 
-	img.img = mlx_new_image(param->mlx->instance, param->settings->max.x, param->settings->max.y);
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, \
-		&img.line_length, &img.endian);
-	iterative_projection(param->map, &img, *(param->settings));
-	mlx_put_image_to_window(param->mlx->instance, param->mlx->win, img.img, 0, 0);
-	mlx_destroy_image(param->mlx->instance, img.img);
+	if (param->mlx->loop_state != 0)
+	{
+		img.img = mlx_new_image(param->mlx->instance, param->settings->max.x, param->settings->max.y);
+		img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, \
+			&img.line_length, &img.endian);
+		iterative_projection(param->map, &img, *(param->settings));
+		mlx_put_image_to_window(param->mlx->instance, param->mlx->win, img.img, 0, 0);
+		mlx_destroy_image(param->mlx->instance, img.img);
+	}
 	return (0);
 }
 
@@ -159,12 +163,12 @@ int	print_map(t_map *map)
 	param->map = map;
 	param->translation = 1;
 	param->rotation = 1;
-	put_map_to_window(param);
-	mlx_hook(param->mlx->win, 17, 0L, destroy_hook, param->mlx);
+	param->mlx->loop_state = 1;
 	mlx_hook(param->mlx->win, 2, (1L<<0), key_down_hook, param);
-	mlx_key_hook(param->mlx->win, key_up_hook, param);
 	mlx_mouse_hook(param->mlx->win, mouse_hook, param);
 	mlx_hook(param->mlx->win, 6, (1L<<8), mouse_transformation, param);
+	mlx_key_hook(param->mlx->win, key_up_hook, param);
+	mlx_hook(param->mlx->win, 17, 0L, destroy_hook, param->mlx);
 	mlx_loop_hook(param->mlx->instance, put_map_to_window, param);
 	mlx_loop(param->mlx->instance);
 	free_param(param);

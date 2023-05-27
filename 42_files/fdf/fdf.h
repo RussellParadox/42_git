@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 20:00:43 by gdornic           #+#    #+#             */
-/*   Updated: 2023/05/25 18:32:21 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/05/27 17:01:04 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_mlx
 {
 	void	*instance;
 	void	*win;
+	int	loop_state;
 }	t_mlx;
 
 typedef struct s_img

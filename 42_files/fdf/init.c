@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:26:07 by gdornic           #+#    #+#             */
-/*   Updated: 2023/05/24 14:00:08 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/05/27 17:29:17 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ t_mlx	*init_mlx(t_settings *settings)
 	mlx = (t_mlx *)malloc(sizeof(t_mlx));
 	mlx->instance = mlx_init();
 	mlx->win = mlx_new_window(mlx->instance, settings->max.x, settings->max.y, "fdf");
+	mlx->loop_state = 1;
 	return (mlx);
 }
 

@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 21:59:04 by gdornic           #+#    #+#             */
-/*   Updated: 2023/05/26 10:00:41 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/05/27 15:25:59 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ char	***split_the_file(char *file, int row_qt)
 		free(row_split[i]);
 		i++;
 	}
+	free(row_split[i]);
 	free(row_split);
 	return (col_split);
 }
