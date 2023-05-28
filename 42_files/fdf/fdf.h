@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 20:00:43 by gdornic           #+#    #+#             */
-/*   Updated: 2023/05/27 17:01:04 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/05/28 16:38:06 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,9 +112,17 @@ typedef struct s_param
 t_map	*get_the_map(int argc, char *argv[]);
 void	free_map(t_map *map);
 
+//map utility
+void	free_map(t_map *map);
+int	get_map_color(char *cptr);
+int	chr_count_until(char *file, char *set, char lim);
+int	check_map_format(char *file, int xmax, int ymax);
+
 //init
 t_mlx	*init_mlx(t_settings *settings);
 t_settings	*settings_init(t_double2D max, t_map *map);
+
+//vector math
 void	base_rotation(t_base3D *base, t_double3D u, double dtheta);
 
 //window

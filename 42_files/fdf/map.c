@@ -6,55 +6,20 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 21:59:04 by gdornic           #+#    #+#             */
-/*   Updated: 2023/05/27 15:25:59 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/05/28 17:03:01 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	free_map(t_map *map)
+void	load_map_data(t_map *map, int i, int j)
 {
-	int	i;
-
-	i = 0;
-	while (i <= map->max.x)
-	{
-		free(map->height[i]);
-		free(map->color[i]);
-		i++;
-	}
-	free(map->height);
-	free(map->color);
-	free(map);
-}
-
-int	get_map_color(char *cptr)
-{
-	char	*comma_occ;
-	int	exponent;
-	int	color;
-
-	comma_occ = ft_strchr(cptr, ',');
-	if (comma_occ == NULL)
-		return (-1);
-	comma_occ = ft_strchr(comma_occ, '\0') - 1;
-	color = 0;
-	exponent = 0;
-	while (*comma_occ != 'x')
-	{
-		if (!ft_isdigit(*comma_occ))
-		{
-			if (*comma_occ >= 'a')
-				color += (*comma_occ - 'a' + 10) * pow(16, exponent);
-			else
-				color += (*comma_occ - 'A' + 10) * pow(16, exponent);
-		}
-		else
-			color += (*comma_occ - '0') * pow(16, exponent);
-		comma_occ--;
-		exponent++;
-	}
-	return (color);
+	if (map->color[i][j] != -1)
+		map->color_profile = 0;
+	if (map->height[i][j] > map->apex.z)
+		map->apex = (t_int3D){i, j, map->height[i][j]};
+	else if (map->height[i][j] < map->abyss.z)
+		map->abyss = (t_int3D){i, j, map->height[i][j]};
 }
 
 t_map	*load_heights(t_map *map, char ***splited_map)
@@ -75,12 +40,7 @@ t_map	*load_heights(t_map *map, char ***splited_map)
 		{
 			map->height[i][j] = ft_atoi(splited_map[i][j]);
 			map->color[i][j] = get_map_color(splited_map[i][j]);
-			if (map->color[i][j] != -1)
-				map->color_profile = 0;
-			if (map->height[i][j] > map->apex.z)
-				map->apex = (t_int3D){.x=i, .y=j, .z=map->height[i][j]};
-			else if (map->height[i][j] < map->abyss.z)
-				map->abyss = (t_int3D){.x=i, .y=j, .z=map->height[i][j]};
+			load_map_data(map, i, j);
 			free(splited_map[i][j]);
 			j++;
 		}
@@ -89,27 +49,6 @@ t_map	*load_heights(t_map *map, char ***splited_map)
 	}
 	free(splited_map);
 	return (map);
-}
-
-int	chr_count_until(char *file, char *set, char lim)
-{
-	int	chr_qt;
-	int	i;
-
-	chr_qt = 0;
-	i = 0;
-	while (file[i] && file[i] != lim)
-	{
-		if (ft_strchr(set, file[i]))
-		{
-			chr_qt++;
-			while (file[i] && ft_strchr(set, file[i]))
-				i++;
-		}
-		else
-			i++;
-	}
-	return (chr_qt);
 }
 
 char	***split_the_file(char *file, int row_qt)
@@ -159,45 +98,18 @@ char	*get_the_file(char *file_name)
 	return (file);
 }
 
-int	check_map_format(char *file, int xmax, int ymax)
-{
-	int	i;
-	int	y;
-	int	x;
-
-	i = 0;
-	x = 0;
-	while (x < xmax)
-	{
-		y = chr_count_until(&file[i], ",x-0123456789abcdefABCDEF", '\n') - 1;
-		if (y != ymax)
-		{
-			ft_printf("Wrong map: error at line %d\n", x);
-			return (1);
-		}
-		while (file[i] && file[i] != '\n')
-			i++;
-		i++;
-		x++;
-	}
-	return (0);
-}
-
 t_map	*get_the_map(int argc, char *argv[])
 {
 	t_map		*map;
 	char		*file;
 	char		***splited_file;
 
-	map = (t_map *)malloc(sizeof(t_map));
 	file = get_the_file(argv[argc - 1]);
 	if (file == NULL)
-	{
-		free(map);
 		return (NULL);
-	}
-	map->apex = (t_int3D){.x=0,.y=0,.z=0};
-	map->abyss = (t_int3D){.x=0,.y=0,.z=0};
+	map = (t_map *)malloc(sizeof(t_map));
+	map->apex = (t_int3D){0, 0, 0};
+	map->abyss = (t_int3D){0, 0, 0};
 	map->max.x = chr_count_until(file, "\n", '\0') - 1;
 	map->max.y = chr_count_until(file, ",x-0123456789abcdefABCDEF", '\n') - 1;
 	if (check_map_format(file, map->max.x, map->max.y))
