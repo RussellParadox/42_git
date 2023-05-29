@@ -6,11 +6,19 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 15:37:44 by gdornic           #+#    #+#             */
-/*   Updated: 2023/05/28 15:38:37 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/05/29 15:20:46 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+double	scalar_product(t_double3D v1, t_double3D v2)
+{
+	double	result;
+
+	result = v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
+	return (result);
+}
 
 t_double3D	rotation(t_double3D v1, t_double3D u, double dtheta)
 {

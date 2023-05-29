@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 20:00:43 by gdornic           #+#    #+#             */
-/*   Updated: 2023/05/28 16:38:06 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/05/29 16:12:30 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,11 @@ int	destroy_hook(t_mlx *mlx);
 //projection
 t_double2D	orthogonal_projection(t_int3D coord, t_map *map, t_base3D base);
 void	iterative_projection(t_map *map, t_img *img, t_settings settings);
+
+//projection utility
+int	pixel_color(t_int2D coord1, t_int2D coord2, t_int2D i, \
+		t_settings settings);
+t_int2D	scaling(t_double2D double_coord, t_settings settings);
 
 //segment
 t_int2D	scaling(t_double2D double_coord, t_settings settings);

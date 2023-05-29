@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:26:07 by gdornic           #+#    #+#             */
-/*   Updated: 2023/05/28 15:38:29 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/05/29 16:17:05 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_mlx	*init_mlx(t_settings *settings)
 	return (mlx);
 }
 
-void	make_offset(t_settings *settings, t_map *map)
+void	make_offset(t_settings *settings)
 {
 	settings->offset.x = 0.5 * settings->max.x;
 	settings->offset.y = 0.5 * settings->max.y;
@@ -70,6 +70,6 @@ t_settings	*settings_init(t_double2D max, t_map *map)
 		M_PI - acos(1 / sqrt(3)));
 	settings->color_profile = map->color_profile;
 	make_scale(settings, map);
-	make_offset(settings, map);
+	make_offset(settings);
 	return (settings);
 }

@@ -6,19 +6,11 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 05:23:00 by gdornic           #+#    #+#             */
-/*   Updated: 2023/05/28 17:20:00 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/05/29 15:20:34 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-double	scalar_product(t_double3D v1, t_double3D v2)
-{
-	double	result;
-
-	result = v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
-	return (result);
-}
 
 //u is the direction vector of the straight line
 t_double2D	parallele_projection(t_int3D coord, t_map *map, \
@@ -69,10 +61,32 @@ t_double2D	orthogonal_projection(t_int3D coord, t_map *map, t_base3D base)
 	return (proj);
 }
 
-void	iterative_projection(t_map *map, t_img *img, t_settings settings)
+void	iterative_projection_core(t_map *map, t_img *img, \
+	t_settings settings, t_int2D i)
 {
 	t_int2D	proj_from;
 	t_int2D	proj_to;
+
+	proj_from = scaling(orthogonal_projection((t_int3D){i.x, \
+	i.y, map->height[i.x][i.y]}, map, settings.map_base), settings);
+	if (i.x < map->max.x)
+	{
+		proj_to = scaling(orthogonal_projection((t_int3D){i.x + 1, \
+		i.y, map->height[i.x + 1][i.y]}, map, settings.map_base), \
+		settings);
+		bresenham_segment(img, proj_from, proj_to, settings);
+	}
+	if (i.y < map->max.y)
+	{
+		proj_to = scaling(orthogonal_projection((t_int3D){i.x, \
+		i.y + 1, map->height[i.x][i.y + 1]}, map, settings.map_base), \
+		settings);
+		bresenham_segment(img, proj_from, proj_to, settings);
+	}
+}
+
+void	iterative_projection(t_map *map, t_img *img, t_settings settings)
+{
 	t_int2D	i;
 
 	i.y = 0;
@@ -81,22 +95,7 @@ void	iterative_projection(t_map *map, t_img *img, t_settings settings)
 		i.x = 0;
 		while (i.x <= map->max.x)
 		{
-			proj_from = scaling(orthogonal_projection((t_int3D){i.x, \
-			i.y, map->height[i.x][i.y]}, map, settings.map_base), settings);
-			if (i.x < map->max.x)
-			{
-				proj_to = scaling(orthogonal_projection((t_int3D){i.x + 1, \
-				i.y, map->height[i.x + 1][i.y]}, map, settings.map_base), \
-				settings);
-				bresenham_segment(img, proj_from, proj_to, settings);
-			}
-			if (i.y < map->max.y)
-			{
-				proj_to = scaling(orthogonal_projection((t_int3D){i.x, \
-				i.y + 1, map->height[i.x][i.y + 1]}, map, settings.map_base), \
-				settings);
-				bresenham_segment(img, proj_from, proj_to, settings);
-			}
+			iterative_projection_core(map, img, settings, i);
 			i.x++;
 		}
 		i.y++;
