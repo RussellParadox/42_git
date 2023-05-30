@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 04:58:56 by gdornic           #+#    #+#             */
-/*   Updated: 2023/05/27 17:28:30 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/05/30 14:10:12 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,27 +64,23 @@ int	mouse_hook(int button, int x, int y, t_param *param)
 {
 	t_int2D	diff;
 	double	scale_ratio;
+	double	scale_increment;
 
 	if (button == 1)
 	{
 		param->settings->cursor_to_map.x = param->settings->offset.x - x;
 		param->settings->cursor_to_map.y = param->settings->offset.y - y;
 	}
-	if (button == 4)
+	if (button == 4 || button == 5)
 	{
-		param->settings->scale += 10;
 		diff.x = param->settings->offset.x - x;
 		diff.y = param->settings->offset.y - y;
-		scale_ratio = param->settings->scale / (param->settings->scale - 10);
-		param->settings->offset.x = x + (diff.x) * scale_ratio;
-		param->settings->offset.y = y + (diff.y) * scale_ratio;
-	}
-	if (button == 5)
-	{
-		param->settings->scale = fmax(0.1, param->settings->scale - 10);
-		diff.x = param->settings->offset.x - x;
-		diff.y = param->settings->offset.y - y;
-		scale_ratio = param->settings->scale / (param->settings->scale + 10);
+		if (button == 4)
+			scale_increment = 10 * param->settings->scale / 100.;
+		else
+			scale_increment = - 10 * param->settings->scale / 100.;
+		param->settings->scale += scale_increment;
+		scale_ratio = param->settings->scale / (param->settings->scale - scale_increment);
 		param->settings->offset.x = x + (diff.x) * scale_ratio;
 		param->settings->offset.y = y + (diff.y) * scale_ratio;
 	}
@@ -129,7 +125,7 @@ int	mouse_transformation(int x, int y, t_param *param)
 				u.y = 0;
 				u.z = signof(v.x);
 			}
-			base_rotation(&(param->settings->map_base), u, M_PI / 120);
+			base_rotation(&(param->settings->map_base), u, M_PI / 240);
 		}
 	}
 	previous.x = x;
