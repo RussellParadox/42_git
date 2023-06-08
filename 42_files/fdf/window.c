@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 04:58:56 by gdornic           #+#    #+#             */
-/*   Updated: 2023/05/30 14:10:12 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/06/07 18:35:58 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,10 @@ int	key_up_hook(int keycode, t_param *param)
 {
 	if (keycode == 0xff1b)
 		return (destroy_hook(param->mlx));
-	if (keycode == 0xffe3 || keycode == 0xffe9)
+	if (keycode == 0xffe3 || keycode == 0xffe9 || keycode == 0x70)
 		param->translation = 1;
+	if (keycode == 0x70)
+		param->parallele = 0;
 	return (0);
 }
 
@@ -56,6 +58,16 @@ int	key_down_hook(int keycode, t_param *param)
 	{
 		param->translation = 0;
 		param->rotation = 0;
+	}
+	if (keycode == 0x6f)
+	{
+		make_scale(param->settings, param->map);
+		make_offset(param->settings);
+	}
+	if (keycode == 0x70)
+	{
+		param->translation = 0;
+		param->parallele = 1;
 	}
 	return (0);
 }
@@ -80,7 +92,8 @@ int	mouse_hook(int button, int x, int y, t_param *param)
 		else
 			scale_increment = - 10 * param->settings->scale / 100.;
 		param->settings->scale += scale_increment;
-		scale_ratio = param->settings->scale / (param->settings->scale - scale_increment);
+		scale_ratio = param->settings->scale / (param->settings->scale - \
+		scale_increment);
 		param->settings->offset.x = x + (diff.x) * scale_ratio;
 		param->settings->offset.y = y + (diff.y) * scale_ratio;
 	}
@@ -110,6 +123,11 @@ int	mouse_transformation(int x, int y, t_param *param)
 		{
 			param->settings->offset.x = x + param->settings->cursor_to_map.x;
 			param->settings->offset.y = y + param->settings->cursor_to_map.y;
+		}
+		else if (param->parallele)
+		{
+			param->settings->u.x += v.x / magnitude / 100.;
+			param->settings->u.y += v.y / magnitude / 100.;
 		}
 		else
 		{
@@ -160,6 +178,7 @@ int	print_map(t_map *map)
 	param->translation = 1;
 	param->rotation = 1;
 	param->mlx->loop_state = 1;
+	param->parallele = 0;
 	mlx_hook(param->mlx->win, 2, (1L<<0), key_down_hook, param);
 	mlx_mouse_hook(param->mlx->win, mouse_hook, param);
 	mlx_hook(param->mlx->win, 6, (1L<<8), mouse_transformation, param);

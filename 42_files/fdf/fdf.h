@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 20:00:43 by gdornic           #+#    #+#             */
-/*   Updated: 2023/05/29 16:12:30 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/06/07 16:10:56 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ typedef struct s_settings
 	double		dist;
 	t_double2D	obj_center;
 	t_base3D	map_base;
+	t_double3D	u;
 }	t_settings;
 
 typedef struct s_param
@@ -105,6 +106,7 @@ typedef struct s_param
 	t_settings	*settings;
 	int	translation;
 	int	rotation;
+	int	parallele;
 	int	frame_count;
 }	t_param;
 
@@ -119,6 +121,8 @@ int	chr_count_until(char *file, char *set, char lim);
 int	check_map_format(char *file, int xmax, int ymax);
 
 //init
+void	make_offset(t_settings *settings);
+void	make_scale(t_settings *settings, t_map *map);
 t_mlx	*init_mlx(t_settings *settings);
 t_settings	*settings_init(t_double2D max, t_map *map);
 

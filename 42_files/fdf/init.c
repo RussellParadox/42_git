@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 22:26:07 by gdornic           #+#    #+#             */
-/*   Updated: 2023/05/29 16:17:05 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/06/07 16:13:08 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,6 @@ t_settings	*settings_init(t_double2D max, t_map *map)
 	settings->color_profile = map->color_profile;
 	make_scale(settings, map);
 	make_offset(settings);
+	settings->u = (t_double3D){.x = 0, .y = 0, .z = 1};
 	return (settings);
 }
