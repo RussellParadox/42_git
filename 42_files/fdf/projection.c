@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 05:23:00 by gdornic           #+#    #+#             */
-/*   Updated: 2023/06/07 18:54:46 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/06/08 14:34:09 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,12 @@ t_double2D	parallele_projection(t_int3D coord, t_map *map, \
 
 	proj.x = (coord.x - map->center.x) * base.e1.x + \
 		(coord.y - map->center.y) * base.e2.x + \
-		(coord.z - map->center.z) / 10. * base.e3.x - (coord.z - map->center.z) * u.x / u.z;
+		(coord.z - map->center.z) / 10. * base.e3.x - \
+		(coord.z - map->center.z) * u.x / u.z;
 	proj.y = (coord.x - map->center.x) * base.e1.y + \
 		(coord.y - map->center.y) * base.e2.y + \
-		(coord.z - map->center.z) / 10. * base.e3.y - (coord.z - map->center.z) * u.y / u.z;
+		(coord.z - map->center.z) / 10. * base.e3.y - \
+		(coord.z - map->center.z) * u.y / u.z;
 	proj.color = projection_color(coord, map);
 	return (proj);
 }
@@ -74,12 +76,11 @@ t_double2D	orthogonal_projection(t_int3D coord, t_map *map, t_base3D base)
 void	iterative_projection_core(t_map *map, t_img *img, \
 	t_settings settings, t_int2D i)
 {
-	t_int2D	proj_from;
-	t_int2D	proj_to;
+	t_int2D		proj_from;
+	t_int2D		proj_to;
 	t_double3D	u;
 
 	u = settings.u;
-	printf("u: %f %f\n", u.x, u.y);
 	proj_from = scaling(parallele_projection((t_int3D){i.x, \
 	i.y, map->height[i.x][i.y]}, map, settings.map_base, u), settings);
 	if (i.x < map->max.x)
