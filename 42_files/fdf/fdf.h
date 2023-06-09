@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 20:00:43 by gdornic           #+#    #+#             */
-/*   Updated: 2023/06/07 16:10:56 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/06/09 15:05:23 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_int3D
 	int	x;
 	int	y;
 	int	z;
+	int	color;
 }	t_int3D;
 
 typedef struct s_double3D
