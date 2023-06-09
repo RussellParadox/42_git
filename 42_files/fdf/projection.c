@@ -6,29 +6,11 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 05:23:00 by gdornic           #+#    #+#             */
-/*   Updated: 2023/06/08 14:34:09 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/06/08 14:35:12 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-//u is the direction vector of the straight line
-t_double2D	parallele_projection(t_int3D coord, t_map *map, \
-		t_base3D base, t_double3D u)
-{
-	t_double2D	proj;
-
-	proj.x = (coord.x - map->center.x) * base.e1.x + \
-		(coord.y - map->center.y) * base.e2.x + \
-		(coord.z - map->center.z) / 10. * base.e3.x - \
-		(coord.z - map->center.z) * u.x / u.z;
-	proj.y = (coord.x - map->center.x) * base.e1.y + \
-		(coord.y - map->center.y) * base.e2.y + \
-		(coord.z - map->center.z) / 10. * base.e3.y - \
-		(coord.z - map->center.z) * u.y / u.z;
-	proj.color = projection_color(coord, map);
-	return (proj);
-}
 
 int	projection_color(t_int3D coord, t_map *map)
 {
@@ -57,6 +39,24 @@ int	projection_color(t_int3D coord, t_map *map)
 	else
 		color = map->color[coord.x][coord.y];
 	return (color);
+}
+
+//u is the direction vector of the straight line
+t_double2D	parallele_projection(t_int3D coord, t_map *map, \
+		t_base3D base, t_double3D u)
+{
+	t_double2D	proj;
+
+	proj.x = (coord.x - map->center.x) * base.e1.x + \
+		(coord.y - map->center.y) * base.e2.x + \
+		(coord.z - map->center.z) / 10. * base.e3.x - \
+		(coord.z - map->center.z) * u.x / u.z;
+	proj.y = (coord.x - map->center.x) * base.e1.y + \
+		(coord.y - map->center.y) * base.e2.y + \
+		(coord.z - map->center.z) / 10. * base.e3.y - \
+		(coord.z - map->center.z) * u.y / u.z;
+	proj.color = projection_color(coord, map);
+	return (proj);
 }
 
 t_double2D	orthogonal_projection(t_int3D coord, t_map *map, t_base3D base)
