@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 20:00:43 by gdornic           #+#    #+#             */
-/*   Updated: 2023/06/09 15:14:59 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/06/10 17:52:43 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,6 @@ typedef struct s_settings
 	int		color_profile;
 	t_double2D	cursor_to_map;
 	double		dist;
-	t_double2D	obj_center;
 	t_base3D	map_base;
 	t_double3D	u;
 }	t_settings;
@@ -114,7 +113,6 @@ typedef struct s_param
 	int	translation;
 	int	rotation;
 	int	parallele;
-	int	frame_count;
 }	t_param;
 
 //map
@@ -153,6 +151,7 @@ t_int2D	scaling(t_double2D double_coord, t_settings settings);
 //segment
 t_int2D	scaling(t_double2D double_coord, t_settings settings);
 void	bresenham_segment(t_img *img, t_int2D coord1, t_int2D coord2, t_settings settings);
+void	bresegment(t_img *img, t_int2D coord1, t_int2D coord2, t_settings settings);
 
 //color
 int	to_trgb(int t, int r, int g, int b);

@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 05:23:00 by gdornic           #+#    #+#             */
-/*   Updated: 2023/06/08 14:35:12 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/06/10 17:52:26 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,14 +88,16 @@ void	iterative_projection_core(t_map *map, t_img *img, \
 		proj_to = scaling(parallele_projection((t_int3D){i.x + 1, \
 		i.y, map->height[i.x + 1][i.y]}, map, settings.map_base, u), \
 		settings);
-		bresenham_segment(img, proj_from, proj_to, settings);
+		bresegment(img, proj_from, proj_to, settings);
+		//bresenham_segment(img, proj_from, proj_to, settings);
 	}
 	if (i.y < map->max.y)
 	{
 		proj_to = scaling(parallele_projection((t_int3D){i.x, \
 		i.y + 1, map->height[i.x][i.y + 1]}, map, settings.map_base, u), \
 		settings);
-		bresenham_segment(img, proj_from, proj_to, settings);
+		bresegment(img, proj_from, proj_to, settings);
+		//bresenham_segment(img, proj_from, proj_to, settings);
 	}
 }
 
