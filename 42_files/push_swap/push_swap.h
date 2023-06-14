@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 10:51:13 by gdornic           #+#    #+#             */
-/*   Updated: 2023/06/14 12:46:39 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/06/14 20:04:58 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,16 @@
 # include <libftprintf.h>
 # include <limits.h>
 
+typedef struct s_stack
+{
+	int	*item;
+	int	size;
+}	t_stack;
+
+//init stack
 int	*init_stack_a(int argc, char *argv[]);
+
+//instructions
+void	ps_swap(int *stack);
 
 #endif

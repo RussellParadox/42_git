@@ -6,7 +6,7 @@
 #    By: gdornic <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 21:58:09 by gdornic           #+#    #+#              #
-#    Updated: 2023/06/14 12:17:07 by gdornic          ###   ########.fr        #
+#    Updated: 2023/06/14 19:44:40 by gdornic          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ HEADERS = -Ilib42
 
 LIB_LINK = -Llib42 -l42 
 
-SRC = main.c init_stack.c
+SRC = main.c init_stack.c instructions.c
 
 OBJ = $(SRC:.c=.o)
 
