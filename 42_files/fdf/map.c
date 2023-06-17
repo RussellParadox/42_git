@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 21:59:04 by gdornic           #+#    #+#             */
-/*   Updated: 2023/05/28 17:03:01 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/06/17 15:16:28 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ void	load_map_data(t_map *map, int i, int j)
 	if (map->color[i][j] != -1)
 		map->color_profile = 0;
 	if (map->height[i][j] > map->apex.z)
-		map->apex = (t_int3D){i, j, map->height[i][j]};
+		map->apex = (t_int3D){.x = i, .y = j, .z = map->height[i][j]};
 	else if (map->height[i][j] < map->abyss.z)
-		map->abyss = (t_int3D){i, j, map->height[i][j]};
+		map->abyss = (t_int3D){.x = i, .y = j, .z = map->height[i][j]};
 }
 
 t_map	*load_heights(t_map *map, char ***splited_map)
@@ -108,8 +108,8 @@ t_map	*get_the_map(int argc, char *argv[])
 	if (file == NULL)
 		return (NULL);
 	map = (t_map *)malloc(sizeof(t_map));
-	map->apex = (t_int3D){0, 0, 0};
-	map->abyss = (t_int3D){0, 0, 0};
+	map->apex = (t_int3D){.x = 0, .y = 0, .z = 0};
+	map->abyss = (t_int3D){.x = 0, .y = 0, .z = 0};
 	map->max.x = chr_count_until(file, "\n", '\0') - 1;
 	map->max.y = chr_count_until(file, ",x-0123456789abcdefABCDEF", '\n') - 1;
 	if (check_map_format(file, map->max.x, map->max.y))

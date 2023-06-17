@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 20:00:43 by gdornic           #+#    #+#             */
-/*   Updated: 2023/06/09 15:05:23 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/06/17 15:12:29 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef struct s_double2D
 {
 	double	x;
 	double	y;
-	int	color;
+	int		color;
 }	t_double2D;
 
 typedef struct s_int3D
@@ -56,7 +56,7 @@ typedef struct s_mlx
 {
 	void	*instance;
 	void	*win;
-	int	loop_state;
+	int		loop_state;
 }	t_mlx;
 
 typedef struct s_img
@@ -70,12 +70,12 @@ typedef struct s_img
 
 typedef struct s_map
 {
-	double	**height;
-	int	**color;
-	int	color_profile;
-	t_int2D	max;
-	t_int3D	apex;
-	t_int3D	abyss;
+	double		**height;
+	int			**color;
+	int			color_profile;
+	t_int2D		max;
+	t_int3D		apex;
+	t_int3D		abyss;
 	t_double3D	center;
 }	t_map;
 
@@ -88,13 +88,13 @@ typedef struct s_base3D
 
 typedef struct s_settings
 {
-	t_int2D	offset;
+	t_int2D		offset;
 	double		scale;
+	double		dist;
 	t_int2D		max;
 	t_int2D		border;
-	int		color_profile;
+	int			color_profile;
 	t_double2D	cursor_to_map;
-	double		dist;
 	t_double2D	obj_center;
 	t_base3D	map_base;
 	t_double3D	u;
@@ -102,57 +102,58 @@ typedef struct s_settings
 
 typedef struct s_param
 {
-	t_mlx	*mlx;
-	t_map	*map;
+	t_mlx		*mlx;
+	t_map		*map;
 	t_settings	*settings;
-	int	translation;
-	int	rotation;
-	int	parallele;
-	int	frame_count;
+	int			translation;
+	int			rotation;
+	int			parallele;
+	int			frame_count;
 }	t_param;
 
 //map
-t_map	*get_the_map(int argc, char *argv[]);
-void	free_map(t_map *map);
+t_map		*get_the_map(int argc, char *argv[]);
+void		free_map(t_map *map);
 
 //map utility
-void	free_map(t_map *map);
-int	get_map_color(char *cptr);
-int	chr_count_until(char *file, char *set, char lim);
-int	check_map_format(char *file, int xmax, int ymax);
+void		free_map(t_map *map);
+int			get_map_color(char *cptr);
+int			chr_count_until(char *file, char *set, char lim);
+int			check_map_format(char *file, int xmax, int ymax);
 
 //init
-void	make_offset(t_settings *settings);
-void	make_scale(t_settings *settings, t_map *map);
-t_mlx	*init_mlx(t_settings *settings);
+void		make_offset(t_settings *settings);
+void		make_scale(t_settings *settings, t_map *map);
+t_mlx		*init_mlx(t_settings *settings);
 t_settings	*settings_init(t_double2D max, t_map *map);
 
 //vector math
-void	base_rotation(t_base3D *base, t_double3D u, double dtheta);
+void		base_rotation(t_base3D *base, t_double3D u, double dtheta);
 
 //window
-void	put_pixel(t_img *data, int x, int y, int color);
-int	print_map(t_map *map);
-int	destroy_hook(t_mlx *mlx);
+void		put_pixel(t_img *data, int x, int y, int color);
+int			print_map(t_map *map);
+int			destroy_hook(t_mlx *mlx);
 
 //projection
 t_double2D	orthogonal_projection(t_int3D coord, t_map *map, t_base3D base);
-void	iterative_projection(t_map *map, t_img *img, t_settings settings);
+void		iterative_projection(t_map *map, t_img *img, t_settings settings);
 
 //projection utility
-int	pixel_color(t_int2D coord1, t_int2D coord2, t_int2D i, \
+int			pixel_color(t_int2D coord1, t_int2D coord2, t_int2D i, \
 		t_settings settings);
-t_int2D	scaling(t_double2D double_coord, t_settings settings);
+t_int2D		scaling(t_double2D double_coord, t_settings settings);
 
 //segment
-t_int2D	scaling(t_double2D double_coord, t_settings settings);
-void	bresenham_segment(t_img *img, t_int2D coord1, t_int2D coord2, t_settings settings);
+t_int2D		scaling(t_double2D double_coord, t_settings settings);
+void		bresenham_segment(t_img *img, t_int2D coord1, \
+		t_int2D coord2, t_settings settings);
 
 //color
-int	to_trgb(int t, int r, int g, int b);
-int	to_t(int trgb);
-int	to_r(int trgb);
-int	to_g(int trgb);
-int	to_b(int trgb);
+int			to_trgb(int t, int r, int g, int b);
+int			to_t(int trgb);
+int			to_r(int trgb);
+int			to_g(int trgb);
+int			to_b(int trgb);
 
 #endif

@@ -6,29 +6,11 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 05:23:00 by gdornic           #+#    #+#             */
-/*   Updated: 2023/06/08 14:34:09 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/06/17 15:19:57 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-//u is the direction vector of the straight line
-t_double2D	parallele_projection(t_int3D coord, t_map *map, \
-		t_base3D base, t_double3D u)
-{
-	t_double2D	proj;
-
-	proj.x = (coord.x - map->center.x) * base.e1.x + \
-		(coord.y - map->center.y) * base.e2.x + \
-		(coord.z - map->center.z) / 10. * base.e3.x - \
-		(coord.z - map->center.z) * u.x / u.z;
-	proj.y = (coord.x - map->center.x) * base.e1.y + \
-		(coord.y - map->center.y) * base.e2.y + \
-		(coord.z - map->center.z) / 10. * base.e3.y - \
-		(coord.z - map->center.z) * u.y / u.z;
-	proj.color = projection_color(coord, map);
-	return (proj);
-}
 
 int	projection_color(t_int3D coord, t_map *map)
 {
@@ -59,6 +41,24 @@ int	projection_color(t_int3D coord, t_map *map)
 	return (color);
 }
 
+//u is the direction vector of the straight line
+t_double2D	parallele_projection(t_int3D coord, t_map *map, \
+		t_base3D base, t_double3D u)
+{
+	t_double2D	proj;
+
+	proj.x = (coord.x - map->center.x) * base.e1.x + \
+		(coord.y - map->center.y) * base.e2.x + \
+		(coord.z - map->center.z) / 10. * base.e3.x - \
+		(coord.z - map->center.z) * u.x / u.z;
+	proj.y = (coord.x - map->center.x) * base.e1.y + \
+		(coord.y - map->center.y) * base.e2.y + \
+		(coord.z - map->center.z) / 10. * base.e3.y - \
+		(coord.z - map->center.z) * u.y / u.z;
+	proj.color = projection_color(coord, map);
+	return (proj);
+}
+
 t_double2D	orthogonal_projection(t_int3D coord, t_map *map, t_base3D base)
 {
 	t_double2D	proj;
@@ -82,18 +82,18 @@ void	iterative_projection_core(t_map *map, t_img *img, \
 
 	u = settings.u;
 	proj_from = scaling(parallele_projection((t_int3D){i.x, \
-	i.y, map->height[i.x][i.y]}, map, settings.map_base, u), settings);
+	i.y, map->height[i.x][i.y], 0}, map, settings.map_base, u), settings);
 	if (i.x < map->max.x)
 	{
 		proj_to = scaling(parallele_projection((t_int3D){i.x + 1, \
-		i.y, map->height[i.x + 1][i.y]}, map, settings.map_base, u), \
+		i.y, map->height[i.x + 1][i.y], 0}, map, settings.map_base, u), \
 		settings);
 		bresenham_segment(img, proj_from, proj_to, settings);
 	}
 	if (i.y < map->max.y)
 	{
 		proj_to = scaling(parallele_projection((t_int3D){i.x, \
-		i.y + 1, map->height[i.x][i.y + 1]}, map, settings.map_base, u), \
+		i.y + 1, map->height[i.x][i.y + 1], 0}, map, settings.map_base, u), \
 		settings);
 		bresenham_segment(img, proj_from, proj_to, settings);
 	}
