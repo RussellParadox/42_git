@@ -6,39 +6,70 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 10:49:56 by gdornic           #+#    #+#             */
-/*   Updated: 2023/06/25 04:45:34 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/06/26 23:00:21 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
+//print stacks for testing tools
+void	ps_print(t_stack *a, t_stack *b)
+{
+	int	i;
+
+	i = 0;
+	while (i < a->size || i < b->size)
+	{
+		if (i < a->size)
+			ft_printf("%d", a->item[i]);
+		else
+			ft_printf(" ");
+		ft_printf(" ");
+		if (i < b->size)
+			ft_printf("%d", b->item[i]);
+		ft_printf("\n");
+		i++;
+	}
+	ft_printf("_ _\n");
+	ft_printf("a b\n");
+}
+
+//free allocated memory at ptr only if ptr isn't set to NULL
+void	no_null_free(void *ptr)
+{
+	if (ptr != NULL)
+		free(ptr);
+}
+
+//free the stacks and their content at the end of the program
+void	exit_free(t_stack *a, t_stack *b)
+{
+	no_null_free(a->item);
+	no_null_free(a);
+	no_null_free(b->item);
+	no_null_free(b);
+}
+
 int	main(int argc, char *argv[])
 {
 	t_stack	*a;
 	t_stack	*b;
-	int	i;
 
-	a = (t_stack *)malloc(sizeof(t_stack));
-	a->item = init_stack_a(argc, argv);
-	a->size = argc - 1;
-	if (a->item == NULL)
+	a = init_stack_a(argc, argv);
+	if (a == NULL)
 	{
-		free(a);
 		ft_printf("Error\n");
 		return (1);
 	}
-	b = (t_stack *)malloc(sizeof(t_stack));
-	b->item = (int *)malloc((a->size) * sizeof(int));
-	b->size = 0;
-	if (b->item == NULL)
+	b = init_stack_b(a->size);
+	if (b == NULL)
 	{
-		free(a->item);
-		free(b);
+		exit_free(a, b);
 		ft_printf("Error\n");
 		return (1);
 	}
-	free(a->item);
-	free(b->item);
-	free(a);
-	free(b);
+	//ps_sort(a, b);
+	ps_print(a, b);
+	exit_free(a, b);
+	return (0);
 }

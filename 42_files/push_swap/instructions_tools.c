@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 16:10:27 by gdornic           #+#    #+#             */
-/*   Updated: 2023/06/25 04:42:41 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/06/26 22:47:35 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	ps_rotate(t_stack *s)
 	i = 0;
 	while (i < s->size - 1)
 	{
-		ps_swap(s->item[i], s->item[i + 1]);
+		ps_swap(&s->item[i], &s->item[i + 1]);
 		i++;
 	}
 }
@@ -43,7 +43,7 @@ void	ps_rrotate(t_stack *s)
 	i = s->size - 1;
 	while (i > 0)
 	{
-		ps_swap(s->item[i], s->item[i - 1]);
+		ps_swap(&s->item[i], &s->item[i - 1]);
 		i--;
 	}
 }

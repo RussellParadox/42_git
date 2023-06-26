@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 11:38:47 by gdornic           #+#    #+#             */
-/*   Updated: 2023/06/14 12:43:13 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/06/26 22:56:15 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,14 @@ int	ft_isnumber(char *str)
 	i = 0;
 	while (str[i] != '\0')
 	{
-		if (!ft_isdigit(str[i]))
+		if (!ft_isdigit(str[i]) && !(str[i] == '-' && ft_isdigit(str[i + 1])))
 			return (0);
 		i++;
 	}
 	return (1);
 }
 
-int	*init_stack_a(int argc, char *argv[])
+int	*init_item_a(int argc, char *argv[])
 {
 	int	*stack_a;
 	int	i;
@@ -69,4 +69,40 @@ int	*init_stack_a(int argc, char *argv[])
 		i++;
 	}
 	return (stack_a);
+}
+
+t_stack	*init_stack_a(int argc, char *argv[])
+{
+	t_stack	*a;
+
+	a = (t_stack *)malloc(sizeof(t_stack));
+	if (a != NULL)
+	{
+		a->item = init_item_a(argc, argv);
+		if (a->item == NULL)
+		{
+			free(a);
+			return (NULL);
+		}
+		a->size = argc - 1;
+	}
+	return (a);
+}
+
+t_stack *init_stack_b(int size)
+{
+	t_stack	*b;
+
+	b = (t_stack *)malloc(sizeof(t_stack));
+	if (b != NULL)
+	{
+		b->item = (int *)malloc(size * sizeof(int));
+		if (b->item == NULL)
+		{
+			free(b);
+			return(NULL);
+		}
+		b->size = 0;
+	}
+	return (b);
 }

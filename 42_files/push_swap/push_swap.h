@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 10:51:13 by gdornic           #+#    #+#             */
-/*   Updated: 2023/06/25 04:43:41 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/06/26 22:46:22 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ typedef struct s_stack
 }	t_stack;
 
 //init stack
-int	*init_stack_a(int argc, char *argv[]);
+t_stack	*init_stack_a(int argc, char *argv[]);
+t_stack	*init_stack_b(int size);
 
 //instructions tools
 void	ps_swap(int *p1, int *p2);
