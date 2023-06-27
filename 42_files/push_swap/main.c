@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 10:49:56 by gdornic           #+#    #+#             */
-/*   Updated: 2023/06/26 23:00:21 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/06/27 19:47:41 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	ps_print(t_stack *a, t_stack *b)
 	int	i;
 
 	i = 0;
+	ft_printf("_ _\n");
 	while (i < a->size || i < b->size)
 	{
 		if (i < a->size)
@@ -68,7 +69,8 @@ int	main(int argc, char *argv[])
 		ft_printf("Error\n");
 		return (1);
 	}
-	//ps_sort(a, b);
+	ps_print(a, b);
+	insert_sort(a, b);
 	ps_print(a, b);
 	exit_free(a, b);
 	return (0);

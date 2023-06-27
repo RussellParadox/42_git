@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 11:38:47 by gdornic           #+#    #+#             */
-/*   Updated: 2023/06/26 22:56:15 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/06/27 21:13:50 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,12 @@ t_stack	*init_stack_a(int argc, char *argv[])
 			return (NULL);
 		}
 		a->size = argc - 1;
+		a->id = 'a';
 	}
 	return (a);
 }
 
-t_stack *init_stack_b(int size)
+t_stack	*init_stack_b(int size)
 {
 	t_stack	*b;
 
@@ -100,9 +101,10 @@ t_stack *init_stack_b(int size)
 		if (b->item == NULL)
 		{
 			free(b);
-			return(NULL);
+			return (NULL);
 		}
 		b->size = 0;
+		b->id = 'b';
 	}
 	return (b);
 }

@@ -6,20 +6,29 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 16:10:27 by gdornic           #+#    #+#             */
-/*   Updated: 2023/06/26 22:47:35 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/06/27 18:28:02 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
 //swap the values of variables pointed by p1 and p2
-void	ps_swap(int *p1, int *p2)
+void	ptr_swap(int *p1, int *p2)
 {
 	int	tmp;
 
 	tmp = *p1;
 	*p1 = *p2;
 	*p2 = tmp;
+}
+
+//swap the two top values of the stack
+void	ps_swap(t_stack *s)
+{
+	if (s->size >= 2)
+	{
+		ptr_swap(&s->item[0], &s->item[1]);
+	}
 }
 
 //move each element one position higher, the first element become the last
@@ -30,7 +39,7 @@ void	ps_rotate(t_stack *s)
 	i = 0;
 	while (i < s->size - 1)
 	{
-		ps_swap(&s->item[i], &s->item[i + 1]);
+		ptr_swap(&s->item[i], &s->item[i + 1]);
 		i++;
 	}
 }
@@ -43,7 +52,7 @@ void	ps_rrotate(t_stack *s)
 	i = s->size - 1;
 	while (i > 0)
 	{
-		ps_swap(&s->item[i], &s->item[i - 1]);
+		ptr_swap(&s->item[i], &s->item[i - 1]);
 		i--;
 	}
 }
