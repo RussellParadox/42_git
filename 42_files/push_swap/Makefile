@@ -6,7 +6,7 @@
 #    By: gdornic <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 21:58:09 by gdornic           #+#    #+#              #
-#    Updated: 2023/06/27 21:01:58 by gdornic          ###   ########.fr        #
+#    Updated: 2023/07/02 04:34:13 by gdornic          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ HEADERS = -Ilib42
 
 LIB_LINK = -Llib42 -l42 
 
-SRC = main.c init_stack.c instructions_tools.c insert_sort.c
+SRC = main.c init_stack.c instructions_tools_low.c instructions_tools_high.c insert_sort.c
 
 OBJ = $(SRC:.c=.o)
 

@@ -6,21 +6,43 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 01:52:22 by gdornic           #+#    #+#             */
-/*   Updated: 2023/07/02 02:26:30 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/07/02 04:43:55 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
+//swap two elements at index i1 and i2 in a->item
+void	array_swap(t_stack *a, t_stack *b, int i1, int i2)
+{
+}
+
 //return the index of the median value in array between first and last
 int	median_pivot(int *array, int first, int last)
 {
-	return (array[first + (last - first) / 2]);
+	return (first + (last - first) / 2);
 }
 
 //partition the stack, the elements smaller than stack[pivot] are placed before him, and taller after, so the element at pivot is right placed
 void	partition(t_stack *a, t_stack *b, int first, int last, int pivot)
 {
+	int	i;
+	int	j;
+
+	array_swap(a, b, pivot, last);
+	j = first;
+	i = 0;
+	while (i < last)
+	{
+		if (a->item[i] <= a->item[last])
+		{
+			array_swap(a, b, i, j);
+			j++;
+		}
+		i++;
+	}
+	array_swap(a, b, last, j);
+	return (j);
 }
 
 //the quick sort algorithm, implemented with the push_swap instructions
