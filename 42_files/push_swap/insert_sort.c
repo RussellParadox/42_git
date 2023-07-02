@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 19:09:26 by gdornic           #+#    #+#             */
-/*   Updated: 2023/06/27 21:08:11 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/07/02 02:07:05 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	insert(t_stack *a, t_stack *b, int j)
 	}
 }
 
-//the insert sort algorithm
+//the insert sort algorithm, implemented with the push_swap instuctions
 void	insert_sort(t_stack *a, t_stack *b)
 {
 	int	i;
