@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 10:49:56 by gdornic           #+#    #+#             */
-/*   Updated: 2023/06/27 19:47:41 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/07/04 05:12:38 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ int	main(int argc, char *argv[])
 		return (1);
 	}
 	ps_print(a, b);
-	insert_sort(a, b);
+	quick_sort(a, b, 0, a->size - 1);
+	//insert_sort(a, b);
 	ps_print(a, b);
 	exit_free(a, b);
 	return (0);

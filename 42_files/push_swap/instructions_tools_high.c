@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 04:26:25 by gdornic           #+#    #+#             */
-/*   Updated: 2023/07/02 04:40:17 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/07/02 14:48:45 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,20 @@ void	ps_npush(t_stack *s1, t_stack *s2, int n)
 {
 	int	i;
 
-	i = 0;
-	while (i < n)
+	if (n == 1)
 	{
 		ps_push(s1, s2);
 		ft_printf("p%c\n", s2->id);
-		i++;
+	}
+	else
+	{
+		i = 0;
+		while (i < n)
+		{
+			ps_push(s1, s2);
+			ft_printf("p%c\n", s2->id);
+			i++;
+		}
 	}
 }
 
@@ -31,12 +39,20 @@ void	ps_nrotate(t_stack *s, int n)
 {
 	int	i;
 
-	i = 0;
-	while (i < n)
+	if (n == 1)
 	{
 		ps_rotate(s);
 		ft_printf("r%c\n", s->id);
-		i++;
+	}
+	else
+	{
+		i = 0;
+		while (i < n)
+		{
+			ps_rotate(s);
+			ft_printf("r%c\n", s->id);
+			i++;
+		}
 	}
 }
 
@@ -45,12 +61,20 @@ void	ps_nrrotate(t_stack *s, int n)
 {
 	int	i;
 
-	i = 0;
-	while (i < n)
+	if (n == 1)
 	{
 		ps_rrotate(s);
 		ft_printf("rr%c\n", s->id);
-		i++;
+	}
+	else
+	{
+		i = 0;
+		while (i < n)
+		{
+			ps_rrotate(s);
+			ft_printf("rr%c\n", s->id);
+			i++;
+		}
 	}
 }
 
@@ -60,16 +84,14 @@ void	insert(t_stack *s1, t_stack *s2, int j)
 	if (j <= s2->size / 2)
 	{
 		ps_nrotate(s2, j);
-		ps_push(s1, s2);
-		ft_printf("pb\n");
+		ps_npush(s1, s2, 1);
 		ps_nrrotate(s2, j);
 	}
 	else
 	{
 		j = s2->size - j;
 		ps_nrrotate(s2, j);
-		ps_push(s1, s2);
-		ft_printf("pb\n");
+		ps_npush(s1, s2, 1);
 		ps_nrotate(s2, j + 1);
 	}
 }
