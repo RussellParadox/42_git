@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 16:10:27 by gdornic           #+#    #+#             */
-/*   Updated: 2023/07/02 04:28:42 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/07/10 10:48:23 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ void	ps_rrotate(t_stack *s)
 //take the top element of s1 and place it on top of s2
 void	ps_push(t_stack *s1, t_stack *s2)
 {
+	if (s1->size == 0)
+		return;
 	s2->item[s2->size] = s1->item[0];
 	ps_rotate(s1);
 	s1->size -= 1;
