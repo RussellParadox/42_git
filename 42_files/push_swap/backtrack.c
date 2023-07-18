@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 10:32:38 by gdornic           #+#    #+#             */
-/*   Updated: 2023/07/10 15:14:25 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/07/13 19:15:49 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,13 @@ int	symmetric_move(int m1, int m2)
 }
 
 //return true if the sequence isn't a solution, in that case we're going backwards in depth -1
-int	reject_sequence(t_sequence *sequence)
+int	reject_sequence(t_sequence *sequence, t_stack *b)
 {
 	int	depth;
 
 	depth = sequence->depth;
+	if (b->size != 0)
+		return (1);
 	if (depth == sequence->max_depth)
 		return (1);
 	if (depth > 1)
@@ -74,11 +76,35 @@ int	accept_sequence(t_stack *a, t_stack *b)
 //apply move on a and/or b and save it in sequence, the depth become depth + 1
 void	sequence_explore(t_stack *a, t_stack *b, t_sequence *sequence, int move)
 {
-	sequence->depth += 1;
+	static int	rotation_count = 0;
+
+	if (rotation_count >= sequence->rotation_max)
+		move = 0;
+	if (move == 1 && a->size == 0)
+		move = 0;
+	if (move == 2 && b->size == 0)
+		move = 0;
+	if (move == 3 && (a->size == 0 || b->size == 0))
+		move = 0;
 	if (move == 4 && b->size == 0)
 		move = 0;
 	if (move == 5 && a->size == 0)
 		move = 0;
+	if (move == 6 && sequence->move[sequence->depth] == 6)
+		rotation_count += 1;
+	else if (move == 7 && sequence->move[sequence->depth] == 7)
+		rotation_count += 1;
+	else if (move == 8 && sequence->move[sequence->depth] == 8)
+		rotation_count += 1;
+	else if (move == 9 && sequence->move[sequence->depth] == 9)
+		rotation_count += 1;
+	else if (move == 10 && sequence->move[sequence->depth] == 10)
+		rotation_count += 1;
+	else if (move == 11 && sequence->move[sequence->depth] == 11)
+		rotation_count += 1;
+	else
+		rotation_count = 0;
+	sequence->depth += 1;
 	make_move(move, a, b);
 	sequence->move[sequence->depth] = move;
 }
@@ -138,7 +164,7 @@ void	backtrack(t_stack *a, t_stack *b, t_sequence *sequence, t_sequence *output)
 {
 	int	i;
 
-	if (reject_sequence(sequence))
+	if (reject_sequence(sequence, b))
 	{
 		return;
 	}
@@ -151,9 +177,12 @@ void	backtrack(t_stack *a, t_stack *b, t_sequence *sequence, t_sequence *output)
 	i = 1;
 	while (i <= 11)
 	{
-		sequence_explore(a, b, sequence, i);
-		backtrack(a, b, sequence, output);
-		sequence_unexplore(a, b, sequence);
+		if (i != 3 && i != 8 && i != 11)
+		{
+			sequence_explore(a, b, sequence, i);
+			backtrack(a, b, sequence, output);
+			sequence_unexplore(a, b, sequence);
+		}
 		i++;
 	}
 }

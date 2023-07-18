@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 10:49:56 by gdornic           #+#    #+#             */
-/*   Updated: 2023/07/10 14:23:44 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/07/18 21:23:55 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,7 @@ int	main(int argc, char *argv[])
 
 	if (argc < 2)
 		return (1);
-	a = NULL;
-	b = NULL;
-	sequence = NULL;
-	output = NULL;
+	null_init(a, b, sequence, output);
 	a = init_stack_a(argc, argv);
 	if (a == NULL)
 		return (error_exit(a, b, sequence, output));
@@ -76,8 +73,13 @@ int	main(int argc, char *argv[])
 	output = init_sequence(a->size);
 	if (output == NULL)
 		return (error_exit(a, b, sequence, output));
-	backtrack(a, b, sequence, output);
-	print_sequence(output);
+	if (argc > 6)
+		quick_sort(a, b, 0, a->size - 1);
+	else
+	{
+		backtrack(a, b, sequence, output);
+		print_sequence(output);
+	}
 	exit_free(a, b, sequence, output);
 	return (0);
 }

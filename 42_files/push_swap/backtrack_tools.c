@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 09:16:19 by gdornic           #+#    #+#             */
-/*   Updated: 2023/07/10 14:31:20 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/07/13 18:22:07 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,25 @@ void	make_move(int move, t_stack *a, t_stack *b)
 {
 	if (move == 1)
 		ps_swap(a);
-	if (move == 2)
+	else if (move == 2)
 		ps_swap(b);
-	if (move == 3)
+	else if (move == 3)
 		ps_ss(a, b);
-	if (move == 4)
+	else if (move == 4)
 		ps_push(b, a);
-	if (move == 5)
+	else if (move == 5)
 		ps_push(a, b);
-	if (move == 6)
+	else if (move == 6)
 		ps_rotate(a);
-	if (move == 7)
+	else if (move == 7)
 		ps_rotate(b);
-	if (move == 8)
+	else if (move == 8)
 		ps_rr(a, b);
-	if (move == 9)
+	else if (move == 9)
 		ps_rrotate(a);
-	if (move == 10)
+	else if (move == 10)
 		ps_rrotate(b);
-	if (move == 11)
+	else if (move == 11)
 		ps_rrr(a, b);
 }
 
@@ -44,25 +44,25 @@ void	unmake_move(int move, t_stack *a, t_stack *b)
 {
 	if (move == 1)
 		ps_swap(a);
-	if (move == 2)
+	else if (move == 2)
 		ps_swap(b);
-	if (move == 3)
+	else if (move == 3)
 		ps_ss(a, b);
-	if (move == 4)
+	else if (move == 4)
 		ps_push(a, b);
-	if (move == 5)
+	else if (move == 5)
 		ps_push(b, a);
-	if (move == 6)
+	else if (move == 6)
 		ps_rrotate(a);
-	if (move == 7)
+	else if (move == 7)
 		ps_rrotate(b);
-	if (move == 8)
+	else if (move == 8)
 		ps_rrr(a, b);
-	if (move == 9)
+	else if (move == 9)
 		ps_rotate(a);
-	if (move == 10)
+	else if (move == 10)
 		ps_rotate(b);
-	if (move == 11)
+	else if (move == 11)
 		ps_rr(a, b);
 }
 

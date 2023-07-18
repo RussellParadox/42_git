@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 10:02:02 by gdornic           #+#    #+#             */
-/*   Updated: 2023/07/10 15:02:04 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/07/13 18:23:32 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_sequence	*init_sequence(int size)
 	s = (t_sequence *)malloc(sizeof(t_sequence));
 	if (s != NULL)
 	{
-		ps_complexity = size * size + 1;
+		ps_complexity = size * size / 2 + 1;
 		s->move = (int *)malloc(sizeof(int) * ps_complexity);
 		if (s->move == NULL)
 		{
@@ -37,6 +37,7 @@ t_sequence	*init_sequence(int size)
 		}
 		s->depth = 0;
 		s->max_depth = ps_complexity - 1;
+		s->rotation_max = size;
 	}
 	return (s);
 }

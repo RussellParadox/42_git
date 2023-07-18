@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 10:51:13 by gdornic           #+#    #+#             */
-/*   Updated: 2023/07/10 09:47:35 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/07/14 13:31:04 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct s_sequence
 	int	*move;
 	int	depth;
 	int	max_depth;
+	int	rotation_max;
 }	t_sequence;
 
 //init stack
@@ -60,13 +61,15 @@ void	ps_npush(t_stack *s1, t_stack *s2, int n);
 void	ps_nrotate(t_stack *s, int n);
 void	ps_nrrotate(t_stack *s, int n);
 void	insert(t_stack *s1, t_stack *s2, int j);
+void	ps_nswap(t_stack *s, int n);
 
 //insert sort
 void	insert_sort(t_stack *a, t_stack *b);
 
 //quick sort
-int	*init_solution(t_stack *a);
-void	quick_sort_solution(int *solution, int first, int last);
+void	quick_sort(t_stack *a, t_stack *b, int first, int last);
+int	move_to_top(t_stack *s, int index, int base);
+void	array_swap(t_stack *a, t_stack *b, int i, int j);
 
 //backtrack
 void	backtrack(t_stack *a, t_stack *b, t_sequence *sequence, t_sequence *output);

@@ -6,66 +6,62 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 01:52:22 by gdornic           #+#    #+#             */
-/*   Updated: 2023/07/07 05:47:17 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/07/18 21:20:35 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-//init solution
-int	*init_solution(t_stack *a)
+//perform a traditional array swap on a with push swap instructions
+//note that i < j
+void	array_swap(t_stack *a, t_stack *b, int i, int j)
 {
-	int	*solution;
-	int	i;
-
-	solution = (int *)malloc(size * sizeof(int));
-	if (solution != NULL)
-	{
-		i = 0;
-		while (i < a->size)
-		{
-			solution[i] = a->item[i];
-			i++;
-		}
-	}
-	return (solution);
+	ps_nrotate(a, i);
+	ps_npush(a, b, 1);
+	ps_nrotate(a, j - i - 1);
+	ps_npush(b, a, 1);
+	ps_nrotate(a, 1);
+	ps_npush(a, b, 1);
+	ps_nrrotate(a, j - i);
+	ps_npush(b, a, 1);
+	ps_nrrotate(a, i);
 }
 
 //a partition version who limitate the swap usage
-static int	partition(int *solution, int first, int last)
+static int	partition(t_stack *a, t_stack *b, int first, int last)
 {
 	int	i;
 	int	j;
 	int	pivot;
 
-	pivot = solution[first];
+	pivot = a->item[first];
 	i = first - 1;
 	j = last + 1;
 	while (1)
 	{
 		j--;
-		while (solution[j] > pivot)
+		while (a->item[j] > pivot)
 			j--;
 		i++;
-		while (solution[i] < pivot)
+		while (a->item[i] < pivot)
 			i++;
 		if (i < j)
-			ptr_swap(&solution[i], &solution[j]);
+			array_swap(a, b, i, j);
 		else
 			return (j);
 	}
 }
 		
 
-//the quick sort algorithm, implemented to sort an array of integer
-void	quick_sort_solution(int *solution, int first, int last)
+//the quick sort algorithm, implemented to sort the a stack
+void	quick_sort(t_stack *a, t_stack *b, int first, int last)
 {
 	int	pivot;
 
 	if (first < last)
 	{
-		pivot = partition(solution, first, last);
-		quick_sort_solution(solution, first, pivot);
-		quick_sort_solution(solution, pivot + 1, last);
+		pivot = partition(a, b, first, last);
+		quick_sort(a, b, first, pivot);
+		quick_sort(a, b, pivot + 1, last);
 	}
 }
