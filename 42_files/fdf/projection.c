@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 05:23:00 by gdornic           #+#    #+#             */
-/*   Updated: 2023/06/17 15:19:57 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/07/22 09:55:16 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,20 +59,6 @@ t_double2D	parallele_projection(t_int3D coord, t_map *map, \
 	return (proj);
 }
 
-t_double2D	orthogonal_projection(t_int3D coord, t_map *map, t_base3D base)
-{
-	t_double2D	proj;
-
-	proj.x = (coord.x - map->center.x) * base.e1.x + \
-		(coord.y - map->center.y) * base.e2.x + \
-		(coord.z - map->center.z) / 10. * base.e3.x;
-	proj.y = (coord.x - map->center.x) * base.e1.y + \
-		(coord.y - map->center.y) * base.e2.y + \
-		(coord.z - map->center.z) / 10. * base.e3.y;
-	proj.color = projection_color(coord, map);
-	return (proj);
-}
-
 void	iterative_projection_core(t_map *map, t_img *img, \
 	t_settings settings, t_int2D i)
 {
@@ -99,6 +85,27 @@ void	iterative_projection_core(t_map *map, t_img *img, \
 	}
 }
 
+void	base_projection(t_img *img, t_settings settings)
+{
+	t_int2D			proj_from;
+	t_int2D			proj_to[3];
+	t_base3D		base;
+
+	base = settings.map_base;
+	proj_from = base_scaling(vector_projection((t_int3D){0, 0, 0, 0xffffff}, \
+				base)); 
+	proj_to[0] = base_scaling(vector_projection((t_int3D){1, 0, 0, 0xfc0303}, \
+				base)); 
+	proj_to[1] = base_scaling(vector_projection((t_int3D){0, 1, 0, 0x03fc0f}, \
+				base)); 
+	proj_to[2] = base_scaling(vector_projection((t_int3D){0, 0, 1, 0x03fcfc}, \
+				base)); 
+	settings.color_profile = 2;
+	bresenham_segment(img, proj_from, proj_to[0], settings);
+	bresenham_segment(img, proj_from, proj_to[1], settings);
+	bresenham_segment(img, proj_from, proj_to[2], settings);
+}
+
 void	iterative_projection(t_map *map, t_img *img, t_settings settings)
 {
 	t_int2D	i;
@@ -114,4 +121,5 @@ void	iterative_projection(t_map *map, t_img *img, t_settings settings)
 		}
 		i.y++;
 	}
+	base_projection(img, settings);
 }

@@ -6,25 +6,45 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 15:37:44 by gdornic           #+#    #+#             */
-/*   Updated: 2023/07/22 08:30:43 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/07/22 09:46:12 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+t_double2D	orthogonal_projection(t_int3D coord, t_map *map, t_base3D base)
+{
+	t_double2D	proj;
+
+	proj.x = (coord.x - map->center.x) * base.e1.x + \
+		(coord.y - map->center.y) * base.e2.x + \
+		(coord.z - map->center.z) / 10. * base.e3.x;
+	proj.y = (coord.x - map->center.x) * base.e1.y + \
+		(coord.y - map->center.y) * base.e2.y + \
+		(coord.z - map->center.z) / 10. * base.e3.y;
+	proj.color = projection_color(coord, map);
+	return (proj);
+}
+
+t_double2D	vector_projection(t_int3D coord, t_base3D base)
+{
+	t_double2D	proj;
+
+	proj.x = coord.x * base.e1.x + \
+		coord.y * base.e2.x + \
+		coord.z * base.e3.x;
+	proj.y = coord.x * base.e1.y + \
+		coord.y * base.e2.y + \
+		coord.z * base.e3.y;
+	proj.color = coord.color;
+	return (proj);
+}
 
 int	signof(double nb)
 {
 	if (nb < 0)
 		return (-1);
 	return (1);
-}
-
-double	scalar_product(t_double3D v1, t_double3D v2)
-{
-	double	result;
-
-	result = v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
-	return (result);
 }
 
 t_double3D	rotation(t_double3D v1, t_double3D u, double dtheta)

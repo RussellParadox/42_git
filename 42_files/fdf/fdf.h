@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 20:00:43 by gdornic           #+#    #+#             */
-/*   Updated: 2023/07/22 08:39:43 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/07/22 09:35:32 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,8 @@ t_settings	*settings_init(t_double2D max, t_map *map);
 //vector math
 void		base_rotation(t_base3D *base, t_double3D u, double dtheta);
 int			signof(double nb);
+t_double2D	orthogonal_projection(t_int3D coord, t_map *map, t_base3D base);
+t_double2D	vector_projection(t_int3D coord, t_base3D base);
 
 //window
 void		put_pixel(t_img *data, int x, int y, int color);
@@ -137,6 +139,7 @@ int			print_map(t_map *map);
 int			destroy_hook(t_mlx *mlx);
 
 //projection
+int			projection_color(t_int3D coord, t_map *map);
 t_double2D	orthogonal_projection(t_int3D coord, t_map *map, t_base3D base);
 void		iterative_projection(t_map *map, t_img *img, t_settings settings);
 
@@ -144,6 +147,7 @@ void		iterative_projection(t_map *map, t_img *img, t_settings settings);
 int			pixel_color(t_int2D coord1, t_int2D coord2, t_int2D i, \
 		t_settings settings);
 t_int2D		scaling(t_double2D double_coord, t_settings settings);
+t_int2D		base_scaling(t_double2D double_coord);
 
 //segment
 t_int2D		scaling(t_double2D double_coord, t_settings settings);
