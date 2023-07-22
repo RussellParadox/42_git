@@ -6,11 +6,18 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 15:37:44 by gdornic           #+#    #+#             */
-/*   Updated: 2023/05/29 15:20:46 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/07/22 08:30:43 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+int	signof(double nb)
+{
+	if (nb < 0)
+		return (-1);
+	return (1);
+}
 
 double	scalar_product(t_double3D v1, t_double3D v2)
 {

@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 20:00:43 by gdornic           #+#    #+#             */
-/*   Updated: 2023/06/17 15:12:29 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/07/22 08:39:43 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ t_settings	*settings_init(t_double2D max, t_map *map);
 
 //vector math
 void		base_rotation(t_base3D *base, t_double3D u, double dtheta);
+int			signof(double nb);
 
 //window
 void		put_pixel(t_img *data, int x, int y, int color);
@@ -155,5 +156,12 @@ int			to_t(int trgb);
 int			to_r(int trgb);
 int			to_g(int trgb);
 int			to_b(int trgb);
+
+//hooks
+int			destroy_hook(t_mlx *mlx);
+int			put_map_to_window(t_param *param);
+int			key_up_hook(int keycode, t_param *param);
+int			key_down_hook(int keycode, t_param *param);
+int			mouse_hook(int button, int x, int y, t_param *param);
 
 #endif
