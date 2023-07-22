@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 10:51:13 by gdornic           #+#    #+#             */
-/*   Updated: 2023/07/14 13:31:04 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/07/22 05:32:42 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,10 @@ typedef struct s_sequence
 	int	max_depth;
 	int	rotation_max;
 }	t_sequence;
+
+//exit
+void	exit_free(t_stack *a, t_stack *b);
+int	error_exit(t_stack *a, t_stack *b);
 
 //init stack
 t_stack	*init_stack_a(int argc, char *argv[]);
@@ -71,12 +75,16 @@ void	quick_sort(t_stack *a, t_stack *b, int first, int last);
 int	move_to_top(t_stack *s, int index, int base);
 void	array_swap(t_stack *a, t_stack *b, int i, int j);
 
+//backtrack sort
+void	backtrack_sort(t_stack *a, t_stack *b);
+
 //backtrack
 void	backtrack(t_stack *a, t_stack *b, t_sequence *sequence, t_sequence *output);
 
 //backtrack tools
 void	make_move(int move, t_stack *a, t_stack *b);
 void	unmake_move(int move, t_stack *a, t_stack *b);
+int	symmetric_move(int m1, int m2);
 void	improve_output(t_sequence *sequence, t_sequence *output);
 
 #endif

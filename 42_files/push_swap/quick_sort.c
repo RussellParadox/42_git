@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 01:52:22 by gdornic           #+#    #+#             */
-/*   Updated: 2023/07/18 21:20:35 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/07/22 04:03:09 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ static int	partition(t_stack *a, t_stack *b, int first, int last)
 			return (j);
 	}
 }
-		
 
 //the quick sort algorithm, implemented to sort the a stack
 void	quick_sort(t_stack *a, t_stack *b, int first, int last)

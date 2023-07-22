@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 19:09:26 by gdornic           #+#    #+#             */
-/*   Updated: 2023/07/02 04:32:12 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/07/22 04:03:27 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	insert_sort(t_stack *a, t_stack *b)
 			if (a->item[0] > b->item[j])
 			{
 				insert(a, b, j);
-				break;
+				break ;
 			}
 			j++;
 		}

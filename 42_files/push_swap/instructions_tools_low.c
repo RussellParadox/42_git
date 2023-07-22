@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 16:10:27 by gdornic           #+#    #+#             */
-/*   Updated: 2023/07/10 10:48:23 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/07/22 04:02:05 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	ps_rrotate(t_stack *s)
 void	ps_push(t_stack *s1, t_stack *s2)
 {
 	if (s1->size == 0)
-		return;
+		return ;
 	s2->item[s2->size] = s1->item[0];
 	ps_rotate(s1);
 	s1->size -= 1;

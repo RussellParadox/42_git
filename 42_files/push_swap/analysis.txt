@@ -1,0 +1,34 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  ms/call  ms/call  name    
+ 18.18      0.06     0.06        1    60.00   315.00  backtrack
+ 15.15      0.11     0.05  2042061     0.00     0.00  accept_sequence2
+ 13.64      0.15     0.04 22462605     0.00     0.00  sequence_unexplore
+ 10.61      0.19     0.04 22462605     0.00     0.00  sequence_explore
+  9.09      0.22     0.03  2042061     0.00     0.00  accept_sequence
+  6.06      0.24     0.02 22462606     0.00     0.00  reject_sequence
+  4.55      0.26     0.01 23886503     0.00     0.00  ptr_swap
+  4.55      0.27     0.01 16664934     0.00     0.00  make_move
+  4.55      0.28     0.01 10069512     0.00     0.00  ps_swap
+  4.55      0.30     0.01  4741626     0.00     0.00  ps_rrotate
+  4.55      0.32     0.01                             unmake_move
+  3.03      0.33     0.01  4743453     0.00     0.00  ps_rotate
+  1.52      0.33     0.01  2449671     0.00     0.00  ps_push
+  0.00      0.33     0.00  2246256     0.00     0.00  symmetric_move
+  0.00      0.33     0.00  1490274     0.00     0.00  ps_ss
+  0.00      0.33     0.00   939066     0.00     0.00  ps_rr
+  0.00      0.33     0.00   939030     0.00     0.00  ps_rrr
+  0.00      0.33     0.00       10     0.00     0.00  check_duplicate
+  0.00      0.33     0.00       10     0.00     0.00  ft_isnumber
+  0.00      0.33     0.00        8     0.00     0.00  no_null_free
+  0.00      0.33     0.00        7     0.00     0.00  print_move
+  0.00      0.33     0.00        6     0.00     0.00  improve_output
+  0.00      0.33     0.00        2     0.00     0.00  init_item_a
+  0.00      0.33     0.00        2     0.00     0.00  init_sequence
+  0.00      0.33     0.00        1     0.00     0.00  exit_free
+  0.00      0.33     0.00        1     0.00     0.00  init_stack_a
+  0.00      0.33     0.00        1     0.00     0.00  init_stack_b
+  0.00      0.33     0.00        1     0.00     0.00  null_init
+  0.00      0.33     0.00        1     0.00     0.00  print_sequence

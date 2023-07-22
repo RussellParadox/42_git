@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 09:16:19 by gdornic           #+#    #+#             */
-/*   Updated: 2023/07/13 18:22:07 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/07/22 03:58:40 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,28 @@ void	unmake_move(int move, t_stack *a, t_stack *b)
 		ps_rotate(b);
 	else if (move == 11)
 		ps_rr(a, b);
+}
+
+//return true if m1 and m2 are symmetric moves
+int	symmetric_move(int m1, int m2)
+{
+	if (m1 == 0 || m2 == 0)
+		return (1);
+	if (m1 == 1 && m2 == 1)
+		return (1);
+	if (m1 == 2 && m2 == 2)
+		return (1);
+	if (m1 == 3 && m2 == 3)
+		return (1);
+	if ((m1 == 4 && m2 == 5) || (m2 == 4 && m1 == 5))
+		return (1);
+	if ((m1 == 6 && m2 == 9) || (m2 == 6 && m1 == 9))
+		return (1);
+	if ((m1 == 8 && m2 == 11) || (m2 == 8 && m1 == 11))
+		return (1);
+	if ((m1 == 7 && m2 == 10) || (m2 == 7 && m1 == 10))
+		return (1);
+	return (0);
 }
 
 //copy sequence in output and adjust the max depth for the search of solutions

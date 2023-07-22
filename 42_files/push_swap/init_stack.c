@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 11:38:47 by gdornic           #+#    #+#             */
-/*   Updated: 2023/06/27 21:13:50 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/07/22 05:27:32 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,6 @@ int	*init_item_a(int argc, char *argv[])
 	int	*stack_a;
 	int	i;
 
-	if (argc <= 1)
-		return (NULL);
 	i = 1;
 	while (i < argc)
 	{
@@ -57,8 +55,10 @@ int	*init_item_a(int argc, char *argv[])
 		i++;
 	}
 	stack_a = (int *)malloc((argc - 1) * sizeof(int));
+	if (stack_a == NULL)
+		return (NULL);
 	i = 0;
-	while (stack_a != NULL && i < argc - 1)
+	while (i < argc - 1)
 	{
 		stack_a[i] = ft_atoi(argv[i + 1]);
 		if (check_duplicate(stack_a, stack_a[i], i))
