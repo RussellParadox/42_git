@@ -6,44 +6,60 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 04:57:18 by gdornic           #+#    #+#             */
-/*   Updated: 2023/07/22 05:49:11 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/07/22 08:09:13 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-char	*read_stdin(void)
+void	apply_instructions(char *instructions, t_stack *a, t_stack *b)
 {
-	char	*file;
-	char	*line;
-	char	*tmp;
+	char	inst[4];
+	int		len;
 
-	line = get_next_line(0);
-	file = ft_strdup("");
-	while (line != NULL && file != NULL)
+	while (*instructions != '\0')
 	{
-		tmp = file;
-		file = ft_strjoin(file, line);
-		free(tmp);
-		free(line);
-		line = get_next_line(0);
+		len = 0;
+		while (instructions[len] != '\n')
+			len++;
+		ft_memcpy(inst, instructions, len);
+		inst[len] = '\0';
+		apply_instruction(inst, a, b);
+		instructions += len + 1;
 	}
-	return (file);
 }
 
-char	*init_instructions(void)
+//return 1 if array is sorted, else return 0
+int	is_sorted(int *array, int size)
 {
+	int	n;
+	int	i;
+
+	n = size - 1;
+	i = 0;
+	while (i < n)
+	{
+		if (array[i] > array[i + 1])
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
+//a little program that check a sequence of push_swap instructions
+//print OK if the instructions sort the given stack
+//print KO if the instructions don't sort the given stack
+//print Error if an error occurs
 int	main(int argc, char *argv[])
 {
 	t_stack	*a;
-	t_stack *b;
+	t_stack	*b;
 	char	*instructions;
 
 	if (argc < 2)
 		return (0);
 	a = NULL;
+	b = NULL;
 	a = init_stack_a(argc, argv);
 	if (a == NULL)
 		return (error_exit(a, b));
@@ -53,4 +69,11 @@ int	main(int argc, char *argv[])
 	instructions = init_instructions();
 	if (instructions == NULL)
 		return (error_exit(a, b));
+	apply_instructions(instructions, a, b);
+	if (b->size == 0 && is_sorted(a->item, a->size))
+		ft_printf("OK\n");
+	else
+		ft_printf("KO\n");
+	free(instructions);
+	exit_free(a, b);
 }
