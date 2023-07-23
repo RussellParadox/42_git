@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 04:57:18 by gdornic           #+#    #+#             */
-/*   Updated: 2023/07/22 08:09:13 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/07/23 05:33:56 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,23 +27,6 @@ void	apply_instructions(char *instructions, t_stack *a, t_stack *b)
 		apply_instruction(inst, a, b);
 		instructions += len + 1;
 	}
-}
-
-//return 1 if array is sorted, else return 0
-int	is_sorted(int *array, int size)
-{
-	int	n;
-	int	i;
-
-	n = size - 1;
-	i = 0;
-	while (i < n)
-	{
-		if (array[i] > array[i + 1])
-			return (0);
-		i++;
-	}
-	return (1);
 }
 
 //a little program that check a sequence of push_swap instructions

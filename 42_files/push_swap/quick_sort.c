@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 01:52:22 by gdornic           #+#    #+#             */
-/*   Updated: 2023/07/22 04:03:09 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/07/23 05:17:56 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,36 @@
 //note that i < j
 void	array_swap(t_stack *a, t_stack *b, int i, int j)
 {
-	ps_nrotate(a, i);
-	ps_npush(a, b, 1);
-	ps_nrotate(a, j - i - 1);
-	ps_npush(b, a, 1);
-	ps_nrotate(a, 1);
-	ps_npush(a, b, 1);
-	ps_nrrotate(a, j - i);
-	ps_npush(b, a, 1);
-	ps_nrrotate(a, i);
+	if (i == j)
+		return ;
+	if (j < i)
+		ptr_swap(&i, &j);
+	if (i < a->size - i)
+		ps_nrotate(a, i);
+	else
+		ps_nrrotate(a, a->size - i);
+	if (i + 1 == j)
+		ps_nswap(a, 1);
+	else
+	{
+		ps_npush(a, b, 1);
+		if (j - i - 1 < i + a->size - j + 1)
+			ps_nrotate(a, j - i - 1);
+		else
+			ps_nrrotate(a, i + a->size - j + 1);
+		ps_npush(b, a, 1);
+		ps_nrotate(a, 1);
+		ps_npush(a, b, 1);
+		if (j - i < i + a->size - j)
+			ps_nrrotate(a, j - i);
+		else
+			ps_nrotate(a, i + a->size - j);
+		ps_npush(b, a, 1);
+	}
+	if (i < a->size - i)
+		ps_nrrotate(a, i);
+	else
+		ps_nrotate(a, a->size - i);
 }
 
 //a partition version who limitate the swap usage

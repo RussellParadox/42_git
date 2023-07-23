@@ -1,43 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   insert_sort.c                                      :+:      :+:    :+:   */
+/*   selection_sort.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/27 19:09:26 by gdornic           #+#    #+#             */
-/*   Updated: 2023/07/23 08:50:49 by gdornic          ###   ########.fr       */
+/*   Created: 2023/07/23 07:06:46 by gdornic           #+#    #+#             */
+/*   Updated: 2023/07/23 07:11:03 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-//the insert sort algorithm, implemented with the push_swap instuctions
-void	insert_sort(t_stack *a, t_stack *b)
+void	selection_sort(t_stack *a, t_stack *b)
 {
 	int	i;
 	int	j;
-	int	item_quantity;
+	int	min;
 
-	ps_push(a, b);
-	ft_printf("pb\n");
 	i = 0;
-	item_quantity = a->size;
-	while (i < item_quantity)
+	while (i < a->size - 1)
 	{
-		j = 0;
-		while (j < b->size)
+		min = i;
+		j = i + 1;
+		while (j < a->size)
 		{
-			if (a->item[0] > b->item[j])
-			{
-				insert(a, b, j);
-				break ;
-			}
+			if (a->item[j] < a->item[min])
+				min = j;
 			j++;
 		}
-		if (j == b->size)
-			insert(a, b, j);
+		if (min != i)
+			array_swap(a, b, i, min);
 		i++;
 	}
-	ps_npush(b, a, item_quantity + 1);
 }

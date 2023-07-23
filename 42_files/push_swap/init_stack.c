@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 11:38:47 by gdornic           #+#    #+#             */
-/*   Updated: 2023/07/22 05:27:32 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/07/23 08:28:05 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,25 +42,25 @@ int	ft_isnumber(char *str)
 	return (1);
 }
 
-int	*init_item_a(int argc, char *argv[])
+int	*init_item_a(int argc, char **argv)
 {
 	int	*stack_a;
 	int	i;
 
-	i = 1;
+	i = 0;
 	while (i < argc)
 	{
 		if (!ft_isnumber(argv[i]))
 			return (NULL);
 		i++;
 	}
-	stack_a = (int *)malloc((argc - 1) * sizeof(int));
+	stack_a = (int *)malloc((argc) * sizeof(int));
 	if (stack_a == NULL)
 		return (NULL);
 	i = 0;
-	while (i < argc - 1)
+	while (i < argc)
 	{
-		stack_a[i] = ft_atoi(argv[i + 1]);
+		stack_a[i] = ft_atoi(argv[i]);
 		if (check_duplicate(stack_a, stack_a[i], i))
 		{
 			free(stack_a);
@@ -84,7 +84,7 @@ t_stack	*init_stack_a(int argc, char *argv[])
 			free(a);
 			return (NULL);
 		}
-		a->size = argc - 1;
+		a->size = argc;
 		a->id = 'a';
 	}
 	return (a);
