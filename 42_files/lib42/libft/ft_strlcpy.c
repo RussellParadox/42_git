@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 14:20:51 by gdornic           #+#    #+#             */
-/*   Updated: 2023/02/05 17:38:27 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/07/23 23:43:38 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,4 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 		dst[size - 1] = '\0';
 	}
 	return (src_size - 1);
-}	
+}
