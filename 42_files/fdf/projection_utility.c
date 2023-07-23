@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 16:01:57 by gdornic           #+#    #+#             */
-/*   Updated: 2023/07/22 10:02:29 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/07/24 00:08:30 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	pixel_color(t_int2D coord1, t_int2D coord2, t_int2D i, \
 		return (color1);
 	}
 	ratio = hypot(i.x - coord1.x, i.y - coord1.y) / settings.dist;
-	if (settings.color_profile)
+	if (settings.color_profile == 1 && color1 != color2)
 	{
 		if (color1 == 0x00FFFFFF)
 			color1 = to_trgb(0, 255, 255, 0);

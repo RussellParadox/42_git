@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 22:36:09 by gdornic           #+#    #+#             */
-/*   Updated: 2023/04/01 20:51:47 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/07/23 23:37:21 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,10 +98,7 @@ int	special_print(const char *format, va_list ap, int i, int *diff)
 	ft_memset_int(format_data.field_width, 0, 3);
 	j = 1;
 	while (format[j] && ft_strchr("-0+ #", format[j]) != NULL)
-	{
-		flags_manager(format_data.flags, format[j]);
-		j++;
-	}
+		flags_manager(format_data.flags, format[j++]);
 	j += ft_atoi_field(&format[j], &(format_data.field_width[0]));
 	while (format[j] && format[j] == '.')
 	{
@@ -134,12 +131,9 @@ int	ft_printf(const char *format, ...)
 		if (format[i] == '%')
 		{
 			chr_printed = special_print(&format[i++], ap, chr_printed, &diff);
-			//i++;
 			if (!diff)
 				while (!ft_strchr("cspdiuxX%", format[i]))
 					i++;
-			//else
-			//	while (diff--);
 		}
 		else
 			chr_printed = usual_print(&format[i], chr_printed, 1);

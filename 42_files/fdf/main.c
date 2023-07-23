@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 18:21:24 by gdornic           #+#    #+#             */
-/*   Updated: 2023/07/23 09:15:39 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/07/23 23:53:27 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ int	main(int argc, char *argv[])
 		dot = ft_strchr(argv[1], '.');
 		if (dot != NULL)
 			dot = ft_strchr(dot + 1, '.');
-		if (dot == NULL && ft_strnstr(argv[1], ".fdf", ft_strlen(argv[1])) != NULL)
+		if (dot == NULL \
+		&& ft_strnstr(argv[1], ".fdf", ft_strlen(argv[1])) != NULL)
 		{
 			map = get_the_map(argc, argv);
 			if (map == NULL)
