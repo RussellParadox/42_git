@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 04:26:25 by gdornic           #+#    #+#             */
-/*   Updated: 2023/07/14 13:18:05 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/07/24 04:22:09 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,20 +68,16 @@ void	ps_nrrotate(t_stack *s, int n)
 	}
 }
 
-//insert s1->item[0] at place of s2->item[j]
-void	insert(t_stack *s1, t_stack *s2, int j)
+//do n ss
+void	ps_nss(t_stack *s1, t_stack *s2, int n)
 {
-	if (j <= s2->size / 2)
+	int	i;
+
+	i = 0;
+	while (i < n)
 	{
-		ps_nrotate(s2, j);
-		ps_npush(s1, s2, 1);
-		ps_nrrotate(s2, j);
-	}
-	else
-	{
-		j = s2->size - j;
-		ps_nrrotate(s2, j);
-		ps_npush(s1, s2, 1);
-		ps_nrotate(s2, j + 1);
+		ps_ss(s1, s2);
+		ft_printf("ss\n");
+		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 09:16:19 by gdornic           #+#    #+#             */
-/*   Updated: 2023/07/23 05:46:43 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/07/24 03:01:31 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,19 +105,3 @@ void	improve_output(t_sequence *sequence, t_sequence *output)
 	output->max_depth = depth;
 }
 
-//return 1 if array is sorted, else return 0
-int	is_sorted(int *array, int size)
-{
-	int	n;
-	int	i;
-
-	n = size - 1;
-	i = 0;
-	while (i < n)
-	{
-		if (array[i] > array[i + 1])
-			return (0);
-		i++;
-	}
-	return (1);
-}

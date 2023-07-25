@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 01:52:22 by gdornic           #+#    #+#             */
-/*   Updated: 2023/07/23 05:17:56 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/07/24 06:40:58 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,19 @@ static int	partition(t_stack *a, t_stack *b, int first, int last)
 }
 
 //the quick sort algorithm, implemented to sort the a stack
-void	quick_sort(t_stack *a, t_stack *b, int first, int last)
+static void	quick_sort_stack(t_stack *a, t_stack *b, int first, int last)
 {
 	int	pivot;
 
 	if (first < last)
 	{
 		pivot = partition(a, b, first, last);
-		quick_sort(a, b, first, pivot);
-		quick_sort(a, b, pivot + 1, last);
+		quick_sort_stack(a, b, first, pivot);
+		quick_sort_stack(a, b, pivot + 1, last);
 	}
+}
+
+void	quick_sort(t_stack *a, t_stack *b)
+{
+	quick_sort_stack(a, b, 0, a->size - 1);
 }
