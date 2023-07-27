@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 10:49:56 by gdornic           #+#    #+#             */
-/*   Updated: 2023/07/24 07:21:38 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/07/28 00:02:43 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,16 +85,12 @@ int	main(int argc, char *argv[])
 	b = init_stack_b(a->size);
 	if (b == NULL)
 		return (error_exit(a, b));
-	split_median(a, b);
-	rbubble_sort(b);
-	//gsort_2(a, b);
-	/*
-	if (argc > 6)
+	if (argc > 3)
 		//gsort_1(a, b);
 		//insert_sort(a, b);
-		quick_sort(a, b, 0, a->size - 1);
+		//quick_sort(a, b, 0, a->size - 1);
+		gsort_3(a, b);
 	else
 		backtrack_sort(a, b);
-		*/
 	exit_free(a, b);
 }

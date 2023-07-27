@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 18:22:11 by gdornic           #+#    #+#             */
-/*   Updated: 2023/07/27 23:00:31 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/07/28 00:29:59 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,26 @@ void	place_item(int i, t_stack *a, t_stack *b)
 	int	b_cost;
 	int	j;
 
+	if (b->size < 1)
+	{
+		ps_npush(a, b, 1);
+		return ;
+	}
+	j = position(a->item[i], b);
 	a_cost = int_min(i, a->size - i);
 	b_cost = int_min(j, b->size - j);
-	j = position(a->item[i], b);
 	if (int_min(a_cost, b_cost) + int_dist(i, j) <= a_cost + b_cost)
 	{
 		if (a_cost <= b_cost)
 		{
 			if (a_cost != i)
 			{
-				ps_nrrr(a, a_cost);
+				ps_nrrr(a, b, a_cost);
 				j = (j + a_cost) % b->size;
 			}
 			else
 			{
-				ps_nrr(a, a_cost);
+				ps_nrr(a, b, a_cost);
 				j = (j - a_cost) % b->size;
 				if (j < 0)
 					j = b->size - j;
@@ -48,12 +53,12 @@ void	place_item(int i, t_stack *a, t_stack *b)
 		{
 			if (b_cost != j)
 			{
-				ps_nrrr(b, b_cost);
+				ps_nrrr(a, b, b_cost);
 				i = (i + b_cost) % a->size;
 			}
 			else
 			{
-				ps_nrr(b, b_cost);
+				ps_nrr(a, b, b_cost);
 				i = (i - b_cost) % a->size;
 				if (i < 0)
 					i = a->size - i;
@@ -120,6 +125,7 @@ int	choose_item(t_stack *a, t_stack *b)
 		}
 		i++;
 	}
+	ft_printf("cost: %d\n", cost);
 	return (best_item);
 }
 

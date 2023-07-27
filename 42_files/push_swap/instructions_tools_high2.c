@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 04:22:25 by gdornic           #+#    #+#             */
-/*   Updated: 2023/07/27 22:27:17 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/07/27 23:30:26 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	ps_nrrr(t_stack *s1, t_stack *s2, int n)
 	while (i < n)
 	{
 		ps_rrr(s1, s2);
-		ft_printf("rr\n");
+		ft_printf("rrr\n");
 		i++;
 	}
 }

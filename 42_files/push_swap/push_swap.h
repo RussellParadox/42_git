@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 10:51:13 by gdornic           #+#    #+#             */
-/*   Updated: 2023/07/27 23:22:30 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/07/27 23:25:42 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,6 @@ void	insert_sort(t_stack *a, t_stack *b);
 //quick sort
 void	array_swap(t_stack *a, t_stack *b, int i, int j);
 void	quick_sort(t_stack *a, t_stack *b);
-
-//rquick sort
-void	rquick_sort(t_stack *a, t_stack *b);
 
 //backtrack sort
 void	backtrack_sort(t_stack *a, t_stack *b);

@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 23:03:55 by gdornic           #+#    #+#             */
-/*   Updated: 2023/07/27 23:22:48 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/07/28 00:00:33 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,21 @@ int	locate_max(t_stack *s)
 //return the position (descending order) of the n index in s
 int	position(int n, t_stack *s)
 {
+	int	nearest_sup;
+	int	position;
 	int	i;
 
+	nearest_sup = stack_max(s);
+	position = 0;
 	i = 0;
-	while (i < s->size && s->item[i] > n)
+	while (i < s->size)
+	{
+		if (s->item[i] > n && s->item[i] <= nearest_sup)
+		{
+			nearest_sup = s->item[i];
+			position = i;
+		}
 		i++;
-	return (i);
+	}
+	return (position + 1);
 }
