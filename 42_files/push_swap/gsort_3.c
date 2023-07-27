@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 18:22:11 by gdornic           #+#    #+#             */
-/*   Updated: 2023/07/28 00:29:59 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/07/28 00:55:32 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,10 @@ int	choose_item(t_stack *a, t_stack *b)
 	int	i;
 
 	if (a->size < 2 || b->size < 2)
+	{
+		//ft_printf("cost: 1\n");
 		return (0);
+	}
 	best_cost = evaluate(0, position(a->item[0], b), a, b);
 	best_item = 0;
 	i = 1;
@@ -125,7 +128,7 @@ int	choose_item(t_stack *a, t_stack *b)
 		}
 		i++;
 	}
-	ft_printf("cost: %d\n", cost);
+	//ft_printf("cost: %d\n", best_cost);
 	return (best_item);
 }
 
@@ -137,7 +140,9 @@ void	gsort_3(t_stack *a, t_stack *b)
 
 	while (a->size > 0)
 	{
+		//ps_print(a, b);
 		i = choose_item(a, b);
+		//ft_printf("item: %d\n", i);
 		place_item(i, a, b);
 	}
 	i = locate_max(b);
