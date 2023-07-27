@@ -1,41 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   instructions_tools_high2.c                         :+:      :+:    :+:   */
+/*   distance_tools.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/24 04:22:25 by gdornic           #+#    #+#             */
-/*   Updated: 2023/07/27 22:27:17 by gdornic          ###   ########.fr       */
+/*   Created: 2023/07/27 23:03:55 by gdornic           #+#    #+#             */
+/*   Updated: 2023/07/27 23:08:00 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-//do n rr
-void	ps_nrr(t_stack *s1, t_stack *s2, int n)
+int	int_min(int x1, int x2)
 {
-	int	i;
-
-	i = 0;
-	while (i < n)
-	{
-		ps_rr(s1, s2);
-		ft_printf("rr\n");
-		i++;
-	}
+	return ((x1 <= x2) * x1 + (x1 > x2) * x2);
 }
 
-//do n rrr
-void	ps_nrrr(t_stack *s1, t_stack *s2, int n)
+int	int_dist(int x1, int x2)
 {
-	int	i;
-
-	i = 0;
-	while (i < n)
-	{
-		ps_rrr(s1, s2);
-		ft_printf("rr\n");
-		i++;
-	}
+	return ((x1 <= x2) * (x2 - x1) + (x2 < x1) * (x1 - x2));
 }

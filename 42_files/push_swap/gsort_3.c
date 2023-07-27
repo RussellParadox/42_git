@@ -6,35 +6,95 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 18:22:11 by gdornic           #+#    #+#             */
-/*   Updated: 2023/07/27 21:51:33 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/07/27 23:00:31 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
+//place item at i-th index in a at his place (descending order) in b
+void	place_item(int i, t_stack *a, t_stack *b)
+{
+	int	a_cost;
+	int	b_cost;
+	int	j;
+
+	a_cost = int_min(i, a->size - i);
+	b_cost = int_min(j, b->size - j);
+	j = position(a->item[i], b);
+	if (int_min(a_cost, b_cost) + int_dist(i, j) <= a_cost + b_cost)
+	{
+		if (a_cost <= b_cost)
+		{
+			if (a_cost != i)
+			{
+				ps_nrrr(a, a_cost);
+				j = (j + a_cost) % b->size;
+			}
+			else
+			{
+				ps_nrr(a, a_cost);
+				j = (j - a_cost) % b->size;
+				if (j < 0)
+					j = b->size - j;
+			}
+			b_cost = int_min(j, b->size - j);
+			if (b_cost != j)
+				ps_nrrotate(b, b_cost);
+			else
+				ps_nrotate(b, b_cost);
+		}
+		else
+		{
+			if (b_cost != j)
+			{
+				ps_nrrr(b, b_cost);
+				i = (i + b_cost) % a->size;
+			}
+			else
+			{
+				ps_nrr(b, b_cost);
+				i = (i - b_cost) % a->size;
+				if (i < 0)
+					i = a->size - i;
+			}
+			a_cost = int_min(i, a->size - i);
+			if (a_cost != i)
+				ps_nrrotate(a, a_cost);
+			else
+				ps_nrotate(a, a_cost);
+		}
+		ps_npush(a, b, 1);
+	}
+	else
+	{
+		if (a_cost != i)
+			ps_nrrotate(a, a_cost);
+		else
+			ps_nrotate(a, a_cost);
+		if (b_cost != j)
+			ps_nrrotate(b, b_cost);
+		else
+			ps_nrotate(b, b_cost);
+		ps_npush(a, b, 1);
+	}
+}
+
 //return the less cost for placing the i-th item of a before the j-th item of b
+//joined version: use of rr,rrr, ra and rb
+//disjoined version: use of ra and rb
 int	evaluate(int i, int j, t_stack *a, t_stack *b)
 {
 	int	disjoin_cost;
 	int	join_cost;
-	int	cost;
 	int	a_cost;
 	int	b_cost;
 
-	cost = 1;
-	a_cost = min(i, a->size - i);
-	b_cost = min(j, b->size - j);
-	if (i == 0)
-		return (cost + b_cost);
-	if (j == 0)
-		return (cost + a_cost);
-	//joined version (use of rr,rrr, ra and rb)
-	join_cost = 1;
-	join_cost += min(a_cost, b_cost) + dist_ij;
-	//disjoined version (use of ra and rb)
-	disjoin_cost = 1;
-	disjoin_cost += a_cost + b_cost;
-	return (min(join_cost, disjoin_cost));
+	a_cost = int_min(i, a->size - i);
+	b_cost = int_min(j, b->size - j);
+	join_cost = 1 + int_min(a_cost, b_cost) + int_dist(i, j);
+	disjoin_cost = 1 + a_cost + b_cost;
+	return (int_min(join_cost, disjoin_cost));
 }
 
 //search for the best item in the a stack to place in the b stack and return his index

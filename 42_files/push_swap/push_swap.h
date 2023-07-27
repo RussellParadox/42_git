@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 10:51:13 by gdornic           #+#    #+#             */
-/*   Updated: 2023/07/24 07:21:31 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/07/27 23:22:30 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	ps_nss(t_stack *s1, t_stack *s2, int n);
 
 //instructions tools high 2
 void	ps_nrr(t_stack *s1, t_stack *s2, int n);
+void	ps_nrrr(t_stack *s1, t_stack *s2, int n);
 
 //insert sort
 void	insert(t_stack *s1, t_stack *s2, int j);
@@ -117,6 +118,15 @@ void	gsort_1(t_stack *a, t_stack *b);
 int		bad_rneighbors(t_stack *s);
 int		bad_neighbors(t_stack *s);
 void	gsort_2(t_stack *a, t_stack *b);
+
+//gsort 3
+void	gsort_3(t_stack *a, t_stack *b);
+
+//gsort 3 tools
+int	int_min(int x1, int x2);
+int	int_dist(int x1, int x2);
+int	locate_max(t_stack *s);
+int	position(int n, t_stack *s);
 
 //quick sort array
 void	quick_sort_array(int *array, int first, int last);

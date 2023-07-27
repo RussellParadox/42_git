@@ -6,7 +6,7 @@
 #    By: gdornic <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 21:58:09 by gdornic           #+#    #+#              #
-#    Updated: 2023/07/24 07:05:09 by gdornic          ###   ########.fr        #
+#    Updated: 2023/07/27 23:23:51 by gdornic          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ HEADERS = -Ilib42
 
 LIB_LINK = -Llib42 -l42 
 
-SRC = main.c init_stack.c instructions_tools_low.c instructions_tools_low2.c instructions_tools_high.c backtrack.c printing_tools.c backtrack_tools.c quick_sort.c backtrack_sort.c exit.c insert_sort.c exchange_sort.c selection_sort.c statistic_tools.c gsort_1.c quick_sort_array.c gsort_2.c instructions_tools_high2.c split_stack.c rquick_sort.c bubble_sort.c
+SRC = main.c init_stack.c instructions_tools_low.c instructions_tools_low2.c instructions_tools_high.c backtrack.c printing_tools.c backtrack_tools.c quick_sort.c backtrack_sort.c exit.c insert_sort.c exchange_sort.c selection_sort.c statistic_tools.c gsort_1.c quick_sort_array.c gsort_2.c instructions_tools_high2.c split_stack.c rquick_sort.c bubble_sort.c gsort_3.c gsort_3_tools.c
 
 SRC_BONUS = checker.c checker_tools.c init_stack.c instructions_tools_low.c instructions_tools_low2.c instructions_tools_high.c backtrack.c printing_tools.c backtrack_tools.c quick_sort.c backtrack_sort.c exit.c
 
