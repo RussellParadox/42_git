@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 18:22:11 by gdornic           #+#    #+#             */
-/*   Updated: 2023/07/28 00:55:32 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/07/28 07:09:41 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	place_item(int i, t_stack *a, t_stack *b)
 {
 	int	a_cost;
 	int	b_cost;
+	int	join_cost;
 	int	j;
 
 	if (b->size < 1)
@@ -27,7 +28,8 @@ void	place_item(int i, t_stack *a, t_stack *b)
 	j = position(a->item[i], b);
 	a_cost = int_min(i, a->size - i);
 	b_cost = int_min(j, b->size - j);
-	if (int_min(a_cost, b_cost) + int_dist(i, j) <= a_cost + b_cost)
+	join_cost = evaluate_join_cost(i, j, a, b) - 1;
+	if (join_cost <= a_cost + b_cost)
 	{
 		if (a_cost <= b_cost)
 		{
@@ -95,9 +97,11 @@ int	evaluate(int i, int j, t_stack *a, t_stack *b)
 	int	a_cost;
 	int	b_cost;
 
+	if (b->size < 1)
+		return (1);
 	a_cost = int_min(i, a->size - i);
 	b_cost = int_min(j, b->size - j);
-	join_cost = 1 + int_min(a_cost, b_cost) + int_dist(i, j);
+	join_cost = evaluate_join_cost(i, j, a, b);
 	disjoin_cost = 1 + a_cost + b_cost;
 	return (int_min(join_cost, disjoin_cost));
 }
@@ -110,11 +114,6 @@ int	choose_item(t_stack *a, t_stack *b)
 	int	cost;
 	int	i;
 
-	if (a->size < 2 || b->size < 2)
-	{
-		//ft_printf("cost: 1\n");
-		return (0);
-	}
 	best_cost = evaluate(0, position(a->item[0], b), a, b);
 	best_item = 0;
 	i = 1;
@@ -143,6 +142,7 @@ void	gsort_3(t_stack *a, t_stack *b)
 		//ps_print(a, b);
 		i = choose_item(a, b);
 		//ft_printf("item: %d\n", i);
+		//ft_printf("b position: %d\n", position(a->item[i], b));
 		place_item(i, a, b);
 	}
 	i = locate_max(b);

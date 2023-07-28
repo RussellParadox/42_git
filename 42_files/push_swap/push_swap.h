@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 10:51:13 by gdornic           #+#    #+#             */
-/*   Updated: 2023/07/27 23:25:42 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/07/28 06:59:40 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,8 @@ int	int_min(int x1, int x2);
 int	int_dist(int x1, int x2);
 int	locate_max(t_stack *s);
 int	position(int n, t_stack *s);
+int	actualise_joined_index(int i1, int i2, int cost, int size);
+int	evaluate_join_cost(int i, int j, t_stack *a, t_stack *b);
 
 //quick sort array
 void	quick_sort_array(int *array, int first, int last);
