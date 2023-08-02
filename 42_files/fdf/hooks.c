@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 08:22:43 by gdornic           #+#    #+#             */
-/*   Updated: 2023/07/22 08:25:10 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/08/02 17:52:41 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	destroy_hook(t_mlx *mlx)
 {
-	mlx_destroy_window(mlx->instance, mlx->win);
 	mlx_loop_end(mlx->instance);
 	mlx->loop_state = 0;
 	return (0);

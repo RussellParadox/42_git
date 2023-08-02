@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 04:58:56 by gdornic           #+#    #+#             */
-/*   Updated: 2023/07/24 00:15:46 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/08/02 17:54:20 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void	put_pixel(t_img *data, int x, int y, int color)
 
 void	free_param(t_param *param)
 {
+	mlx_destroy_window(param->mlx->instance, param->mlx->win);
 	mlx_destroy_display(param->mlx->instance);
 	free(param->mlx->instance);
 	free(param->settings);
