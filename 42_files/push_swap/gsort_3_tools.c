@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 23:03:55 by gdornic           #+#    #+#             */
-/*   Updated: 2023/07/28 07:05:41 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/08/03 12:59:10 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ int	position(int n, t_stack *s)
 	int	position;
 	int	i;
 
+	if (s->size == 0)
+		return (0);
 	nearest_min = stack_min(s);
 	position = 0;
 	i = 0;

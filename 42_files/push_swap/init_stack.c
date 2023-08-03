@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 11:38:47 by gdornic           #+#    #+#             */
-/*   Updated: 2023/07/24 05:14:13 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/08/03 12:41:12 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ int	check_duplicate(int *stack, long nb, int size)
 {
 	int	i;
 
-	if (nb > INT_MAX || nb < INT_MIN)
-		return (1);
 	i = 0;
 	while (i < size)
 	{
@@ -30,8 +28,20 @@ int	check_duplicate(int *stack, long nb, int size)
 
 int	ft_isnumber(char *str)
 {
-	int	i;
+	int		i;
+	size_t	int_len;
+	long	max;
 
+	max = INT_MAX;
+	int_len = 1;
+	while (max != 0)
+	{
+		int_len += 1;
+		max /= 10;
+	}
+	if ((str[0] == '-' && ft_strlen(str) > int_len + 1) \
+	|| (str[0] != '-' && ft_strlen(str) > int_len))
+		return (0);
 	i = 0;
 	while (str[i] != '\0')
 	{

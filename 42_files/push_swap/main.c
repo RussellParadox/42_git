@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 10:49:56 by gdornic           #+#    #+#             */
-/*   Updated: 2023/07/28 06:11:22 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/08/03 13:16:00 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,6 @@ int	main(int argc, char *argv[])
 	av = argv + 1;
 	if (one_arg(&ac, &av, argv))
 		return (1);
-	a = NULL;
-	b = NULL;
 	a = init_stack_a(ac, av);
 	free_av(av, ac, argv);
 	if (a == NULL)
@@ -85,10 +83,9 @@ int	main(int argc, char *argv[])
 	b = init_stack_b(a->size);
 	if (b == NULL)
 		return (error_exit(a, b));
-	if (argc > 3)
-		//gsort_1(a, b);
-		//insert_sort(a, b);
-		//quick_sort(a, b, 0, a->size - 1);
+	if (is_rotate_sorted(a))
+		rotate_sort(a);
+	else if (a->size > 5)
 		gsort_3(a, b);
 	else
 		backtrack_sort(a, b);

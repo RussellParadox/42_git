@@ -6,85 +6,68 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 18:22:11 by gdornic           #+#    #+#             */
-/*   Updated: 2023/07/28 07:09:41 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/08/03 13:12:26 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-//place item at i-th index in a at his place (descending order) in b
-void	place_item(int i, t_stack *a, t_stack *b)
+void	join_rotate(t_stack *a, t_stack *b, int i, int j)
 {
 	int	a_cost;
 	int	b_cost;
-	int	join_cost;
-	int	j;
 
-	if (b->size < 1)
-	{
-		ps_npush(a, b, 1);
-		return ;
-	}
-	j = position(a->item[i], b);
 	a_cost = int_min(i, a->size - i);
 	b_cost = int_min(j, b->size - j);
-	join_cost = evaluate_join_cost(i, j, a, b) - 1;
-	if (join_cost <= a_cost + b_cost)
+	if (a_cost != i)
 	{
-		if (a_cost <= b_cost)
-		{
-			if (a_cost != i)
-			{
-				ps_nrrr(a, b, a_cost);
-				j = (j + a_cost) % b->size;
-			}
-			else
-			{
-				ps_nrr(a, b, a_cost);
-				j = (j - a_cost) % b->size;
-				if (j < 0)
-					j = b->size - j;
-			}
-			b_cost = int_min(j, b->size - j);
-			if (b_cost != j)
-				ps_nrrotate(b, b_cost);
-			else
-				ps_nrotate(b, b_cost);
-		}
-		else
-		{
-			if (b_cost != j)
-			{
-				ps_nrrr(a, b, b_cost);
-				i = (i + b_cost) % a->size;
-			}
-			else
-			{
-				ps_nrr(a, b, b_cost);
-				i = (i - b_cost) % a->size;
-				if (i < 0)
-					i = a->size - i;
-			}
-			a_cost = int_min(i, a->size - i);
-			if (a_cost != i)
-				ps_nrrotate(a, a_cost);
-			else
-				ps_nrotate(a, a_cost);
-		}
-		ps_npush(a, b, 1);
+		ps_nrrr(a, b, a_cost);
+		j = (j + a_cost) % b->size;
 	}
 	else
 	{
-		if (a_cost != i)
-			ps_nrrotate(a, a_cost);
-		else
-			ps_nrotate(a, a_cost);
-		if (b_cost != j)
-			ps_nrrotate(b, b_cost);
-		else
-			ps_nrotate(b, b_cost);
-		ps_npush(a, b, 1);
+		ps_nrr(a, b, a_cost);
+		j = (j - a_cost) % b->size;
+		if (j < 0)
+			j = b->size - j;
 	}
+	b_cost = int_min(j, b->size - j);
+	if (b_cost != j)
+		ps_nrrotate(b, b_cost);
+	else
+		ps_nrotate(b, b_cost);
+}
+
+//place item at i-th index in a at his place (descending order) in b
+//cost[0] -> cost of a
+//cost[1] -> cost of b
+void	place_item(int i, t_stack *a, t_stack *b)
+{
+	int	cost[2];
+	int	j;
+
+	j = position(a->item[i], b);
+	cost[0] = int_min(i, a->size - i);
+	cost[1] = int_min(j, b->size - j);
+	if (b->size > 0 && evaluate_join_cost(i, j, a, b) - 1 <= cost[0] + cost[1])
+	{
+		if (cost[0] <= cost[1])
+			join_rotate(a, b, i, j);
+		else
+			join_rotate(b, a, j, i);
+	}
+	else
+	{
+		if (cost[0] != i)
+			ps_nrrotate(a, cost[0]);
+		else
+			ps_nrotate(a, cost[0]);
+		if (cost[1] != j)
+			ps_nrrotate(b, cost[1]);
+		else
+			ps_nrotate(b, cost[1]);
+	}
+	ps_npush(a, b, 1);
 }
 
 //return the less cost for placing the i-th item of a before the j-th item of b
@@ -127,7 +110,6 @@ int	choose_item(t_stack *a, t_stack *b)
 		}
 		i++;
 	}
-	//ft_printf("cost: %d\n", best_cost);
 	return (best_item);
 }
 
@@ -139,10 +121,7 @@ void	gsort_3(t_stack *a, t_stack *b)
 
 	while (a->size > 0)
 	{
-		//ps_print(a, b);
 		i = choose_item(a, b);
-		//ft_printf("item: %d\n", i);
-		//ft_printf("b position: %d\n", position(a->item[i], b));
 		place_item(i, a, b);
 	}
 	i = locate_max(b);

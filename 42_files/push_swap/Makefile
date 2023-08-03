@@ -6,7 +6,7 @@
 #    By: gdornic <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 21:58:09 by gdornic           #+#    #+#              #
-#    Updated: 2023/07/27 23:26:10 by gdornic          ###   ########.fr        #
+#    Updated: 2023/08/03 12:36:46 by gdornic          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ OBJ_BONUS = $(SRC_BONUS:.c=.o)
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra
+CFLAGS = -Wall -Wextra -Werror
 
 define make_dep
 	for d in $(DEP) ; do \
