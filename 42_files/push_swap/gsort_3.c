@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 18:22:11 by gdornic           #+#    #+#             */
-/*   Updated: 2023/08/03 14:51:07 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/08/03 14:52:24 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,10 @@ void	join_rotate(t_stack *a, t_stack *b, int i, int j)
 //place item at i-th index in a at his place (descending order) in b
 //cost[0] -> cost of a
 //cost[1] -> cost of b
-void	place_item(int i, t_stack *a, t_stack *b)
+void	place_item(int i, int j, t_stack *a, t_stack *b)
 {
 	int	cost[2];
-	int	j;
 
-	j = position(a->item[i], b);
 	cost[0] = int_min(i, a->size - i);
 	cost[1] = int_min(j, b->size - j);
 	if (b->size > 0 && evaluate_join_cost(i, j, a, b) - 1 <= cost[0] + cost[1])
@@ -124,7 +122,7 @@ void	gsort_3(t_stack *a, t_stack *b)
 	while (a->size > 0)
 	{
 		i = choose_item(a, b);
-		place_item(i, a, b);
+		place_item(i, position(a->item[i], b), a, b);
 	}
 	i = locate_max(b);
 	if (i < b->size - i)

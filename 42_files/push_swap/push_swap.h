@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 10:51:13 by gdornic           #+#    #+#             */
-/*   Updated: 2023/08/03 14:46:02 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/08/03 15:04:03 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,6 @@ int		is_rsorted(int *array, int size);
 void	gsort_3(t_stack *a, t_stack *b);
 
 //gsort 3 tools
-int		int_min(int x1, int x2);
-int		int_dist(int x1, int x2);
 int		locate_max(t_stack *s);
 int		position(int n, t_stack *s);
 int		actualise_joined_index(int i1, int i2, int cost, int size);
@@ -125,5 +123,16 @@ void	rotate_sort(t_stack *a);
 //extremum
 int		int_min(int x1, int x2);
 int		int_dist(int x1, int x2);
+
+//instructions tools high silent
+void	ps_snpush(t_stack *s1, t_stack *s2, int n);
+void	ps_snrotate(t_stack *s, int n);
+void	ps_snrrotate(t_stack *s, int n);
+void	ps_snswap(t_stack *s, int n);
+void	ps_snss(t_stack *s1, t_stack *s2, int n);
+
+//instructions tools high silent 2
+void	ps_snrr(t_stack *s1, t_stack *s2, int n);
+void	ps_snrrr(t_stack *s1, t_stack *s2, int n);
 
 #endif
