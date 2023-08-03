@@ -6,21 +6,11 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 23:03:55 by gdornic           #+#    #+#             */
-/*   Updated: 2023/08/03 12:59:10 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/08/03 14:45:26 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-int	int_min(int x1, int x2)
-{
-	return ((x1 <= x2) * x1 + (x1 > x2) * x2);
-}
-
-int	int_dist(int x1, int x2)
-{
-	return ((x1 <= x2) * (x2 - x1) + (x2 < x1) * (x1 - x2));
-}
 
 int	locate_max(t_stack *s)
 {
@@ -57,7 +47,8 @@ int	position(int n, t_stack *s)
 	i = 0;
 	while (i < s->size)
 	{
-		if ((s->item[i] < n && s->item[i] > nearest_min) || (s->item[i] == nearest_min))
+		if ((s->item[i] < n && s->item[i] > nearest_min) \
+		|| (s->item[i] == nearest_min))
 		{
 			nearest_min = s->item[i];
 			position = i;
@@ -67,7 +58,7 @@ int	position(int n, t_stack *s)
 	if (nearest_min > n)
 		position++;
 	if (position == s->size)
-			position = 0;
+		position = 0;
 	return (position);
 }
 

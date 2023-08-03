@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 10:51:13 by gdornic           #+#    #+#             */
-/*   Updated: 2023/07/28 06:59:40 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/08/03 14:46:02 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,6 @@ void	ps_nrrr(t_stack *s1, t_stack *s2, int n);
 void	insert(t_stack *s1, t_stack *s2, int j);
 void	insert_sort(t_stack *a, t_stack *b);
 
-//quick sort
-void	array_swap(t_stack *a, t_stack *b, int i, int j);
-void	quick_sort(t_stack *a, t_stack *b);
-
 //backtrack sort
 void	backtrack_sort(t_stack *a, t_stack *b);
 
@@ -108,33 +104,26 @@ int		stack_median(t_stack *s, int first, int last);
 int		is_sorted(int *array, int size);
 int		is_rsorted(int *array, int size);
 
-//gsort 1
-void	gsort_1(t_stack *a, t_stack *b);
-
-//gsort 2
-int		bad_rneighbors(t_stack *s);
-int		bad_neighbors(t_stack *s);
-void	gsort_2(t_stack *a, t_stack *b);
-
 //gsort 3
 void	gsort_3(t_stack *a, t_stack *b);
 
 //gsort 3 tools
-int	int_min(int x1, int x2);
-int	int_dist(int x1, int x2);
-int	locate_max(t_stack *s);
-int	position(int n, t_stack *s);
-int	actualise_joined_index(int i1, int i2, int cost, int size);
-int	evaluate_join_cost(int i, int j, t_stack *a, t_stack *b);
+int		int_min(int x1, int x2);
+int		int_dist(int x1, int x2);
+int		locate_max(t_stack *s);
+int		position(int n, t_stack *s);
+int		actualise_joined_index(int i1, int i2, int cost, int size);
+int		evaluate_join_cost(int i, int j, t_stack *a, t_stack *b);
 
 //quick sort array
 void	quick_sort_array(int *array, int first, int last);
 
-//split stack
-void	split_median(t_stack *a, t_stack *b);
+//rotate sort
+int		is_rotate_sorted(t_stack *a);
+void	rotate_sort(t_stack *a);
 
-//bubble sort
-void	bubble_sort(t_stack *s);
-void	rbubble_sort(t_stack *s);
+//extremum
+int		int_min(int x1, int x2);
+int		int_dist(int x1, int x2);
 
 #endif

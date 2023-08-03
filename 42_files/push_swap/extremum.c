@@ -1,36 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gsort_1.c                                          :+:      :+:    :+:   */
+/*   extremum.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/24 02:04:16 by gdornic           #+#    #+#             */
-/*   Updated: 2023/07/24 03:02:34 by gdornic          ###   ########.fr       */
+/*   Created: 2023/08/03 14:45:07 by gdornic           #+#    #+#             */
+/*   Updated: 2023/08/03 14:45:32 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	gsort_1(t_stack *a, t_stack *b)
+int	int_min(int x1, int x2)
 {
-	int	rotation_count;
+	return ((x1 <= x2) * x1 + (x1 > x2) * x2);
+}
 
-	while (!is_sorted(a->item, a->size))
-	{
-		rotation_count = 0;
-		while (rotation_count < a->size - 1 && !is_sorted(a->item, a->size))
-		{
-			if (a->item[0] > a->item[1])
-				ps_nswap(a, 1);
-			ps_nrotate(a, 1);
-			rotation_count++;
-		}
-		ps_npush(a, b, 1);
-	}
-	while (b->size > 0)
-	{
-		ps_npush(b, a, 1);
-		ps_nrotate(a, 1);
-	}
+int	int_dist(int x1, int x2)
+{
+	return ((x1 <= x2) * (x2 - x1) + (x2 < x1) * (x1 - x2));
 }

@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 18:22:11 by gdornic           #+#    #+#             */
-/*   Updated: 2023/08/03 13:12:26 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/08/03 14:51:07 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,8 @@ int	evaluate(int i, int j, t_stack *a, t_stack *b)
 	return (int_min(join_cost, disjoin_cost));
 }
 
-//search for the best item in the a stack to place in the b stack and return his index
+//search for the best item in the a stack to place in the b stack and
+//return his index
 int	choose_item(t_stack *a, t_stack *b)
 {
 	int	best_item;
@@ -114,7 +115,8 @@ int	choose_item(t_stack *a, t_stack *b)
 }
 
 //algorithm that use rotation and push instructions
-//looks like the insert sort but place the less cost item instead of the top item of a
+//looks like the insert sort but place the less cost
+//item instead of the top item of a
 void	gsort_3(t_stack *a, t_stack *b)
 {
 	int	i;

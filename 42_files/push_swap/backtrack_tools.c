@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 09:16:19 by gdornic           #+#    #+#             */
-/*   Updated: 2023/07/24 03:01:31 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/08/03 14:42:38 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,4 +104,3 @@ void	improve_output(t_sequence *sequence, t_sequence *output)
 	sequence->max_depth = depth;
 	output->max_depth = depth;
 }
-
