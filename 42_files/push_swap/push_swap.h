@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 10:51:13 by gdornic           #+#    #+#             */
-/*   Updated: 2023/08/03 15:04:03 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/08/04 16:26:57 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,11 @@ typedef struct s_sequence
 	int	max_depth;
 	int	rotation_max;
 }	t_sequence;
+
+//main tools
+int		init_ac(char str[]);
+int		one_arg(int *ac, char ***av, char *argv[]);
+void	free_av(char **av, int ac, char *argv[]);
 
 //exit
 void	exit_free(t_stack *a, t_stack *b);

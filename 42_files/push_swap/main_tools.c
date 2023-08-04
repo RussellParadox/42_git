@@ -1,39 +1,60 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   instructions_tools_high_silent2.c                  :+:      :+:    :+:   */
+/*   main_tools.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/24 04:22:25 by gdornic           #+#    #+#             */
-/*   Updated: 2023/08/03 15:02:12 by gdornic          ###   ########.fr       */
+/*   Created: 2023/08/04 16:26:13 by gdornic           #+#    #+#             */
+/*   Updated: 2023/08/04 16:26:50 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-//do n rr
-void	ps_snrr(t_stack *s1, t_stack *s2, int n)
+int	init_ac(char str[])
 {
+	int	ac;
 	int	i;
 
+	ac = 0;
 	i = 0;
-	while (i < n)
+	while (str[i] != '\0')
 	{
-		ps_rr(s1, s2);
+		if (str[i] != ' ')
+		{
+			ac++;
+			while (str[i] != ' ' && str[i + 1] != '\0')
+				i++;
+		}
 		i++;
 	}
+	return (ac);
 }
 
-//do n rrr
-void	ps_snrrr(t_stack *s1, t_stack *s2, int n)
+void	free_av(char **av, int ac, char *argv[])
 {
 	int	i;
 
+	if (av == argv + 1)
+		return ;
 	i = 0;
-	while (i < n)
+	while (i < ac)
 	{
-		ps_rrr(s1, s2);
+		free(av[i]);
 		i++;
 	}
+	free(av);
+}
+
+int	one_arg(int *ac, char ***av, char *argv[])
+{
+	if (*ac == 1)
+	{
+		*ac = init_ac(argv[1]);
+		*av = ft_split(argv[1], ' ');
+		if (av == NULL)
+			return (1);
+	}
+	return (0);
 }

@@ -6,11 +6,19 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 04:57:18 by gdornic           #+#    #+#             */
-/*   Updated: 2023/07/23 05:33:56 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/08/04 16:25:25 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+void	print_result(t_stack *a, t_stack *b)
+{
+	if (b->size == 0 && is_sorted(a->item, a->size))
+		ft_printf("OK\n");
+	else
+		ft_printf("KO\n");
+}
 
 void	apply_instructions(char *instructions, t_stack *a, t_stack *b)
 {
@@ -35,28 +43,28 @@ void	apply_instructions(char *instructions, t_stack *a, t_stack *b)
 //print Error if an error occurs
 int	main(int argc, char *argv[])
 {
-	t_stack	*a;
-	t_stack	*b;
 	char	*instructions;
+	char	**av;
+	int		ac;
+	t_stack	*s[2];
 
 	if (argc < 2)
 		return (0);
-	a = NULL;
-	b = NULL;
-	a = init_stack_a(argc, argv);
-	if (a == NULL)
-		return (error_exit(a, b));
-	b = init_stack_b(a->size);
-	if (b == NULL)
-		return (error_exit(a, b));
+	ac = argc - 1;
+	av = argv + 1;
+	if (one_arg(&ac, &av, argv))
+		return (1);
+	s[1] = NULL;
+	s[0] = init_stack_a(ac, av);
+	free_av(av, ac, argv);
+	if (s[0] == NULL)
+		return (error_exit(s[0], s[1]));
+	s[1] = init_stack_b(s[0]->size);
 	instructions = init_instructions();
 	if (instructions == NULL)
-		return (error_exit(a, b));
-	apply_instructions(instructions, a, b);
-	if (b->size == 0 && is_sorted(a->item, a->size))
-		ft_printf("OK\n");
-	else
-		ft_printf("KO\n");
+		return (error_exit(s[0], s[1]));
+	apply_instructions(instructions, s[0], s[1]);
+	print_result(s[0], s[1]);
 	free(instructions);
-	exit_free(a, b);
+	exit_free(s[0], s[1]);
 }
