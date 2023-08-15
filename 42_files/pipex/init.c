@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 03:11:05 by gdornic           #+#    #+#             */
-/*   Updated: 2023/08/15 04:59:47 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/08/15 11:11:08 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ t_list	**exit_init(t_list **cmd)
 	return (NULL);
 }
 
-t_list	**init_cmd(int argc, char *argv[])
+t_list	**init_cmd(int len, char *argv[])
 {
 	t_list	**cmd;
 	t_list	*new;
@@ -52,27 +52,26 @@ t_list	**init_cmd(int argc, char *argv[])
 	int	content_len;
 	int	i;
 
-	argc = argc - 3;
-	cmd = (t_list **)malloc(sizeof(t_list *) * (argc + 1));
+	cmd = (t_list **)malloc(sizeof(t_list *) * (len + 1));
 	if (cmd == NULL)
 		return (NULL);
 	i = 0;
-	while (i < argc)
+	while (i < len)
 	{
 		cmd[i] = (t_list *)malloc(sizeof(t_list));
 		if (cmd[i] == NULL)
 			return (exit_init(cmd));
-		cmd[i]->content = content[content_len--];
-		cmd[i]->next = NULL;
 		i++;
 	}
 	i = 0;
-	while (i < argc)
+	while (i < len)
 	{
 		content = ft_split(argv[i], ' ');
 		if (content == NULL)
 			return (exit_init(cmd));
 		content_len = split_len(content) - 1;
+		cmd[i]->content = content[content_len--];
+		cmd[i]->next = NULL;
 		while (content_len >= 0)
 		{
 			new = ft_lstnew(content[content_len]);

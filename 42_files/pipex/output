@@ -1,6 +1,7 @@
-execve_test.c
-execve_test.o
+get_file.c
+get_file.o
 init.c
+init.o
 lib42
 main.c
 main.o
@@ -9,4 +10,3 @@ Makefile
 output
 pipex
 pipex.h
-wc
