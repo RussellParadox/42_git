@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 16:31:06 by gdornic           #+#    #+#             */
-/*   Updated: 2023/08/15 16:08:24 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/08/16 01:46:53 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,13 @@
 # include <get_next_line.h>
 
 //init
-void	cmd_free(t_list **cmd);
-t_list	**init_cmd(int len, char *argv[]);
+void	cmd_free(char ***cmd);
+char	***init_cmd(int len, char *argv[]);
 
 //get file
 char	*get_file(int fd);
+
+//print cmd
+void	print_cmd(char ***cmd);
 
 #endif

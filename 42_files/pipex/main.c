@@ -6,60 +6,111 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 01:47:06 by gdornic           #+#    #+#             */
-/*   Updated: 2023/08/15 11:41:22 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/08/16 01:47:09 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	print_content(char *str)
+void	child_process(char **cmd, char *envp[], int pipe_fd[2], int pipeline_fd[2])
 {
-	ft_printf("\t%s\n", str);
+	close(pipe_fd[0]);
+	if (dup2(pipeline_fd[0], 0) == -1)
+	{
+		perror("dup2");
+		close(pipe_fd[1]);
+		exit(1);
+	}
+	if (dup2(pipe_fd[1], 1) == -1)
+	{
+		perror("dup2");
+		close(pipe_fd[1]);
+		exit(1);
+	}
+	if (execve(cmd[0], cmd, envp) == -1)
+	{
+		perror("execve");
+		close(pipe_fd[1]);
+		exit(1);
+	}
+	close(pipe_fd[1]);
+	exit(0);
 }
 
-void	print_cmd(t_list **cmd)
+void	parent_process(char **cmd, char *envp[], int pipe_fd[2], int pipeline_fd[2])
 {
-	int	i;
-
-	i = 0;
-	while (cmd[i] != NULL)
+	close(pipe_fd[1]);
+	if (dup2(pipeline_fd[1], 1) == -1)
 	{
-		ft_printf("command %d:\n", i);
-		ft_lstiter(cmd[i], print_content);
-		i++;
+		perror("dup2");
+		close(pipe_fd[0]);
+		exit(1);
 	}
+	if (dup2(pipe_fd[0], 0) == -1)
+	{
+		perror("dup2");
+		close(pipe_fd[0]);
+		exit(1);
+	}
+	if (execve(cmd[0], cmd, envp) == -1)
+	{
+		perror("execve");
+		close(pipe_fd[0]);
+		exit(1);
+	}
+	close(pipe_fd[0]);
+	exit(0);
 }
 
 int	main(int argc, char *argv[], char *envp[])
 {
-	t_list	**cmd;
+	char	***cmd;
 	pid_t	pid;
-	char	*input;
+	int		pipeline_fd[2];
 	int		pipe_fd[2];
-	int		i;
+	int		status;
 
 	if (argc < 5)
 		return (EXIT_FAILURE);
+	pipeline_fd[0] = open(argv[1], O_RDONLY);
+	if (pipeline_fd[0] == -1)
+	{
+		perror("open");
+		return (EXIT_FAILURE);
+	}
+	pipeline_fd[1] = open(argv[argc - 1], O_RDONLY);
+	if (pipeline_fd[1] == -1)
+	{
+		perror("open");
+		return (EXIT_FAILURE);
+	}
 	cmd = init_cmd(argc - 3, argv + 2);
 	if (cmd == NULL)
 		return (EXIT_FAILURE);
 	print_cmd(cmd);
-	/*
-	input = argv[1];
-	i = 0;
-	while (i < argc - 3)
+	if (pipe(pipe_fd) == - 1)
 	{
-		set_cmd_input(cmd, i, input);
-		pid = fork();
-		if (pid < 0)
-			return (EXIT_FAILURE);
-		else if (pid == 0)
-			execute_cmd(cmd[i]);
-		else
-			get_next_input(pid, input);
-		i++;
+		perror("pipe");
+		return (EXIT_FAILURE);
 	}
-	*/
+	pid = fork();
+	if (pid < 0)
+	{
+		perror("fork");
+		return (EXIT_FAILURE);
+	}
+	else if (pid == 0)
+		child_process(cmd[0], envp, pipe_fd, pipeline_fd);
+	else
+	{
+		waitpid(pid, &status, 0);
+		if (WIFEXITED(status))
+			return (EXIT_FAILURE);
+		if (!WEXITSTATUS(status))
+			parent_process(cmd[1], envp, pipe_fd, pipeline_fd);
+	}
+	close(pipeline_fd[0]);
+	close(pipeline_fd[1]);
 	cmd_free(cmd);
 	return (EXIT_SUCCESS);
 }

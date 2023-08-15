@@ -10,3 +10,5 @@ Makefile
 output
 pipex
 pipex.h
+print_cmd.c
+print_cmd.o

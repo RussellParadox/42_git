@@ -6,26 +6,30 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 03:11:05 by gdornic           #+#    #+#             */
-/*   Updated: 2023/08/15 11:11:08 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/08/16 01:40:26 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	cmd_free(t_list **cmd)
+void	cmd_free(char ***cmd)
 {
 	int	i;
+	int	j;
 
-	if (cmd != NULL)
+	i = 0;
+	while (cmd[i] != NULL)
 	{
-		i = 0;
-		while (cmd[i] != NULL)
+		j = 0;
+		while (cmd[i][j] != NULL)
 		{
-			ft_lstclear(&cmd[i], free);
-			i++;
+			free(cmd[i][j]);
+			j++;
 		}
-		free(cmd);
+		free(cmd[i]);
+		i++;
 	}
+	free(cmd);
 }
 
 int	split_len(char **split)
@@ -38,12 +42,33 @@ int	split_len(char **split)
 	return (len);
 }
 
-t_list	**exit_init(t_list **cmd)
+char	***exit_init(char ***cmd)
 {
 	cmd_free(cmd);
 	return (NULL);
 }
 
+char	***init_cmd(int len, char *argv[])
+{
+	char	***cmd;
+	int		i;
+
+	cmd = (char ***)malloc(sizeof(char **) * (len + 1));
+	if (cmd == NULL)
+		return (NULL);
+	i = 0;
+	while (i < len)
+	{
+		cmd[i] = ft_split(argv[i], ' ');
+		if (cmd[i] == NULL)
+			return (exit_init(cmd));
+		i++;
+	}
+	cmd[i] = NULL;
+	return (cmd);
+}
+
+/*
 t_list	**init_cmd(int len, char *argv[])
 {
 	t_list	**cmd;
@@ -86,3 +111,4 @@ t_list	**init_cmd(int len, char *argv[])
 	cmd[i] = NULL;
 	return (cmd);
 }
+*/
