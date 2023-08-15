@@ -6,7 +6,7 @@
 #    By: gdornic <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 21:58:09 by gdornic           #+#    #+#              #
-#    Updated: 2023/08/08 17:03:37 by gdornic          ###   ########.fr        #
+#    Updated: 2023/08/15 04:30:51 by gdornic          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,13 +18,13 @@ HEADERS = -Ilib42
 
 LIB_LINK = -Llib42 -l42
 
-SRC = main.c
+SRC = main.c init.c
 
 OBJ = $(SRC:.c=.o)
 
 CC = gcc
 
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Wextra
 
 define make_dep
 	for d in $(DEP) ; do \

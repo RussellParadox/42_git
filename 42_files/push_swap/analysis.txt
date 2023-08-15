@@ -1,0 +1,33 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls   s/call   s/call  name    
+ 16.63      0.59     0.59 653541992     0.00     0.00  ptr_swap
+ 14.07      1.08     0.50 161294705     0.00     0.00  sequence_explore
+ 12.51      1.52     0.44 161576606     0.00     0.00  ps_rotate
+ 11.94      1.94     0.42        1     0.42     3.45  backtrack
+  9.24      2.27     0.33 161576606     0.00     0.00  ps_rrotate
+  6.25      2.49     0.22 161294705     0.00     0.00  sequence_unexplore
+  5.97      2.70     0.21 161294705     0.00     0.00  unmake_move
+  5.40      2.89     0.19 161294705     0.00     0.00  make_move
+  3.69      3.02     0.13 161294706     0.00     0.00  reject_sequence
+  3.69      3.15     0.13 17050313     0.00     0.00  symmetric_move
+  3.13      3.26     0.11 44271366     0.00     0.00  ps_push
+  2.70      3.35     0.10 14663173     0.00     0.00  accept_sequence
+  1.99      3.42     0.07 117305240     0.00     0.00  ps_swap
+  1.28      3.47     0.05        1     0.05     0.05  init_stack_b
+  0.57      3.49     0.02                             accept_sequence2
+  0.43      3.50     0.02 29326310     0.00     0.00  ps_ss
+  0.28      3.51     0.01 29326310     0.00     0.00  ps_rrr
+  0.28      3.52     0.01        1     0.01     0.01  print_sequence
+  0.00      3.52     0.00 29326310     0.00     0.00  ps_rr
+  0.00      3.52     0.00       18     0.00     0.00  improve_output
+  0.00      3.52     0.00        8     0.00     0.00  no_null_free
+  0.00      3.52     0.00        8     0.00     0.00  print_move
+  0.00      3.52     0.00        5     0.00     0.00  check_duplicate
+  0.00      3.52     0.00        5     0.00     0.00  ft_isnumber
+  0.00      3.52     0.00        2     0.00     0.00  init_sequence
+  0.00      3.52     0.00        1     0.00     0.00  exit_free
+  0.00      3.52     0.00        1     0.00     0.00  init_item_a
+  0.00      3.52     0.00        1     0.00     0.00  init_stack_a
