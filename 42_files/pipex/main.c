@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 01:47:06 by gdornic           #+#    #+#             */
-/*   Updated: 2023/08/16 01:47:09 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/08/17 19:04:42 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ int	main(int argc, char *argv[], char *envp[])
 	int		pipeline_fd[2];
 	int		pipe_fd[2];
 	int		status;
+	int		i;
 
 	if (argc < 5)
 		return (EXIT_FAILURE);
@@ -78,13 +79,13 @@ int	main(int argc, char *argv[], char *envp[])
 		perror("open");
 		return (EXIT_FAILURE);
 	}
-	pipeline_fd[1] = open(argv[argc - 1], O_RDONLY);
+	pipeline_fd[1] = open(argv[argc - 1], O_WRONLY);
 	if (pipeline_fd[1] == -1)
 	{
 		perror("open");
 		return (EXIT_FAILURE);
 	}
-	cmd = init_cmd(argc - 3, argv + 2);
+	cmd = init_cmd(argc, argv);
 	if (cmd == NULL)
 		return (EXIT_FAILURE);
 	print_cmd(cmd);
@@ -94,20 +95,26 @@ int	main(int argc, char *argv[], char *envp[])
 		return (EXIT_FAILURE);
 	}
 	pid = fork();
-	if (pid < 0)
+	i = 0;
+	while (i < argc - 3)
 	{
-		perror("fork");
-		return (EXIT_FAILURE);
-	}
-	else if (pid == 0)
-		child_process(cmd[0], envp, pipe_fd, pipeline_fd);
-	else
-	{
-		waitpid(pid, &status, 0);
-		if (WIFEXITED(status))
+		if (pid < 0)
+		{
+			perror("fork");
 			return (EXIT_FAILURE);
-		if (!WEXITSTATUS(status))
-			parent_process(cmd[1], envp, pipe_fd, pipeline_fd);
+		}
+		else if (pid == 0)
+		{
+			child_process(cmd[0], envp, pipe_fd, pipeline_fd);
+		}
+		else
+		{
+			waitpid(pid, &status, 0);
+			if (!WIFEXITED(status))
+				return (EXIT_FAILURE);
+			if (!WEXITSTATUS(status))
+				parent_process(cmd[1], envp, pipe_fd, pipeline_fd);
+		}
 	}
 	close(pipeline_fd[0]);
 	close(pipeline_fd[1]);

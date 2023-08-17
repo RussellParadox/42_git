@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 16:31:06 by gdornic           #+#    #+#             */
-/*   Updated: 2023/08/16 01:46:53 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/08/16 17:11:56 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 
 //init
 void	cmd_free(char ***cmd);
-char	***init_cmd(int len, char *argv[]);
+char	***init_cmd(int argc, char *argv[]);
 
 //get file
 char	*get_file(int fd);

@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 03:11:05 by gdornic           #+#    #+#             */
-/*   Updated: 2023/08/16 01:40:26 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/08/17 18:15:11 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,18 +48,49 @@ char	***exit_init(char ***cmd)
 	return (NULL);
 }
 
-char	***init_cmd(int len, char *argv[])
+int	init_argv(char *argv[], int argc)
+{
+	char	*tmp;
+
+	tmp = argv[2];
+	argv[2] = ft_strjoin(argv[2], " < ");
+	if (argv[2] == NULL)
+		return (0);
+	tmp = argv[2];
+	argv[2] = ft_strjoin(argv[2], argv[1]);
+	free(tmp);
+	if (argv[2] == NULL)
+		return (0);
+	tmp = argv[3];
+	argv[3] = ft_strjoin(argv[3], " > ");
+	if (argv[3] == NULL)
+		return (0);
+	tmp = argv[3];
+	argv[3] = ft_strjoin(argv[3], argv[argc - 1]);
+	free(tmp);
+	if (argv[3] == NULL)
+		return (0);
+	return (1);
+}
+
+char	***init_cmd(int argc, char *argv[])
 {
 	char	***cmd;
 	int		i;
+	int		len;
 
+	len = argc - 3;
 	cmd = (char ***)malloc(sizeof(char **) * (len + 1));
 	if (cmd == NULL)
 		return (NULL);
+	/*
+	if (!init_argv(argv, argc))
+		return (exit_init(cmd));
+		*/
 	i = 0;
 	while (i < len)
 	{
-		cmd[i] = ft_split(argv[i], ' ');
+		cmd[i] = ft_split(argv[2 + i], ' ');
 		if (cmd[i] == NULL)
 			return (exit_init(cmd));
 		i++;
@@ -67,48 +98,3 @@ char	***init_cmd(int len, char *argv[])
 	cmd[i] = NULL;
 	return (cmd);
 }
-
-/*
-t_list	**init_cmd(int len, char *argv[])
-{
-	t_list	**cmd;
-	t_list	*new;
-	char	**content;
-	int	content_len;
-	int	i;
-
-	cmd = (t_list **)malloc(sizeof(t_list *) * (len + 1));
-	if (cmd == NULL)
-		return (NULL);
-	i = 0;
-	while (i < len)
-	{
-		cmd[i] = (t_list *)malloc(sizeof(t_list));
-		if (cmd[i] == NULL)
-			return (exit_init(cmd));
-		i++;
-	}
-	i = 0;
-	while (i < len)
-	{
-		content = ft_split(argv[i], ' ');
-		if (content == NULL)
-			return (exit_init(cmd));
-		content_len = split_len(content) - 1;
-		cmd[i]->content = content[content_len--];
-		cmd[i]->next = NULL;
-		while (content_len >= 0)
-		{
-			new = ft_lstnew(content[content_len]);
-			if (new == NULL)
-				return (exit_init(cmd));
-			ft_lstadd_front(&cmd[i], new);
-			content_len--;
-		}
-		free(content);
-		i++;
-	}
-	cmd[i] = NULL;
-	return (cmd);
-}
-*/
