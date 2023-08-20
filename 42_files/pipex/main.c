@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 01:47:06 by gdornic           #+#    #+#             */
-/*   Updated: 2023/08/19 19:38:36 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/08/20 16:05:11 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,15 +67,13 @@ int	choose_io_fd(int io_fd[4], int i, int cmd_qt, int end_fd[2])
 	return (0);
 }
 
-int	execute_cmd(char **cmd, int io_fd[3], char *envp[])
+int	execute_cmd(char **cmd, int io_fd[4], char *envp[])
 {
-	/*
 	if (io_fd[2] && close(io_fd[2]) == -1)
 	{
 		perror("close");
 		exit(1);
 	}
-	*/
 	if (io_fd[3] && close(io_fd[3]) == -1)
 	{
 		perror("close");
@@ -115,8 +113,6 @@ int	pipex(char ***cmd, int end_fd[2], char *envp[], int cmd_qt)
 	{
 		if (choose_io_fd(io_fd, i, cmd_qt, end_fd))
 			return (1);
-		if (io_fd[2] && close(io_fd[2]))
-			return (1);
 		pid = fork();
 		if (pid < 0)
 		{
@@ -129,6 +125,8 @@ int	pipex(char ***cmd, int end_fd[2], char *envp[], int cmd_qt)
 		{
 			waitpid(pid, NULL, WNOHANG);
 			if (io_fd[0] && close(io_fd[0]))
+				return (1);
+			if (io_fd[2] && close(io_fd[2]))
 				return (1);
 			if (!WIFEXITED(status) || WEXITSTATUS(status))
 				return (1);
@@ -152,7 +150,7 @@ int	main(int argc, char *argv[], char *envp[])
 		return (EXIT_FAILURE);
 	if (pipex(cmd, end_fd, envp, argc - 3))
 		return (EXIT_FAILURE);
-	if (close(end_fd[0]) == -1 || close(end_fd[1]) == -1)
+	if (close(end_fd[1]) == -1)
 	{
 		perror("close");
 		return (EXIT_FAILURE);
