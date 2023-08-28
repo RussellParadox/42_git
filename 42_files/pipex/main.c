@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 01:47:06 by gdornic           #+#    #+#             */
-/*   Updated: 2023/08/20 16:05:11 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/08/28 16:28:21 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	init_end_fd(int end_fd[2], char *input_end, char *output_end)
 		perror("open");
 		return (1);
 	}
-	end_fd[1] = open(output_end, O_WRONLY);
+	end_fd[1] = open(output_end, O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if (end_fd[1] == -1)
 	{
 		perror("open");
@@ -145,7 +145,7 @@ int	main(int argc, char *argv[], char *envp[])
 		return (EXIT_FAILURE);
 	if (init_end_fd(end_fd, argv[1], argv[argc - 1]))
 		return (EXIT_FAILURE);
-	cmd = init_cmd(argc, argv);
+	cmd = init_cmd(argc, argv, envp);
 	if (cmd == NULL)
 		return (EXIT_FAILURE);
 	if (pipex(cmd, end_fd, envp, argc - 3))

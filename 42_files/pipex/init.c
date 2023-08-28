@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 03:11:05 by gdornic           #+#    #+#             */
-/*   Updated: 2023/08/17 18:15:11 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/08/28 17:54:25 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,19 @@ void	cmd_free(char ***cmd)
 	free(cmd);
 }
 
+void	path_free(char **path)
+{
+	int	i;
+
+	i = 0;
+	while (path[i] != NULL)
+	{
+		free(path[i]);
+		i++;
+	}
+	free(path);
+}
+
 int	split_len(char **split)
 {
 	int	len;
@@ -42,40 +55,58 @@ int	split_len(char **split)
 	return (len);
 }
 
-char	***exit_init(char ***cmd)
+char	***exit_init(char ***cmd, char **path)
 {
 	cmd_free(cmd);
+	if (path != NULL)
+		path_free(path);
 	return (NULL);
 }
 
-int	init_argv(char *argv[], int argc)
+char	**init_path(char *envp[])
 {
-	char	*tmp;
+	char	**path;
 
-	tmp = argv[2];
-	argv[2] = ft_strjoin(argv[2], " < ");
-	if (argv[2] == NULL)
-		return (0);
-	tmp = argv[2];
-	argv[2] = ft_strjoin(argv[2], argv[1]);
-	free(tmp);
-	if (argv[2] == NULL)
-		return (0);
-	tmp = argv[3];
-	argv[3] = ft_strjoin(argv[3], " > ");
-	if (argv[3] == NULL)
-		return (0);
-	tmp = argv[3];
-	argv[3] = ft_strjoin(argv[3], argv[argc - 1]);
-	free(tmp);
-	if (argv[3] == NULL)
-		return (0);
-	return (1);
+	while (*envp != NULL && ft_strncmp("PATH=", *envp, 5))
+		envp++;
+	if (*envp == NULL)
+		return (NULL);
+	path = ft_split(*envp + 5, ':');
+	return (path);
 }
 
-char	***init_cmd(int argc, char *argv[])
+char	**find_cmd_path(char **cmd, char **path)
+{
+	char	*test_path;
+	char	*tmp;
+
+	if (cmd == NULL)
+		return (NULL);
+	while (*path != NULL)
+	{
+		tmp = ft_strjoin(*path, "/");
+		if (tmp == NULL)
+			return (NULL);
+		test_path = ft_strjoin(tmp, cmd[0]);
+		free(tmp);
+		if (test_path == NULL)
+			return (NULL);
+		if (!access(test_path, F_OK | X_OK))
+		{
+			free(cmd[0]);
+			cmd[0] = test_path;
+			return (cmd);
+		}
+		free(test_path);
+		path++;
+	}
+	return (cmd);
+}
+
+char	***init_cmd(int argc, char *argv[], char *envp[])
 {
 	char	***cmd;
+	char	**path;
 	int		i;
 	int		len;
 
@@ -83,18 +114,19 @@ char	***init_cmd(int argc, char *argv[])
 	cmd = (char ***)malloc(sizeof(char **) * (len + 1));
 	if (cmd == NULL)
 		return (NULL);
-	/*
-	if (!init_argv(argv, argc))
-		return (exit_init(cmd));
-		*/
+	path = init_path(envp);
+	if (path == NULL)
+		return (exit_init(cmd, path));
 	i = 0;
 	while (i < len)
 	{
 		cmd[i] = ft_split(argv[2 + i], ' ');
+		cmd[i] = find_cmd_path(cmd[i], path);
 		if (cmd[i] == NULL)
-			return (exit_init(cmd));
+			return (exit_init(cmd, path));
 		i++;
 	}
 	cmd[i] = NULL;
+	path_free(path);
 	return (cmd);
 }
