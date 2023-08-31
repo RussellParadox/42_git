@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 01:47:06 by gdornic           #+#    #+#             */
-/*   Updated: 2023/08/28 16:28:21 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/08/30 17:16:33 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,14 +140,22 @@ int	main(int argc, char *argv[], char *envp[])
 {
 	char	***cmd;
 	int		end_fd[2];
+	int		i;
 
 	if (argc < 5)
 		return (EXIT_FAILURE);
+	i = 0;
+	while (i < argc)
+	{
+		ft_printf("argv %d:%s\n", i, argv[i]);
+		i++;
+	}
 	if (init_end_fd(end_fd, argv[1], argv[argc - 1]))
 		return (EXIT_FAILURE);
 	cmd = init_cmd(argc, argv, envp);
 	if (cmd == NULL)
 		return (EXIT_FAILURE);
+	print_cmd(cmd);
 	if (pipex(cmd, end_fd, envp, argc - 3))
 		return (EXIT_FAILURE);
 	if (close(end_fd[1]) == -1)

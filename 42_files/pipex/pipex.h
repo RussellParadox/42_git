@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 16:31:06 by gdornic           #+#    #+#             */
-/*   Updated: 2023/08/28 16:31:37 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/08/31 22:23:56 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,8 @@ char	*get_file(int fd);
 
 //print cmd
 void	print_cmd(char ***cmd);
+
+//split arg
+char	**split_arg(char *arg);
 
 #endif

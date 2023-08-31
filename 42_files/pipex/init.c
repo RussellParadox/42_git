@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 03:11:05 by gdornic           #+#    #+#             */
-/*   Updated: 2023/08/28 17:54:25 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/08/31 22:52:18 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,8 @@ char	***init_cmd(int argc, char *argv[], char *envp[])
 	i = 0;
 	while (i < len)
 	{
-		cmd[i] = ft_split(argv[2 + i], ' ');
+		//cmd[i] = ft_split(argv[2 + i], ' ');
+		cmd[i] = split_arg(argv[2 + i]);
 		cmd[i] = find_cmd_path(cmd[i], path);
 		if (cmd[i] == NULL)
 			return (exit_init(cmd, path));
