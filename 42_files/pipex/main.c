@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 01:47:06 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/07 07:08:49 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/07 11:10:11 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,12 +131,13 @@ int	main(int argc, char *argv[], char *envp[])
 	char	***cmd;
 	int		end_fd[2];
 
-	if (argc < 5)
+	if (argc < 5 || (!ft_strncmp(argv[1], "here_doc", sizeof(argv[1])) && argc < 6))
 		return (EXIT_FAILURE);
 	init_end_fd(end_fd, argv[1], argv[argc - 1]);
 	cmd = init_cmd(argc, argv, envp);
 	if (cmd == NULL)
 		return (EXIT_FAILURE);
+	print_cmd(cmd);
 	if (pipex(cmd, end_fd, envp, argc - 3))
 		return (EXIT_FAILURE);
 	if (close(end_fd[1]) == -1)
