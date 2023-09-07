@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 17:40:48 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/07 12:05:40 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/07 16:03:06 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ void	arr_test(int array[2])
 int	main(int argc, char *argv[], char *envp[])
 {
 	int	i;
-	int	pipe_fd[2];
-	char	buffer;
+	char	*line;
 
 	i = 0;
 	while (i < argc)

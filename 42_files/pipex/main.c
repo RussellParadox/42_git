@@ -6,18 +6,67 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 01:47:06 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/07 11:10:11 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/07 16:35:20 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	init_end_fd(int end_fd[2], char *input_end, char *output_end)
+void	here_doc(int pipe_fd[2], char *limit)
 {
-	end_fd[0] = open(input_end, O_RDONLY);
-	if (end_fd[0] == -1)
-		perror("open");
-	end_fd[1] = open(output_end, O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+	int		limit_size;
+	char	*line;
+
+	limit_size = ft_strlen(limit) + 1;
+	limit[limit_size - 1] = '\n';
+	close(pipe_fd[0]);
+	ft_printf("> ");
+	line = get_next_line(0);
+	while (line != NULL && ft_strncmp(line, limit, limit_size))
+	{
+		write(pipe_fd[1], line, ft_strlen(line));
+		free(line);
+		ft_printf("> ");
+		line = get_next_line(0);
+	}
+	if (line != NULL)
+		free(line);
+	close(pipe_fd[1]);
+	exit(0);
+}
+
+void	init_end_fd(int end_fd[2], int argc, char *argv[])
+{
+	int	pipe_fd[2];
+	int		pid;
+
+	if (!ft_strncmp(argv[1], "here_doc", ft_strlen("here_doc") + 1))
+	{
+		if (argv[2][0] == '\0')
+			exit(EXIT_FAILURE);
+		pipe(pipe_fd);
+		pid = fork();
+		if (pid < 0)
+		{
+			perror("fork");
+			exit(1);
+		}
+		else if (pid == 0)
+			here_doc(pipe_fd, argv[2]);
+		else
+		{
+			waitpid(pid, NULL, 0);
+			close(pipe_fd[1]);
+			end_fd[0] = pipe_fd[0];
+		}
+	}
+	else
+	{
+		end_fd[0] = open(argv[1], O_RDONLY);
+		if (end_fd[0] == -1)
+			perror("open");
+	}
+	end_fd[1] = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if (end_fd[1] == -1)
 		perror("open");
 }
@@ -131,10 +180,13 @@ int	main(int argc, char *argv[], char *envp[])
 	char	***cmd;
 	int		end_fd[2];
 
-	if (argc < 5 || (!ft_strncmp(argv[1], "here_doc", sizeof(argv[1])) && argc < 6))
+	if (argc < 5 || (!ft_strncmp(argv[1], "here_doc", ft_strlen(argv[1]) + 1) && argc < 6))
 		return (EXIT_FAILURE);
-	init_end_fd(end_fd, argv[1], argv[argc - 1]);
-	cmd = init_cmd(argc, argv, envp);
+	init_end_fd(end_fd, argc, argv);
+	if (!ft_strncmp(argv[1], "here_doc", ft_strlen(argv[1]) + 1))
+		cmd = init_cmd(argc - 1, argv, envp);
+	else
+		cmd = init_cmd(argc, argv, envp);
 	if (cmd == NULL)
 		return (EXIT_FAILURE);
 	print_cmd(cmd);

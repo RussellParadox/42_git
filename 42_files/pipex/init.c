@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 03:11:05 by gdornic           #+#    #+#             */
-/*   Updated: 2023/08/31 22:52:18 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/07 15:46:11 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,12 @@ char	***init_cmd(int argc, char *argv[], char *envp[])
 	char	**path;
 	int		i;
 	int		len;
+	int		start;
 
+	if (ft_strncmp(argv[1], "here_doc", ft_strlen(argv[1]) + 1))
+		start = 2;
+	else
+		start = 3;
 	len = argc - 3;
 	cmd = (char ***)malloc(sizeof(char **) * (len + 1));
 	if (cmd == NULL)
@@ -121,7 +126,7 @@ char	***init_cmd(int argc, char *argv[], char *envp[])
 	while (i < len)
 	{
 		//cmd[i] = ft_split(argv[2 + i], ' ');
-		cmd[i] = split_arg(argv[2 + i]);
+		cmd[i] = split_arg(argv[start + i]);
 		cmd[i] = find_cmd_path(cmd[i], path);
 		if (cmd[i] == NULL)
 			return (exit_init(cmd, path));
