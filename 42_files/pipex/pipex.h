@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 16:31:06 by gdornic           #+#    #+#             */
-/*   Updated: 2023/08/31 22:23:56 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/09 17:27:40 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,13 @@ void	print_cmd(char ***cmd);
 
 //split arg
 char	**split_arg(char *arg);
+
+//path
+void	path_free(char **path);
+char	**init_path(char *envp[]);
+char	**find_cmd_path(char **cmd, char **path);
+
+//sec alloc
+void	*sec_alloc(void *content, int mode);
 
 #endif

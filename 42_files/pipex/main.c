@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 01:47:06 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/09 12:00:12 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/09 14:48:12 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,8 +186,6 @@ int	main(int argc, char *argv[], char *envp[])
 		return (EXIT_FAILURE);
 	init_end_fd(end_fd, argc, argv);
 	if (!ft_strncmp(argv[1], "here_doc", ft_strlen(argv[1]) + 1))
-		argc--;
-	else
 		argc--;
 	cmd = init_cmd(argc, argv, envp);
 	if (cmd == NULL)
