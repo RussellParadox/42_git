@@ -1,0 +1,72 @@
+1.si E est vraie:
+
+I est necessairement fausse
+A est necessairement fausse
+O est necessairement vraie
+
+si E est fausse:
+
+I est necessairement vraie
+A est indeterminee
+O est indeterminee
+
+si O est vraie
+
+E est indeterminee
+A est necessairement fausse
+I est indeterminee
+
+si O est fausse
+
+E est necessairement fausse
+A est necessairement vraie
+I est necessairement vraie
+
+2.a)generalement les etudiants travaillent beaucoup
+
+quelques etudiants sont de grands travailleurs(particuliere affirmative)
+
+intersection entre l'ensemble des etudiants et celui des grands travailleurs
+
+quelques grands travailleurs sont des etudiants
+
+b)il n'existe pas d'etudiant analphabete
+
+aucun etudiant n'est analphabete(universelle negative)
+
+disjonction entre l'ensemble des etudiants et celui des analphabetes
+
+aucun analphabete n'est etudiant
+
+c)les canards sont des oiseaux
+
+tous les canards sont des oiseaux(universelle affirmative)
+
+inclusion de l'ensemble des canards dans celui des oiseaux
+
+quelques oiseaux sont des canards
+
+d)j'ai rencontre un mouton a cinq pattes
+
+quelques moutons sont des animaux avec cinq pattes(particuliere affirmative)
+
+intersection de l'ensemble des moutons et de celui des animaux avec cinq pattes
+
+quelques animaux avec cinq pattes sont des moutons
+
+e)j'ai rencontre un mouton qui n'avait pas quatres pattes
+
+quelques mouton ne sont pas des animaux avec quatre pattes(particuliere negative)
+
+3 choix:
+	intersection de l'ensemble des mouton et de celui des animaux avec quatre pattes
+	inclusion de l'ensemble des animaux avec quatre pattes dans celui des moutons
+	disjonction de l'ensemble des animaux avec quatre pattes et de celui des moutons
+
+f)il y a sept jours dans une semaine
+
+toutes les semaines sont des ensembles de 7 jours(universelle affirmative)
+
+inclusion de l'ensemble des semaiens dans celui des ensembles 7 jours
+
+quelques ensembles de 7 jours sont des semaines

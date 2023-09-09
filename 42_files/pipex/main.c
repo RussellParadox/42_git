@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 01:47:06 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/07 16:35:20 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/09 12:00:12 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	here_doc(int pipe_fd[2], char *limit)
 	if (line != NULL)
 		free(line);
 	close(pipe_fd[1]);
-	exit(0);
+	exit(EXIT_SUCCESS);
 }
 
 void	init_end_fd(int end_fd[2], int argc, char *argv[])
@@ -44,7 +44,9 @@ void	init_end_fd(int end_fd[2], int argc, char *argv[])
 	{
 		if (argv[2][0] == '\0')
 			exit(EXIT_FAILURE);
-		pipe(pipe_fd);
+		if (pipe(pipe_fd) == -1)
+			perror("pipe");
+		end_fd[0] = pipe_fd[0];
 		pid = fork();
 		if (pid < 0)
 		{
@@ -56,8 +58,8 @@ void	init_end_fd(int end_fd[2], int argc, char *argv[])
 		else
 		{
 			waitpid(pid, NULL, 0);
-			close(pipe_fd[1]);
-			end_fd[0] = pipe_fd[0];
+			if (close(pipe_fd[1]) == -1)
+				perror("close");
 		}
 	}
 	else
@@ -121,12 +123,12 @@ int	execute_cmd(char **cmd, int io_fd[4], char *envp[])
 		perror("close");
 		exit(1);
 	}
-	if (dup2(io_fd[0], 0) == -1)
+	if (io_fd[0] != -1 && dup2(io_fd[0], 0) == -1)
 	{
 		perror("dup2");
 		exit(1);
 	}
-	if (dup2(io_fd[1], 1) == -1)
+	if (io_fd[1] != -1 && dup2(io_fd[1], 1) == -1)
 	{
 		perror("dup2");
 		exit(1);
@@ -184,12 +186,12 @@ int	main(int argc, char *argv[], char *envp[])
 		return (EXIT_FAILURE);
 	init_end_fd(end_fd, argc, argv);
 	if (!ft_strncmp(argv[1], "here_doc", ft_strlen(argv[1]) + 1))
-		cmd = init_cmd(argc - 1, argv, envp);
+		argc--;
 	else
-		cmd = init_cmd(argc, argv, envp);
+		argc--;
+	cmd = init_cmd(argc, argv, envp);
 	if (cmd == NULL)
 		return (EXIT_FAILURE);
-	print_cmd(cmd);
 	if (pipex(cmd, end_fd, envp, argc - 3))
 		return (EXIT_FAILURE);
 	if (close(end_fd[1]) == -1)
