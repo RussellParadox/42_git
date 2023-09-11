@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 14:44:53 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/09 14:46:12 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/10 12:47:58 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ void	path_free(char **path)
 	i = 0;
 	while (path[i] != NULL)
 	{
-		free(path[i]);
+		sec_alloc(path[i], 1);
 		i++;
 	}
-	free(path);
+	sec_alloc(path, 1);
 }
 
 char	**init_path(char *envp[])
@@ -33,7 +33,7 @@ char	**init_path(char *envp[])
 		envp++;
 	if (*envp == NULL)
 		return (NULL);
-	path = ft_split(*envp + 5, ':');
+	path = sec_alloc(ft_split(*envp + 5, ':'), 0);
 	return (path);
 }
 
@@ -42,24 +42,22 @@ char	**find_cmd_path(char **cmd, char **path)
 	char	*test_path;
 	char	*tmp;
 
-	if (cmd == NULL)
-		return (NULL);
 	while (*path != NULL)
 	{
-		tmp = ft_strjoin(*path, "/");
+		tmp = sec_alloc(ft_strjoin(*path, "/"), 0);
 		if (tmp == NULL)
 			return (NULL);
-		test_path = ft_strjoin(tmp, cmd[0]);
-		free(tmp);
+		test_path = sec_alloc(ft_strjoin(tmp, cmd[0]), 0);
 		if (test_path == NULL)
 			return (NULL);
+		sec_alloc(tmp, 1);
 		if (!access(test_path, F_OK | X_OK))
 		{
-			free(cmd[0]);
+			sec_alloc(cmd[0], 1);
 			cmd[0] = test_path;
 			return (cmd);
 		}
-		free(test_path);
+		sec_alloc(test_path, 1);
 		path++;
 	}
 	return (cmd);

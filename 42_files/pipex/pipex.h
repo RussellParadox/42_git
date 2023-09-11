@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 16:31:06 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/09 17:27:40 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/11 14:00:19 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,8 @@ char	**find_cmd_path(char **cmd, char **path);
 
 //sec alloc
 void	*sec_alloc(void *content, int mode);
+
+//sec alloc 2D
+void	*sec_alloc_2D(void *array, size_t size, int mode);
 
 #endif

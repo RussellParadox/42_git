@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 03:11:05 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/09 14:46:06 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/10 12:43:36 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,19 +53,21 @@ char	***init_cmd(int argc, char *argv[], char *envp[])
 	else
 		start = 3;
 	len = argc - 3;
-	cmd = (char ***)malloc(sizeof(char **) * (len + 1));
+	cmd = (char ***)sec_alloc(malloc(sizeof(char **) * (len + 1)), 0);
 	if (cmd == NULL)
 		return (NULL);
 	path = init_path(envp);
 	if (path == NULL)
-		return (exit_init(cmd, path));
+		return (NULL);
 	i = 0;
 	while (i < len)
 	{
 		cmd[i] = split_arg(argv[start + i]);
+		if (cmd[i] == NULL)
+			return (NULL);
 		cmd[i] = find_cmd_path(cmd[i], path);
 		if (cmd[i] == NULL)
-			return (exit_init(cmd, path));
+			return (NULL);
 		i++;
 	}
 	cmd[i] = NULL;
