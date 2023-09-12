@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 15:02:33 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/09 18:18:23 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/12 17:02:33 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,14 @@ void	*sec_alloc(void *content, int mode)
 	}
 	if (mode)
 	{
+		ft_printf("content: %p\n", content);
 		delete_node(alloc, node_of(content, alloc));
 		return (NULL);
 	}
 	node = ft_lstnew(content);
 	if (node == NULL)
 	{
+		free(content);
 		ft_lstclear(&alloc, free);
 		return (NULL);
 	}

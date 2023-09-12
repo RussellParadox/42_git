@@ -6,7 +6,7 @@
 #    By: gdornic <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 21:58:09 by gdornic           #+#    #+#              #
-#    Updated: 2023/09/11 12:58:00 by gdornic          ###   ########.fr        #
+#    Updated: 2023/09/12 15:10:20 by gdornic          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ HEADERS = -Ilib42
 
 LIB_LINK = -Llib42 -l42
 
-SRC = main_test.c init.c get_file.c print_cmd.c split_arg.c path.c sec_alloc.c sec_alloc_2D.c
+SRC = main_test.c init.c get_file.c print_cmd.c split_arg.c path.c sec_alloc.c sec_alloc_tree.c
 
 OBJ = $(SRC:.c=.o)
 
