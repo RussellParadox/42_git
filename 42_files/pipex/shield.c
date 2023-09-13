@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sec_alloc.c                                        :+:      :+:    :+:   */
+/*   shield.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 15:02:33 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/12 17:02:33 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/13 15:58:41 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,13 @@ t_list	*node_of(void *content, t_list *list)
 	return (i);
 }
 
-// The main purpose is to manage securely all the allocations of the program.
+// The main purpose is to manage and store securely all the allocations of the program.
 // If content is NULL or an allocation fail every precedent
 // allocation is free and NULL is returned.
 // If mode is 0 the content is stored in the list and returned,
-// else the content is deleted(with free) and NULL is returned.
-void	*sec_alloc(void *content, int mode)
+// if mode is more than 0 the content is removed from the list and NULL is returned,
+// if mode is less than 0 the content is added, but in case of error it's not free.
+void	*shield(void *content, int mode)
 {
 	static t_list	*alloc;
 	t_list	*node;
@@ -50,7 +51,7 @@ void	*sec_alloc(void *content, int mode)
 		ft_lstclear(&alloc, free);
 		return (NULL);
 	}
-	if (mode)
+	if (mode > 0)
 	{
 		ft_printf("content: %p\n", content);
 		delete_node(alloc, node_of(content, alloc));
@@ -59,7 +60,11 @@ void	*sec_alloc(void *content, int mode)
 	node = ft_lstnew(content);
 	if (node == NULL)
 	{
-		free(content);
+		if (mode < 0)
+		{
+			free(content);
+			content = NULL;
+		}
 		ft_lstclear(&alloc, free);
 		return (NULL);
 	}

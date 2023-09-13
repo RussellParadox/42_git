@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 16:31:06 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/12 19:15:43 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/13 17:42:32 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,12 @@ char	**init_path(char *envp[]);
 char	**find_cmd_path(char **cmd, char **path);
 
 //sec alloc
-void	*sec_alloc(void *content, int mode);
+void	*shield(void *content, int mode);
 
-//sec alloc tree
+//sec alloc array
+//void	*shield_array(void *root, size_t size, unsigned int depth_max, int mode);
+
+//free array
 void	free_array(void *root, size_t size, unsigned int dimension);
-void	*sec_alloc_tree(void *root, size_t size, unsigned int depth_max, int mode);
 
 #endif
