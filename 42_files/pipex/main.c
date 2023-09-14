@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 01:47:06 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/09 14:48:12 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/14 17:37:52 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,18 @@ void	here_doc(int pipe_fd[2], char *limit)
 	limit[limit_size - 1] = '\n';
 	close(pipe_fd[0]);
 	ft_printf("> ");
-	line = get_next_line(0);
+	line = shield(get_next_line(0), 0);
 	while (line != NULL && ft_strncmp(line, limit, limit_size))
 	{
 		write(pipe_fd[1], line, ft_strlen(line));
-		free(line);
+		shield(line, 1);
 		ft_printf("> ");
-		line = get_next_line(0);
+		line = shield(get_next_line(0), 0);
 	}
 	if (line != NULL)
-		free(line);
-	close(pipe_fd[1]);
+		shield(line, 1);
+	if (close(pipe_fd[1]) == -1)
+		perror("close");
 	exit(EXIT_SUCCESS);
 }
 
@@ -194,6 +195,6 @@ int	main(int argc, char *argv[], char *envp[])
 		return (EXIT_FAILURE);
 	if (close(end_fd[1]) == -1)
 		perror("close");
-	cmd_free(cmd);
+	shield(NULL, 0);
 	return (EXIT_SUCCESS);
 }

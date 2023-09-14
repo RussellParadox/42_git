@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 15:02:33 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/14 15:44:15 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/14 19:11:40 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,20 +38,23 @@ t_list	*node_of(void *content, t_list *list)
 // The main purpose is to manage and store securely all the allocations of the program.
 // If content is NULL or an allocation fail every precedent
 // allocation is free and NULL is returned.
-// If mode is 0 the content is stored in the list and returned,
-// if mode is more than 0 the content is removed from the list and NULL is returned,
-// if mode is less than 0 the content is added, but in case of error it's not free.
+// If mode is 0 the content is stored in the list and returned(free in case of error),
+// if mode is 1 the content is removed from the list and NULL is returned,
+// if mode is 2 the content is stored in the protected list and returned,
+// else the content is added, but in case of error it's not free.
 void	*shield(void *content, int mode)
 {
 	static t_list	*alloc;
+	static t_list	*protected_alloc;
 	t_list	*node;
 
 	if (content == NULL)
 	{
 		ft_lstclear(&alloc, free);
+		alloc = NULL;
 		return (NULL);
 	}
-	if (mode > 0)
+	if (mode == 1)
 	{
 		delete_node(alloc, node_of(content, alloc));
 		return (NULL);
@@ -62,6 +65,7 @@ void	*shield(void *content, int mode)
 		if (mode == 0)
 			free(content);
 		ft_lstclear(&alloc, free);
+		alloc = NULL;
 		return (NULL);
 	}
 	ft_lstadd_back(&alloc, node);

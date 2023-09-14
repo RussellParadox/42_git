@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 12:42:59 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/14 16:00:20 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/14 16:49:11 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,13 @@ void	*shield_node(void *node, size_t size, unsigned int dimension, int mode)
 }
 
 //use shield() on each dimension of an array where each dimension of the array terminate with NULL except the first dimension(root)
-//size need to be the size of a pointer to the data stored in the array tree
-void	*shield_array(void *root, size_t size, unsigned int dimension, int mode)
+void	*shield_array(void *root, unsigned int dimension, int mode)
 {
 	if (root == NULL)
 		return (shield(NULL, 0));
 	if (mode == 0)
 		mode = -1;
-	if (shield_node(root, size, dimension, mode) == NULL)
+	if (shield_node(root, sizeof(void *), dimension, mode) == NULL)
 	{
 		free(root);
 		return (NULL);

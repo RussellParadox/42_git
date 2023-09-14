@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 19:02:15 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/14 14:19:04 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/14 18:32:54 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static char	*next_word(char *arg, int *start)
 	while (arg[*start] != '\0' && arg[*start] == ' ')
 		(*start)++;
 	size = word_size(arg + *start, 0);
-	word = shield(malloc(sizeof(char) * (size + 1)), 0);
+	word = malloc(sizeof(char) * (size + 1));
 	if (word == NULL)
 		return (NULL);
 	quoted_size = word_size(arg + *start, 1);
@@ -90,19 +90,20 @@ static char	*next_word(char *arg, int *start)
 char	**split_arg(char *arg)
 {
 	char	**split;
+	char	*tmp;
 	int		count;
 	int		next_start;
 	int		i;
 
 	next_start = 0;
 	count = word_count(arg);
-	split = shield(malloc(sizeof(char *) * (count + 1)), 0);
+	split = shield(malloc(sizeof(char *) * (count + 1)), 2);
 	if (split == NULL)
 		return (NULL);
 	i = 0;
 	while (i < count)
 	{
-		split[i] = next_word(arg, &next_start);
+		split[i] = shield(next_word(arg, &next_start), 0);
 		if (split[i] == NULL)
 			return (NULL);
 		i++;
