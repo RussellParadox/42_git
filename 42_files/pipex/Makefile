@@ -6,7 +6,7 @@
 #    By: gdornic <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 21:58:09 by gdornic           #+#    #+#              #
-#    Updated: 2023/09/13 17:55:17 by gdornic          ###   ########.fr        #
+#    Updated: 2023/09/14 14:11:22 by gdornic          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ HEADERS = -Ilib42
 
 LIB_LINK = -Llib42 -l42
 
-SRC = main_test.c shield.c free_array.c  shield_array.c#init.c get_file.c print_cmd.c split_arg.c path.c 
+SRC = main_test.c init.c get_file.c print_cmd.c split_arg.c path.c 
 
 OBJ = $(SRC:.c=.o)
 

@@ -6,13 +6,13 @@
 #    By: gdornic <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 21:58:09 by gdornic           #+#    #+#              #
-#    Updated: 2023/04/01 20:49:29 by gdornic          ###   ########.fr        #
+#    Updated: 2023/09/14 11:18:39 by gdornic          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = lib42.a
 
-LIB = libft get_next_line libftprintf
+LIB = libft get_next_line libftprintf shield
 
 define make_lib
 	for d in $(LIB) ; do \

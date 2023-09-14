@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 19:02:15 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/10 12:42:15 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/14 14:19:04 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static char	*next_word(char *arg, int *start)
 	while (arg[*start] != '\0' && arg[*start] == ' ')
 		(*start)++;
 	size = word_size(arg + *start, 0);
-	word = (char *)sec_alloc(malloc(sizeof(char) * (size + 1)), 0);
+	word = shield(malloc(sizeof(char) * (size + 1)), 0);
 	if (word == NULL)
 		return (NULL);
 	quoted_size = word_size(arg + *start, 1);
@@ -86,20 +86,6 @@ static char	*next_word(char *arg, int *start)
 	return (word);
 }
 
-static char	**split_exit(char **split, int done)
-{
-	int	i;
-
-	i = 0;
-	while (i < done)
-	{
-		free(split[i]);
-		i++;
-	}
-	free(split);
-	return (NULL);
-}
-
 //split with space as character, but escape spaces between ' and '
 char	**split_arg(char *arg)
 {
@@ -110,7 +96,7 @@ char	**split_arg(char *arg)
 
 	next_start = 0;
 	count = word_count(arg);
-	split = (char **)sec_alloc(malloc(sizeof(char *) * (count + 1)), 0);
+	split = shield(malloc(sizeof(char *) * (count + 1)), 0);
 	if (split == NULL)
 		return (NULL);
 	i = 0;

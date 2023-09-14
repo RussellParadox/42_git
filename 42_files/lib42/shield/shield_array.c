@@ -6,11 +6,11 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 12:42:59 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/13 17:57:39 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/14 16:00:20 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "shield.h"
 
 void	*shield_node(void *node, size_t size, unsigned int dimension, int mode)
 {
@@ -24,13 +24,12 @@ void	*shield_node(void *node, size_t size, unsigned int dimension, int mode)
 		if (dimension > 2)
 		{
 			if (shield_node(*(void **)node, size, dimension - 1, mode) == NULL)
-				return (NULL);
+				continue_prev_dim = NULL;
 		}
-		if (shield(*(void **)node, mode) == NULL)
-		{
-			mode = -1;
-			continue_prev_dim = (void *)0;
-		}
+		if (shield(*(void **)node, mode) == NULL && mode == -1)
+			continue_prev_dim = NULL;
+		if (continue_prev_dim == NULL)
+			free(*(void **)node);
 		node += size;
 	}
 	return (continue_prev_dim);
@@ -42,10 +41,12 @@ void	*shield_array(void *root, size_t size, unsigned int dimension, int mode)
 {
 	if (root == NULL)
 		return (shield(NULL, 0));
+	if (mode == 0)
+		mode = -1;
 	if (shield_node(root, size, dimension, mode) == NULL)
 	{
-		free_array(root, sizeof(char *), dimension);
-		return (shield(NULL, 0));
+		free(root);
+		return (NULL);
 	}
 	return (shield(root, mode));
 }

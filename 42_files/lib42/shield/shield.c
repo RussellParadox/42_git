@@ -6,11 +6,11 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 15:02:33 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/13 15:58:41 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/14 15:44:15 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "shield.h"
 
 //delete the node and his content, and reconnect the list
 void	delete_node(t_list *list, t_list *node)
@@ -53,18 +53,14 @@ void	*shield(void *content, int mode)
 	}
 	if (mode > 0)
 	{
-		ft_printf("content: %p\n", content);
 		delete_node(alloc, node_of(content, alloc));
 		return (NULL);
 	}
 	node = ft_lstnew(content);
 	if (node == NULL)
 	{
-		if (mode < 0)
-		{
+		if (mode == 0)
 			free(content);
-			content = NULL;
-		}
 		ft_lstclear(&alloc, free);
 		return (NULL);
 	}
