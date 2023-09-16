@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 19:02:15 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/14 18:32:54 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/16 20:27:50 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ static char	*next_word(char *arg, int *start)
 char	**split_arg(char *arg)
 {
 	char	**split;
-	char	*tmp;
 	int		count;
 	int		next_start;
 	int		i;

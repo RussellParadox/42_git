@@ -6,19 +6,19 @@
 #    By: gdornic <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 21:58:09 by gdornic           #+#    #+#              #
-#    Updated: 2023/09/16 22:46:11 by gdornic          ###   ########.fr        #
+#    Updated: 2023/04/01 20:29:34 by gdornic          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = pipex
+NAME = get_next_line.a
 
-DEP = lib42
+DEP =
 
-HEADERS = -Ilib42
+HEADERS =
 
-LIB_LINK = -Llib42 -l42
+LIB_LINK =
 
-SRC = main.c init.c print_cmd.c split_arg.c path.c here_doc.c
+SRC = get_next_line.c get_next_line_utils.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -36,10 +36,10 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	$(call make_dep,all)
-	$(CC) $(OBJ) $(HEADERS) $(LIB_LINK) -o $(NAME) -g
+	ar -cr $(NAME) $(OBJ)
 
 %.o: %.c
-	$(CC) $(CFLAGS) $(HEADERS) -O3 -c $< -o $@ -g
+	$(CC) $(CFLAGS) $(HEADERS) -O3 -c $< -o $@
 
 clean:
 	rm -f $(OBJ)

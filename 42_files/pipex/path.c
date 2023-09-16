@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 14:44:53 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/14 14:16:20 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/16 20:30:14 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	**init_path(char *envp[])
 		envp++;
 	if (*envp == NULL)
 		return (NULL);
-	path = shield(ft_split(*envp + 5, ':'), 0);
+	path = shield_array(ft_split(*envp + 5, ':'), 2, 0);
 	return (path);
 }
 

@@ -6,47 +6,38 @@
 #    By: gdornic <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 21:58:09 by gdornic           #+#    #+#              #
-#    Updated: 2023/09/16 22:46:11 by gdornic          ###   ########.fr        #
+#    Updated: 2023/09/14 11:18:39 by gdornic          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = pipex
+NAME = lib42.a
 
-DEP = lib42
+LIB = libft get_next_line libftprintf shield
 
-HEADERS = -Ilib42
-
-LIB_LINK = -Llib42 -l42
-
-SRC = main.c init.c print_cmd.c split_arg.c path.c here_doc.c
-
-OBJ = $(SRC:.c=.o)
-
-CC = gcc
-
-CFLAGS = -Wall -Wextra
-
-define make_dep
-	for d in $(DEP) ; do \
+define make_lib
+	for d in $(LIB) ; do \
 		make -C $$d $(1) ; \
+	done
+endef
+
+define cp_header
+	for d in $(LIB) ; do \
+		cp $$d/$$d.h . ; \
 	done
 endef
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
-	$(call make_dep,all)
-	$(CC) $(OBJ) $(HEADERS) $(LIB_LINK) -o $(NAME) -g
-
-%.o: %.c
-	$(CC) $(CFLAGS) $(HEADERS) -O3 -c $< -o $@ -g
+$(NAME):
+	$(call make_lib,all)
+	$(call cp_header)
+	ar crsT $(NAME) $(join $(LIB:=/), $(LIB:=.a))
 
 clean:
-	rm -f $(OBJ)
-	$(call make_dep,clean)
+	$(call make_lib,clean)
 
 fclean: clean
 	rm -f $(NAME)
-	$(call make_dep,fclean)
+	$(call make_lib,fclean)
 
 re: fclean all

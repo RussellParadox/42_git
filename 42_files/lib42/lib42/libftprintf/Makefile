@@ -6,25 +6,25 @@
 #    By: gdornic <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 21:58:09 by gdornic           #+#    #+#              #
-#    Updated: 2023/09/16 22:46:11 by gdornic          ###   ########.fr        #
+#    Updated: 2023/04/01 20:45:53 by gdornic          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = pipex
+NAME = libftprintf.a
 
-DEP = lib42
+DEP = ../libft
 
-HEADERS = -Ilib42
+HEADERS = -I../libft
 
-LIB_LINK = -Llib42 -l42
+LIB_LINK = -L../libft -lft
 
-SRC = main.c init.c print_cmd.c split_arg.c path.c here_doc.c
+SRC = ft_balloc.c ft_itoa_base.c ft_printf.c ft_printf_utils.c ft_chrswap.c ft_itoa_base_pointer.c inclusive_strjoin.c ft_chrtostr.c ft_memset_int.c ft_printf_utils2.c
 
 OBJ = $(SRC:.c=.o)
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra
+CFLAGS = -Wall -Werror -Wextra
 
 define make_dep
 	for d in $(DEP) ; do \
@@ -36,10 +36,10 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	$(call make_dep,all)
-	$(CC) $(OBJ) $(HEADERS) $(LIB_LINK) -o $(NAME) -g
+	ar -cr $(NAME) $(OBJ)
 
 %.o: %.c
-	$(CC) $(CFLAGS) $(HEADERS) -O3 -c $< -o $@ -g
+	$(CC) $(CFLAGS) $(HEADERS) -O3 -c $< -o $@
 
 clean:
 	rm -f $(OBJ)

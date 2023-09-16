@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 16:31:06 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/14 14:12:41 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/16 22:45:54 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,8 @@ char	**split_arg(char *arg);
 void	path_free(char **path);
 char	**init_path(char *envp[]);
 char	**find_cmd_path(char **cmd, char **path);
+
+//here_doc
+void	here_doc(int end_fd[2], char *argv[]);
 
 #endif
