@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 15:02:33 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/16 22:23:01 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/16 23:02:00 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,22 @@ t_list	*node_of(void *content, t_list *list)
 	return (i);
 }
 
-// The main purpose is to manage and store securely all the allocations of the program.
+// The main purpose is to manage and store securely
+// all the allocations of the program.
 // If content is NULL or an allocation fail every precedent
 // allocation is free and NULL is returned.
-// If mode is 0 the content is stored in the list and returned(free in case of error),
-// if mode is 1 the content is removed from the list and NULL is returned,
-// if mode is 2 the content is stored in the protected list and returned,
+// If mode is 0 the content is stored in the list 
+// and returned(free in case of error),
+// if mode is 1 the content is removed from the list 
+// and NULL is returned,
+// if mode is 2 the content is stored in the protected list 
+// and returned,
 // else the content is added, but in case of error it's not free.
 void	*shield(void *content, int mode)
 {
 	static t_list	*alloc;
 	static t_list	*protect;
-	t_list	*node;
+	t_list			*node;
 
 	if (content == NULL)
 	{

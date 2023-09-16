@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:57:49 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/14 16:41:16 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/16 23:04:57 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ void	free_array_nodes(void *node, size_t size, unsigned int dimension)
 	}
 }
 
-//free each dimension of a dynamic multi-dimensionnal array NULL terminated on any other dimension than the first
+//free each dimension of a dynamic multi-dimensionnal
+//array NULL terminated on any other dimension than the first
 void	free_array(void *root, unsigned int dimension)
 {
 	if (root == NULL)
