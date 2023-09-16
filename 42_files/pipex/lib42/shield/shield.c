@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 15:02:33 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/14 19:11:40 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/16 15:29:44 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	delete_node(t_list *list, t_list *node)
 {
 	t_list	*i;
 
+	if (list == NULL || node == NULL)
+		return ;
 	i = list;
 	while (i->next != NULL && i->next != node)
 		i = i->next;
@@ -45,18 +47,20 @@ t_list	*node_of(void *content, t_list *list)
 void	*shield(void *content, int mode)
 {
 	static t_list	*alloc;
-	static t_list	*protected_alloc;
+	static t_list	*protect;
 	t_list	*node;
 
 	if (content == NULL)
 	{
 		ft_lstclear(&alloc, free);
-		alloc = NULL;
+		if (mode == 2)
+			ft_lstclear(&protect, free);
 		return (NULL);
 	}
 	if (mode == 1)
 	{
 		delete_node(alloc, node_of(content, alloc));
+		delete_node(protect, node_of(content, protect));
 		return (NULL);
 	}
 	node = ft_lstnew(content);
@@ -65,9 +69,13 @@ void	*shield(void *content, int mode)
 		if (mode == 0)
 			free(content);
 		ft_lstclear(&alloc, free);
-		alloc = NULL;
+		if (mode == 2)
+			ft_lstclear(&protect, free);
 		return (NULL);
 	}
-	ft_lstadd_back(&alloc, node);
+	if (mode == 2)
+		ft_lstadd_back(&protect, node);
+	else
+		ft_lstadd_back(&alloc, node);
 	return (content);
 }
