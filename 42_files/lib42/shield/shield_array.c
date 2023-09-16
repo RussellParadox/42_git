@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 12:42:59 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/14 16:49:48 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/16 22:11:18 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	*shield_array(void *root, unsigned int dimension, int mode)
 		return (shield(NULL, 0));
 	if (mode == 0)
 		mode = -1;
-	if (shield_node(root, sizeof(void *), dimension, mode) == NULL)
+	if (shield_node(root, sizeof(void *), dimension, mode) == NULL && mode == -1)
 	{
 		free(root);
 		return (NULL);
