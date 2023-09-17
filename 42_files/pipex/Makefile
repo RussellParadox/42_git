@@ -6,7 +6,7 @@
 #    By: gdornic <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 21:58:09 by gdornic           #+#    #+#              #
-#    Updated: 2023/09/16 22:46:11 by gdornic          ###   ########.fr        #
+#    Updated: 2023/09/17 15:32:24 by gdornic          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ HEADERS = -Ilib42
 
 LIB_LINK = -Llib42 -l42
 
-SRC = main.c init.c print_cmd.c split_arg.c path.c here_doc.c
+SRC = main_test.c init.c print_cmd.c split_arg.c path.c here_doc.c
 
 OBJ = $(SRC:.c=.o)
 

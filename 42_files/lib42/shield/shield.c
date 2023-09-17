@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 15:02:33 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/16 23:02:00 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/17 15:58:00 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,15 @@ void	delete_node(t_list **list, t_list *node)
 
 	if (list == NULL || *list == NULL || node == NULL)
 		return ;
-	i = *list;
-	while (i->next != NULL && i->next != node)
-		i = i->next;
-	if ((*list)->next == NULL && i->next == node)
-		*list = NULL;
-	i->next = node->next;
+	if (*list == node)
+		*list = (*list)->next;
+	else
+	{
+		i = *list;
+		while (i->next != NULL && i->next != node)
+			i = i->next;
+		i->next = node->next;
+	}
 	ft_lstdelone(node, free);
 }
 
