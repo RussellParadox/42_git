@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 16:31:06 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/16 22:45:54 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/18 16:58:47 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,11 @@
 # include <libftprintf.h>
 # include <get_next_line.h>
 # include <shield.h>
+# define SHELL_LEN 50
 
 //init
 void	cmd_free(char ***cmd);
-char	***init_cmd(int argc, char *argv[], char *envp[]);
+char	***init_cmd(int argc, char *argv[]);
 
 //get file
 char	*get_file(int fd);
@@ -40,11 +41,18 @@ void	print_cmd(char ***cmd);
 char	**split_arg(char *arg);
 
 //path
-void	path_free(char **path);
 char	**init_path(char *envp[]);
-char	**find_cmd_path(char **cmd, char **path);
+char	*find_cmd_path(char **cmd, char **path);
 
 //here_doc
-void	here_doc(int end_fd[2], char *argv[]);
+int	here_doc(int end_fd[2], char *argv[]);
+
+//find envp
+char	*find_envp(char *variable, char *envp[]);
+
+//print error
+void	init_shell_error(char *envp[]);
+void	shell_error(char *error, char *suffix);
+void	print_error(char *prefix, char *error, char *suffix);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 14:44:53 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/16 20:30:14 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/18 16:08:01 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	**init_path(char *envp[])
 	return (path);
 }
 
-char	**find_cmd_path(char **cmd, char **path)
+char	*find_cmd_path(char **cmd, char **path)
 {
 	char	*test_path;
 	char	*tmp;
@@ -39,13 +39,9 @@ char	**find_cmd_path(char **cmd, char **path)
 			return (NULL);
 		shield(tmp, 1);
 		if (!access(test_path, F_OK | X_OK))
-		{
-			shield(cmd[0], 1);
-			cmd[0] = test_path;
-			return (cmd);
-		}
+			return (test_path);
 		shield(test_path, 1);
 		path++;
 	}
-	return (cmd);
+	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 22:33:51 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/16 22:53:18 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/17 19:53:29 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,44 +21,49 @@ void	exec_here_doc(int pipe_fd[2], char *limit)
 	limit[limit_size - 1] = '\n';
 	close(pipe_fd[0]);
 	ft_printf("> ");
-	line = get_next_line(0);
+	line = shield(get_next_line(0), 0);
+	if (line == NULL)
+		exit(1);
 	while (line != NULL && ft_strncmp(line, limit, limit_size))
 	{
 		if (write(pipe_fd[1], line, ft_strlen(line)) == -1)
 			perror("write");
-		free(line);
+		shield(line, 1);
 		ft_printf("> ");
-		line = get_next_line(0);
+		line = shield(get_next_line(0), 0);
+		if (line == NULL)
+			exit(1);
 	}
 	if (line != NULL)
-		free(line);
+		shield(line, 1);
 	if (close(pipe_fd[1]) == -1)
 		perror("close");
-	exit(EXIT_SUCCESS);
+	exit(0);
 }
 
-void	here_doc(int end_fd[2], char *argv[])
+int	here_doc(int end_fd[2], char *argv[])
 {
 	int	pipe_fd[2];
+	int	status;
 	int	pid;
 
-	if (argv[2][0] == '\0')
-		exit(EXIT_FAILURE);
 	if (pipe(pipe_fd) == -1)
 		perror("pipe");
 	end_fd[0] = pipe_fd[0];
 	pid = fork();
 	if (pid < 0)
-	{
 		perror("fork");
-		exit(1);
-	}
 	else if (pid == 0)
 		exec_here_doc(pipe_fd, argv[2]);
 	else
 	{
-		waitpid(pid, NULL, 0);
+		waitpid(pid, &status, 0);
+		if (!WIFEXITED(status))
+			return (1);
+		if (WEXITSTATUS(status) == 1)
+			return (1);
 		if (close(pipe_fd[1]) == -1)
 			perror("close");
 	}
+	return (0);
 }

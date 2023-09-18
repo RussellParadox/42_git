@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 15:52:08 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/17 16:35:00 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/18 16:30:30 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,12 @@ int	main(int argc, char *argv[], char *envp[])
 	int	*nb;
 	int	i;
 
+	i = 0;
+	while (envp[i] != NULL)
+	{
+		ft_printf("%s\n", envp[i]);
+		i++;
+	}
 	nb = shield(malloc(sizeof(int) * 400), 0);
 	split = shield_array(ft_split("lfa djf:flka kfjls:f lksd", ':'), 2, 0);
 	new_split = shield(malloc(sizeof(char **) * 4), 2);
@@ -33,4 +39,7 @@ int	main(int argc, char *argv[], char *envp[])
 	new_split[i] = NULL;
 	shield_array(new_split, 3, 1);
 	shield(NULL, 2);
+	while (i-- > 0)
+	{
+	}
 }
