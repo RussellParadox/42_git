@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 16:31:06 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/18 16:58:47 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/18 18:53:20 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,12 @@
 //init
 void	cmd_free(char ***cmd);
 char	***init_cmd(int argc, char *argv[]);
+
+//init end fd
+int	init_end_fd(int end_fd[2], int argc, char *argv[]);
+
+//choose io fd
+void	choose_io_fd(int io_fd[4], int i, int cmd_qt, int end_fd[2]);
 
 //get file
 char	*get_file(int fd);

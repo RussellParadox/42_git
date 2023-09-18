@@ -6,13 +6,15 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 19:02:15 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/16 20:27:50 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/18 19:01:07 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-//return the size of the first word in arg, if single_quote worth 0 it return the word size without the single quote count, else with
+//return the size of the first word in arg,
+//if single_quote worth 0 it return the word size without
+//the single quote count, else with
 static int	word_size(char *arg, int single_quote)
 {
 	int	size;
@@ -60,8 +62,7 @@ static char	*next_word(char *arg, int *start)
 	char	*word;
 	int		quoted_size;
 	int		size;
-	int		i;
-	int		j;
+	int		i[2];
 
 	while (arg[*start] != '\0' && arg[*start] == ' ')
 		(*start)++;
@@ -70,16 +71,13 @@ static char	*next_word(char *arg, int *start)
 	if (word == NULL)
 		return (NULL);
 	quoted_size = word_size(arg + *start, 1);
-	i = 0;
-	j = 0;
-	while (i < quoted_size)
+	i[0] = 0;
+	i[1] = 0;
+	while (i[0] < quoted_size)
 	{
-		if (arg[*start + i] != '\'')
-		{
-			word[j] = arg[*start + i];
-			j++;
-		}
-		i++;
+		if (arg[*start + i[0]] != '\'')
+			word[i[1]++] = arg[*start + i[0]];
+		i[0]++;
 	}
 	word[size] = '\0';
 	*start += quoted_size;
