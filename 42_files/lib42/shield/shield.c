@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 15:02:33 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/17 19:54:55 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/19 15:37:32 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,29 @@ void	delete_node(t_list **list, t_list *node)
 	ft_lstdelone(node, free);
 }
 
-//return the pointer to the node of content
-t_list	*node_of(void *content, t_list *list)
+void	*null_content(t_list **alloc, t_list **protect, int mode)
 {
-	t_list	*i;
+	ft_lstclear(alloc, free);
+	if (mode == 2)
+		ft_lstclear(protect, free);
+	return (NULL);
+}
 
-	i = list;
-	while (i != NULL && i->content != content)
-		i = i->next;
-	return (i);
+void	*delete_mode(t_list **alloc, t_list **protect, void *content)
+{
+	delete_node(alloc, node_of(content, *alloc));
+	delete_node(protect, node_of(content, *protect));
+	return (NULL);
+}
+
+void	*null_node(t_list **alloc, t_list **protect, void *content, int mode)
+{
+	if (mode == 0)
+		free(content);
+	ft_lstclear(alloc, free);
+	if (mode == 2)
+		ft_lstclear(protect, free);
+	return (NULL);
 }
 
 // The main purpose is to manage and store securely
@@ -60,28 +74,12 @@ void	*shield(void *content, int mode)
 	t_list			*node;
 
 	if (content == NULL)
-	{
-		ft_lstclear(&alloc, free);
-		if (mode == 2)
-			ft_lstclear(&protect, free);
-		return (NULL);
-	}
+		return (null_content(&alloc, &protect, mode));
 	if (mode == 1)
-	{
-		delete_node(&alloc, node_of(content, alloc));
-		delete_node(&protect, node_of(content, protect));
-		return (NULL);
-	}
+		return (delete_mode(&alloc, &protect, content));
 	node = ft_lstnew(content);
 	if (node == NULL)
-	{
-		if (mode == 0)
-			free(content);
-		ft_lstclear(&alloc, free);
-		if (mode == 2)
-			ft_lstclear(&protect, free);
-		return (NULL);
-	}
+		return (null_node(&alloc, &protect, content, mode));
 	if (mode == 2)
 		ft_lstadd_back(&protect, node);
 	else

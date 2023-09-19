@@ -6,7 +6,7 @@
 #    By: gdornic <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 21:58:09 by gdornic           #+#    #+#              #
-#    Updated: 2023/09/14 11:21:39 by gdornic          ###   ########.fr        #
+#    Updated: 2023/09/19 15:25:22 by gdornic          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ HEADERS = -I../libft
 
 LIB_LINK = -L../libft -lft
 
-SRC = free_array.c shield.c shield_array.c
+SRC = free_array.c shield.c shield_array.c node_of.c
 
 OBJ = $(SRC:.c=.o)
 
