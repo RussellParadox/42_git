@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 16:31:06 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/18 18:53:20 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/19 16:01:52 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	cmd_free(char ***cmd);
 char	***init_cmd(int argc, char *argv[]);
 
 //init end fd
-int	init_end_fd(int end_fd[2], int argc, char *argv[]);
+int		init_end_fd(int end_fd[2], int argc, char *argv[]);
 
 //choose io fd
 void	choose_io_fd(int io_fd[4], int i, int cmd_qt, int end_fd[2]);
@@ -51,7 +51,7 @@ char	**init_path(char *envp[]);
 char	*find_cmd_path(char **cmd, char **path);
 
 //here_doc
-int	here_doc(int end_fd[2], char *argv[]);
+int		here_doc(int end_fd[2], char *argv[]);
 
 //find envp
 char	*find_envp(char *variable, char *envp[]);
