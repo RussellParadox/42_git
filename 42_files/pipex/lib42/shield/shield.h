@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 11:22:06 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/14 16:43:17 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/19 15:24:39 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 # include <libft.h>
 # include <stddef.h>
 # include <stdlib.h>
+
+//node of
+t_list	*node_of(void *content, t_list *list);
 
 //free array
 void	free_array(void *root, unsigned int dimension);
