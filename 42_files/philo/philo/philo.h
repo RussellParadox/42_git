@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 19:33:47 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/20 11:03:30 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/21 17:27:44 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,21 +35,18 @@
 # define EMPTY 0
 # define FULL 1
 
-typedef struct	s_table
-{
-	int	*fork;
-	int	ok;
-}	t_table;
-
 typedef struct	s_philosopher
 {
-	pthread_t	*id;
+	pthread_t	id;
+	pthread_mutex_t	*fork;
 	int		number;
+	int		quantity;
 	int		die_time;
 	int		eat_time;
 	int		sleep_time;
 	int		meals_left;
 	long int	prev_eat;
+	struct s_philosopher	*next;
 }	t_philosopher;
 
 //check arguments
@@ -62,6 +59,9 @@ void	args_init(int args[5], char *argv[]);
 long int	get_time(int mode);
 
 //state change
-int	state_change(long int timestamp, int philosopher, int state);
+int	state_change(long int timestamp, int number, int state);
+
+//init philosopher
+t_philosopher	*init_philosopher(int args[5]);
 
 #endif

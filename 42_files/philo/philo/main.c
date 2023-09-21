@@ -6,21 +6,11 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 19:33:32 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/20 11:05:36 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/21 17:52:57 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-void	init_philosopher(t_philosopher *philosopher, int i, int args[5])
-{
-	philosopher->number = i;
-	philosopher->die_time = args[1];
-	philosopher->eat_time = args[2];
-	philosopher->sleep_time = args[3];
-	philosopher->meals_left = args[4];
-	philosopher->prev_eat = get_time(CURRENT);
-}
 
 void	*routine(void *data)
 {
@@ -29,29 +19,41 @@ void	*routine(void *data)
 	philosopher = (t_philosopher *)data;
 	while (philosopher->meals_left != 0)
 	{
-		
+		state_change(get_time(CURRENT), philosopher->number, THINK);
+		if (pthread_mutex_lock(philosopher->fork) \
+		|| pthread_mutex_lock(philosopher->next->fork))
+			return ((void *)1);
+		pthread_mutex_unlock(philosopher->fork);
+		pthread_mutex_unlock(philosopher->next->fork);
+		if (get_time(CURRENT) - philosopher->prev_eat >= philosopher->die_time)
+		{
+			state_change(get_time(CURRENT), philosopher->number, DIED);
+			break ;
+		}
+		philosopher->prev_eat = get_time(CURRENT);
+		state_change(get_time(CURRENT), philosopher->number, EAT);
+		usleep(philosopher->eat_time * 1000);
+		state_change(get_time(CURRENT), philosopher->number, SLEEP);
+		usleep(philosopher->sleep_time * 1000);
+		philosopher->meals_left--;
 	}
+	return (NULL);
 }
 
-void	start_philosophy(int args[5])
+void	start_philosophy(t_philosopher *philosopher, int args[5])
 {
-	t_philosopher	*philosopher;
+	t_philosopher	*p;
 	int	i;
 
-	philosopher = malloc(sizeof(t_philosopher) * args[0]);
-	if (philosopher == NULL)
-		return ;
 	i = 0;
+	p = philosopher;
 	while (i < args[0])
 	{
-		init_philosopher(&philosopher[i], i, args);
-		if (pthread_create(philosopher[i]->id, NULL, routine, &i))
+		if (pthread_create(&p->id, NULL, routine, p))
 			return ;
+		pthread_detach(p->id);
+		p = p->next;
 		i++;
-	}
-	while (i > 0)
-	{
-		
 	}
 }
 
@@ -62,6 +64,7 @@ void	start_philosophy(int args[5])
 //      4: number of time each philosopher must eat
 int	main(int argc, char *argv[])
 {
+	static t_philosopher	*philosopher;
 	int	args[5];
 
 	if (argc < 5 || argc > 6)
@@ -74,5 +77,8 @@ int	main(int argc, char *argv[])
 	args_init(args, argv);
 	if (get_time(INIT))
 		return (EXIT_FAILURE);
-	start_philosophy(args);
+	philosopher = init_philosopher(args);
+	if (philosopher == NULL)
+		return (EXIT_FAILURE);
+	start_philosophy(philosopher, args);
 }
