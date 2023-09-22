@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 19:33:47 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/21 17:27:44 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/22 22:11:46 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct	s_philosopher
 {
 	pthread_t	id;
 	pthread_mutex_t	*fork;
+	int		fork_free;
 	int		number;
 	int		quantity;
 	int		die_time;
@@ -63,5 +64,8 @@ int	state_change(long int timestamp, int number, int state);
 
 //init philosopher
 t_philosopher	*init_philosopher(int args[5]);
+
+//usleep extend
+void	usleep_extend(long int time);
 
 #endif

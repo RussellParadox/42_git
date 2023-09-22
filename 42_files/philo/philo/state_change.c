@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 07:11:01 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/21 17:50:48 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/22 22:41:08 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,17 @@
 //       4: died
 int	state_change(long int timestamp, int number, int state)
 {
-	static pthread_mutex_t	*mutex;
+	static pthread_mutex_t	mutex;
+	static int		init_mutex;
 
 	if (timestamp == -1)
 		return (1);
-	if (mutex == NULL)
+	if (init_mutex == 0)
 	{
-		mutex = malloc(sizeof(pthread_mutex_t));
-		if (mutex == NULL)
-			return (1);
-		pthread_mutex_init(mutex, NULL);
+		init_mutex = 1;
+		pthread_mutex_init(&mutex, NULL);
 	}
-	if (pthread_mutex_lock(mutex))
+	if (pthread_mutex_lock(&mutex))
 		return (1);
 	if (state == FORK)
 		printf("%ld %d has taken a fork\n", timestamp, number);
@@ -44,6 +43,6 @@ int	state_change(long int timestamp, int number, int state)
 		printf("%ld %d is thinking\n", timestamp, number);
 	if (state == DIED)
 		printf("%ld %d died\n", timestamp, number);
-	pthread_mutex_unlock(mutex);
+	pthread_mutex_unlock(&mutex);
 	return (0);
 }

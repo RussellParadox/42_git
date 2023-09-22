@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 14:54:39 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/21 17:30:03 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/22 20:47:20 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ t_philosopher	*new_philosopher(pthread_mutex_t *mutex, int i, int args[5])
 	if (new == NULL)
 		return (NULL);
 	new->fork = &mutex[i];
+	new->fork_free = 1;
 	new->number = i + 1;
 	new->quantity = args[0];
 	new->die_time = args[1];
