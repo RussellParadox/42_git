@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 01:47:06 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/18 18:52:07 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/23 23:00:52 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ int	execute_cmd(char **cmd, int io_fd[4], char *envp[])
 	char	*pathname;
 
 	path = init_path(envp);
-	if (path == NULL)
-		exit(1);
 	pathname = find_cmd_path(cmd, path);
 	if (pathname == NULL)
+	{
 		exit(1);
+	}
 	shield(path, 1);
 	if (io_fd[2] != -1 && close(io_fd[2]) == -1)
 		perror("close");
@@ -77,6 +77,8 @@ int	main(int argc, char *argv[], char *envp[])
 	char	***cmd;
 	int		end_fd[2];
 
+	if (*envp == NULL)
+		return (EXIT_FAILURE);
 	if (argc < 5 || (!ft_strncmp(argv[1], "here_doc", \
 	ft_strlen(argv[1]) + 1) && argc < 6))
 		return (EXIT_FAILURE);

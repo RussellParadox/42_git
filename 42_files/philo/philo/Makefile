@@ -6,7 +6,7 @@
 #    By: gdornic <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 21:58:09 by gdornic           #+#    #+#              #
-#    Updated: 2023/09/22 22:12:39 by gdornic          ###   ########.fr        #
+#    Updated: 2023/09/23 17:56:28 by gdornic          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,13 +18,13 @@ HEADERS =
 
 LIB_LINK = 
 
-SRC = main.c check_arguments.c args_init.c get_time.c state_change.c init_philosopher.c usleep_extend.c
+SRC = main.c check_arguments.c args_init.c get_time.c state_change.c init_philosopher.c usleep_extend.c eat.c
 
 OBJ = $(SRC:.c=.o)
 
 CC = gcc
 
-CFLAGS = -pthread -Wall -Werror -Wextra
+CFLAGS = -pthread -Wall -Werror -Wextra -fsanitize=thread -g
 
 define make_dep
 	for d in $(DEP) ; do \

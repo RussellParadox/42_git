@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 14:44:53 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/18 16:08:01 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/23 23:01:01 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,6 @@ char	*find_cmd_path(char **cmd, char **path)
 		shield(test_path, 1);
 		path++;
 	}
+	shell_error("command not found", cmd[0]);
 	return (NULL);
 }

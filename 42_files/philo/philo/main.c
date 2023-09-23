@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 19:33:32 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/23 00:02:44 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/23 18:10:36 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,32 +15,30 @@
 void	*routine(void *data)
 {
 	t_philosopher	*philosopher;
-	pthread_mutex_t	*next_fork;
 
 	philosopher = (t_philosopher *)data;
-	//printf("starting philosopher %d\n", philosopher->number);
-	next_fork = philosopher->next->fork;
 	while (philosopher->meals_left != 0)
 	{
 		state_change(get_time(CURRENT), philosopher->number, THINK);
-		if (pthread_mutex_lock(philosopher->fork) \
-		|| pthread_mutex_lock(next_fork))
-			return ((void *)1);
-		/*
-		if (get_time(CURRENT) - philosopher->prev_eat >= philosopher->die_time)
+		while (can_not_eat(philosopher->fork_mutex, philosopher->next->fork_mutex, \
+		&philosopher->fork, &philosopher->next->fork))
 		{
-			state_change(get_time(CURRENT), philosopher->number, DIED);
-			break ;
+			if (get_time(CURRENT) - philosopher->prev_eat >= philosopher->die_time)
+			{
+				state_change(get_time(CURRENT), philosopher->number, DIED);
+				philosopher->meals_left = 0;
+				break ;
+			}
 		}
-		*/
-		philosopher->prev_eat = get_time(CURRENT);
+		if (philosopher->meals_left == 0)
+			break ;
 		state_change(get_time(CURRENT), philosopher->number, EAT);
-		//usleep_extend(philosopher->eat_time);
+		usleep_extend(philosopher->eat_time);
+		free_forks(philosopher->fork_mutex, philosopher->next->fork_mutex, &philosopher->fork, &philosopher->next->fork);
+		philosopher->prev_eat = get_time(CURRENT);
 		state_change(get_time(CURRENT), philosopher->number, SLEEP);
-		//usleep_extend(philosopher->sleep_time);
-		pthread_mutex_unlock(philosopher->fork);
-		pthread_mutex_unlock(next_fork);
-		//philosopher->meals_left--;
+		usleep_extend(philosopher->sleep_time);
+		philosopher->meals_left--;
 	}
 	return (NULL);
 }
@@ -50,15 +48,22 @@ void	start_philosophy(t_philosopher *philosopher, int args[5])
 	t_philosopher	*p;
 	int	i;
 
-	i = 0;
-	p = philosopher;
 	state_change(-1, 0, 0);
+	p = philosopher;
+	i = 0;
 	while (i < args[0])
 	{
 		if (pthread_create(&p->id, NULL, routine, p))
 			return ;
 		usleep_extend(10);
-		//pthread_detach(p->id);
+		p = p->next;
+		i++;
+	}
+	p = philosopher;
+	i = 0;
+	while (i < args[0])
+	{
+		pthread_join(p->id, NULL);
 		p = p->next;
 		i++;
 	}
