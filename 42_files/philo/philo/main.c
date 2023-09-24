@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 19:33:32 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/25 01:09:54 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/25 01:45:00 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void	start_philosophy(t_philosopher *philosopher, int args[5])
 	{
 		if (pthread_create(&p->id, NULL, routine, p))
 			return ;
-		//usleep_extend(10);
 		p = p->next;
 		i++;
 	}
@@ -79,8 +78,7 @@ void	start_philosophy(t_philosopher *philosopher, int args[5])
 //      4: number of time each philosopher must eat
 int	main(int argc, char *argv[])
 {
-	static t_philosopher	*philosopher;
-	t_philosopher		*p;
+	t_philosopher	*philosopher;
 	int			args[5];
 
 	if (argc < 5 || argc > 6)
@@ -94,13 +92,6 @@ int	main(int argc, char *argv[])
 	philosopher = init_philosopher(args);
 	if (philosopher == NULL)
 		return (EXIT_FAILURE);
-	p = philosopher;
-	printf("philosopher %d meal left %d\n", p->number, p->meals_left);
-	p = p->next;
-	while (p != philosopher)
-	{
-		printf("philosopher %d meal left %d\n", p->number, p->meals_left);
-		p = p->next;
-	}
 	start_philosophy(philosopher, args);
+	return (EXIT_SUCCESS);
 }

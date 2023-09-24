@@ -6,11 +6,20 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 14:54:39 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/25 01:09:23 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/25 01:40:29 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int	*init_simulation(void)
+{
+	static int	*simulation;
+
+	if (simulation == NULL)
+		simulation = malloc(sizeof(int));
+	return (simulation);
+}
 
 pthread_mutex_t	*init_eat_mutex(void)
 {
@@ -21,7 +30,8 @@ pthread_mutex_t	*init_eat_mutex(void)
 		eat_mutex = malloc(sizeof(pthread_mutex_t));
 		if (eat_mutex == NULL)
 			return (NULL);
-		pthread_mutex_init(eat_mutex, NULL);
+		if (pthread_mutex_init(eat_mutex, NULL))
+			return (NULL);
 	}
 	return (eat_mutex);
 }
@@ -68,8 +78,13 @@ t_philosopher	*new_philosopher(int i, int args[5])
 	if (new == NULL)
 		return (NULL);
 	new->fork_mutex = init_fork_mutex(i, args);
+	if (new->fork_mutex == NULL)
+		return (NULL);
 	new->eat_mutex = init_eat_mutex();
 	if (new->eat_mutex == NULL)
+		return (NULL);
+	new->simulation = init_simulation();
+	if (new->simulation == NULL)
 		return (NULL);
 	new->fork = 1;
 	new->number = i + 1;

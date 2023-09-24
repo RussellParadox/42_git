@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 04:29:33 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/24 23:15:11 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/25 01:45:12 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,9 @@ void	*work(void *data)
 
 int	main(int argc, char *argv[])
 {
-	pthread_t	tid;
-	pthread_t	tid2;
-	pthread_t	tid3;
 	t_philosopher	*p;
 	int		args[5];
 
 	args_init(args, argv);
 	p = init_philosopher(args);
-	pthread_create(&tid, NULL, work, p);
-	pthread_join(tid, NULL);
-	pthread_create(&tid2, NULL, work, p->next);
-	pthread_join(tid2, NULL);
 }
