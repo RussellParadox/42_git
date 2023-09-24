@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 04:29:33 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/23 17:55:40 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/24 23:15:11 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,28 @@
 
 void	*work(void *data)
 {
-	static int	value;
+	t_philosopher	*p;
 
-	if (value == 0)
-		value = 3;
-	printf("thread %ld, value: %d, value address: %p\n", pthread_self(), value, &value);
+	p = data;
+	printf("thread %ld\n", pthread_self());
+	if (p->number == 1)
+		p->next->fork = 0;
+	else
+		printf("thread 2: p->fork: %d\n", p->fork);
 }
 
-int	main(void)
+int	main(int argc, char *argv[])
 {
 	pthread_t	tid;
 	pthread_t	tid2;
 	pthread_t	tid3;
+	t_philosopher	*p;
+	int		args[5];
 
-	pthread_create(&tid, NULL, work, NULL);
-	usleep(100000);
-	pthread_create(&tid2, NULL, work, NULL);
-	usleep(100000);
-	pthread_create(&tid3, NULL, work, NULL);
+	args_init(args, argv);
+	p = init_philosopher(args);
+	pthread_create(&tid, NULL, work, p);
+	pthread_join(tid, NULL);
+	pthread_create(&tid2, NULL, work, p->next);
+	pthread_join(tid2, NULL);
 }

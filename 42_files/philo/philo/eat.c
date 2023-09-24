@@ -6,45 +6,50 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 16:00:51 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/23 18:43:12 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/24 23:25:15 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	free_forks(pthread_mutex_t *fork_mutex, pthread_mutex_t *next_fork_mutex, \
-		int *fork, int *next_fork)
+void	free_fork(t_philosopher *p)
 {
-	pthread_mutex_lock(fork_mutex);
-	*fork = 1;
-	pthread_mutex_unlock(fork_mutex);
-	pthread_mutex_lock(next_fork_mutex);
-	*next_fork = 1;
-	pthread_mutex_unlock(next_fork_mutex);
+	if (p == NULL)
+		return ;
+	pthread_mutex_lock(p->fork_mutex);
+	p->fork = 1;
+	pthread_mutex_unlock(p->fork_mutex);
 }
 
-int	can_not_eat(pthread_mutex_t *fork_mutex, pthread_mutex_t *next_fork_mutex, \
-		int *fork, int *next_fork)
+int	can_not_eat(t_philosopher *p)
 {
-	static int	
-	int	res;
+	int			res;
 
-	pthread_mutex_lock(fork_mutex);
-	if (*fork)
+	if (p == NULL)
+		return (1);
+	pthread_mutex_lock(p->eat_mutex);
+	pthread_mutex_lock(p->fork_mutex);
+	if (p->fork)
 	{
-		*fork = 0;
+		p->fork = 0;
 		res = 0;
 	}
 	else
 		res = 1;
-	pthread_mutex_unlock(fork_mutex);
-	pthread_mutex_lock(next_fork_mutex);
-	if (*next_fork)
-		*next_fork = 0;
+	pthread_mutex_unlock(p->fork_mutex);
+	pthread_mutex_lock(p->next->fork_mutex);
+	if (!res)
+	{
+		if (p->next->fork)
+			p->next->fork = 0;
+		else
+			res = 2;
+	}
 	else
 		res = 1;
-	pthread_mutex_unlock(next_fork_mutex);
-	if (res)
-		free_forks(fork_mutex, next_fork_mutex, fork, next_fork);
+	pthread_mutex_unlock(p->next->fork_mutex);
+	if (res == 2)
+		free_fork(p);
+	pthread_mutex_unlock(p->eat_mutex);
 	return (res);
 }

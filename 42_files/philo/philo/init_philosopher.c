@@ -6,11 +6,25 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 14:54:39 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/23 17:43:23 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/25 00:36:40 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+pthread_mutex_t	*init_eat_mutex(void)
+{
+	static pthread_mutex_t	*eat_mutex;
+
+	if (eat_mutex == NULL)
+	{
+		eat_mutex = malloc(sizeof(pthread_mutex_t));
+		if (eat_mutex == NULL)
+			return (NULL);
+		pthread_mutex_init(eat_mutex, NULL);
+	}
+	return (eat_mutex);
+}
 
 t_philosopher	*new_philosopher(pthread_mutex_t *mutex, int i, int args[5])
 {
@@ -20,6 +34,9 @@ t_philosopher	*new_philosopher(pthread_mutex_t *mutex, int i, int args[5])
 	if (new == NULL)
 		return (NULL);
 	new->fork_mutex = &mutex[i];
+	new->eat_mutex = init_eat_mutex();
+	if (init_eat_mutex == NULL)
+		return (NULL);
 	new->fork = 1;
 	new->number = i + 1;
 	new->quantity = args[0];

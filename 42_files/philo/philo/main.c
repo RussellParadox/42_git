@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 19:33:32 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/23 18:10:36 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/25 00:14:55 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ void	*routine(void *data)
 	while (philosopher->meals_left != 0)
 	{
 		state_change(get_time(CURRENT), philosopher->number, THINK);
-		while (can_not_eat(philosopher->fork_mutex, philosopher->next->fork_mutex, \
-		&philosopher->fork, &philosopher->next->fork))
+		while (can_not_eat(philosopher))
 		{
 			if (get_time(CURRENT) - philosopher->prev_eat >= philosopher->die_time)
 			{
@@ -34,7 +33,8 @@ void	*routine(void *data)
 			break ;
 		state_change(get_time(CURRENT), philosopher->number, EAT);
 		usleep_extend(philosopher->eat_time);
-		free_forks(philosopher->fork_mutex, philosopher->next->fork_mutex, &philosopher->fork, &philosopher->next->fork);
+		free_fork(philosopher);
+		free_fork(philosopher->next);
 		philosopher->prev_eat = get_time(CURRENT);
 		state_change(get_time(CURRENT), philosopher->number, SLEEP);
 		usleep_extend(philosopher->sleep_time);
@@ -51,11 +51,13 @@ void	start_philosophy(t_philosopher *philosopher, int args[5])
 	state_change(-1, 0, 0);
 	p = philosopher;
 	i = 0;
+	get_time(INIT);
+	state_change(0, 0, -1);
 	while (i < args[0])
 	{
 		if (pthread_create(&p->id, NULL, routine, p))
 			return ;
-		usleep_extend(10);
+		//usleep_extend(10);
 		p = p->next;
 		i++;
 	}
@@ -88,8 +90,6 @@ int	main(int argc, char *argv[])
 	if (check_arguments(argv))
 		return (EXIT_FAILURE);
 	args_init(args, argv);
-	if (get_time(INIT))
-		return (EXIT_FAILURE);
 	philosopher = init_philosopher(args);
 	if (philosopher == NULL)
 		return (EXIT_FAILURE);

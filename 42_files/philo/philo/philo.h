@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 19:33:47 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/23 18:08:34 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/25 00:28:07 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ typedef struct	s_philosopher
 {
 	pthread_t	id;
 	pthread_mutex_t	*fork_mutex;
+	pthread_mutex_t	*eat_mutex;
+	int		*simulation;
 	int		fork;
 	int		number;
 	int		quantity;
@@ -72,9 +74,7 @@ void	usleep_extend(long int time);
 int	atomic_read(int *value, pthread_mutex_t *mutex);
 
 //eat
-void	free_forks(pthread_mutex_t *fork_mutex, pthread_mutex_t *next_fork_mutex, \
-		int *fork, int *next_fork);
-int	can_not_eat(pthread_mutex_t *fork_mutex, pthread_mutex_t *next_fork_mutex, \
-		int *fork, int *next_fork);
+void	free_fork(t_philosopher *p);
+int	can_not_eat(t_philosopher *p);
 
 #endif
