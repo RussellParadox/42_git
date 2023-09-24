@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 19:33:32 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/25 00:14:55 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/25 01:09:54 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	*routine(void *data)
 	t_philosopher	*philosopher;
 
 	philosopher = (t_philosopher *)data;
+	philosopher->prev_eat = get_time(CURRENT);
 	while (philosopher->meals_left != 0)
 	{
 		state_change(get_time(CURRENT), philosopher->number, THINK);

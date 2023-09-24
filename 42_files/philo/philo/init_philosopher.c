@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 14:54:39 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/25 00:36:40 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/25 01:09:23 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,50 @@ pthread_mutex_t	*init_eat_mutex(void)
 	return (eat_mutex);
 }
 
-t_philosopher	*new_philosopher(pthread_mutex_t *mutex, int i, int args[5])
+t_philosopher	*init_philosophers(int i, int args[5])
 {
-	static t_philosopher	*new;
+	static t_philosopher	*philosopher;
 
-	new = malloc(sizeof(t_philosopher));
+	if (philosopher == NULL)
+	{
+		philosopher = malloc(sizeof(t_philosopher) * args[0]);
+		if (philosopher == NULL)
+			return (NULL);
+	}
+	return (&philosopher[i]);
+}
+
+pthread_mutex_t	*init_fork_mutex(int i, int args[5])
+{
+	static pthread_mutex_t	*mutex;
+	int			j;
+
+	if (mutex == NULL)
+	{
+		mutex = malloc(sizeof(pthread_mutex_t) * args[0]);
+		if (mutex == NULL)
+			return (NULL);
+		j = 0;
+		while (j < args[0])
+		{
+			if (pthread_mutex_init(&mutex[j], NULL))
+				return (NULL);
+			j++;
+		}
+	}
+	return (&mutex[i]);
+}
+
+t_philosopher	*new_philosopher(int i, int args[5])
+{
+	t_philosopher	*new;
+
+	new = init_philosophers(i, args);
 	if (new == NULL)
 		return (NULL);
-	new->fork_mutex = &mutex[i];
+	new->fork_mutex = init_fork_mutex(i, args);
 	new->eat_mutex = init_eat_mutex();
-	if (init_eat_mutex == NULL)
+	if (new->eat_mutex == NULL)
 		return (NULL);
 	new->fork = 1;
 	new->number = i + 1;
@@ -44,33 +78,26 @@ t_philosopher	*new_philosopher(pthread_mutex_t *mutex, int i, int args[5])
 	new->eat_time = args[2];
 	new->sleep_time = args[3];
 	new->meals_left = args[4];
-	new->prev_eat = get_time(CURRENT);
 	return (new);
 }
 
 t_philosopher	*init_philosopher(int args[5])
 {
-	static pthread_mutex_t	*mutex;
 	t_philosopher	*philosopher;
 	t_philosopher	*first;
 	int		i;
 
-	mutex = malloc(sizeof(pthread_mutex_t) * args[0]);
-	if (mutex == NULL)
+	philosopher = new_philosopher(0, args);
+	if (philosopher == NULL)
 		return (NULL);
-	i = 0;
-	while (i < args[0])
-	{
-		pthread_mutex_init(&mutex[i], NULL);
-		i++;
-	}
-	philosopher = new_philosopher(mutex, 0, args);
 	first = philosopher;
 	i = 1;
 	while (i < args[0])
 	{
-		philosopher->next = new_philosopher(mutex, i, args);
+		philosopher->next = new_philosopher(i, args);
 		philosopher = philosopher->next;
+		if (philosopher == NULL)
+			return (NULL);
 		i++;
 	}
 	philosopher->next = first;
