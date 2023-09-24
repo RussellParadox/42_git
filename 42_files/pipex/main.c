@@ -6,24 +6,16 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 01:47:06 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/23 23:00:52 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/24 02:50:49 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	execute_cmd(char **cmd, int io_fd[4], char *envp[])
+int	execute_cmd(char **cmd, int io_fd[4], char *envp[], char *pathname)
 {
-	char	**path;
-	char	*pathname;
-
-	path = init_path(envp);
-	pathname = find_cmd_path(cmd, path);
 	if (pathname == NULL)
-	{
-		exit(1);
-	}
-	shield(path, 1);
+		exit(0);
 	if (io_fd[2] != -1 && close(io_fd[2]) == -1)
 		perror("close");
 	if (io_fd[3] != -1 && close(io_fd[3]) == -1)
@@ -34,8 +26,6 @@ int	execute_cmd(char **cmd, int io_fd[4], char *envp[])
 		perror("dup2");
 	if (execve(pathname, cmd, envp) == -1)
 		perror("execve");
-	shield_array(path, 2, 1);
-	shield(pathname, 1);
 	exit(0);
 }
 
@@ -46,24 +36,23 @@ int	execute_cmd(char **cmd, int io_fd[4], char *envp[])
 int	pipex(char ***cmd, int end_fd[2], char *envp[], int cmd_qt)
 {
 	pid_t	pid;
+	char	*pathname;
 	int		io_fd[4];
-	int		status;
 	int		i;
 
 	i = 0;
 	while (i < cmd_qt)
 	{
 		choose_io_fd(io_fd, i, cmd_qt, end_fd);
+		pathname = find_cmd_path(cmd[i], init_path(envp));
 		pid = fork();
 		if (pid < 0)
 			perror("fork");
 		else if (pid == 0)
-			execute_cmd(cmd[i], io_fd, envp);
+			execute_cmd(cmd[i], io_fd, envp, pathname);
 		else
 		{
-			waitpid(pid, &status, WNOHANG);
-			if (!WIFEXITED(status) || WEXITSTATUS(status))
-				return (1);
+			waitpid(pid, NULL, WNOHANG);
 			if ((++i && io_fd[0] != -1 && close(io_fd[0])) \
 			|| (io_fd[2] != -1 && close(io_fd[2])))
 				perror("close");

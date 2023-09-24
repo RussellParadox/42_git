@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 19:54:01 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/18 16:55:56 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/24 02:27:39 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	shell_error(char *error, char *suffix)
 
 	if (shell[0] == '\0' && error != NULL)
 		ft_memcpy(shell, error, ft_strlen(error));
-	else if (shell != NULL)
+	else
 		print_error(shell, error, suffix);
 }
 
