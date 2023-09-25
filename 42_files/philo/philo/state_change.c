@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 07:11:01 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/22 22:41:08 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/25 16:17:41 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,11 @@
 //       2: is sleeping
 //       3: is thinking
 //       4: died
-int	state_change(long int timestamp, int number, int state)
+int	state_change(long int timestamp, t_philosopher *p, int state)
 {
 	static pthread_mutex_t	mutex;
 	static int		init_mutex;
+	int			number;
 
 	if (timestamp == -1)
 		return (1);
@@ -31,6 +32,11 @@ int	state_change(long int timestamp, int number, int state)
 		init_mutex = 1;
 		pthread_mutex_init(&mutex, NULL);
 	}
+	if (p == NULL)
+		return (0);
+	if (!simulate(p))
+		return (0);
+	number = p->number;
 	if (pthread_mutex_lock(&mutex))
 		return (1);
 	if (state == FORK)

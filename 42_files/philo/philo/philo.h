@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 19:33:47 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/25 14:36:51 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/25 16:00:16 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,10 @@
 //get time
 # define INIT 0
 # define CURRENT 1
+
+//init functions
+# define GET 0
+# define FREE 1
 
 typedef struct	s_philosopher
 {
@@ -58,9 +62,13 @@ void	args_init(int args[5], char *argv[]);
 long int	get_time(int mode);
 
 //state change
-int	state_change(long int timestamp, int number, int state);
+int	state_change(long int timestamp, t_philosopher *p, int state);
 
 //init philosopher
+int	*init_simulation(int mode);
+pthread_mutex_t	*init_eat_mutex(int mode);
+t_philosopher	*init_philosophers(int i, int args[5]);
+pthread_mutex_t	*init_fork_mutex(int i, int args[5]);
 t_philosopher	*init_philosopher(int args[5]);
 
 //usleep extend
@@ -72,5 +80,8 @@ int	atomic_read(int *value, pthread_mutex_t *mutex);
 //eat
 void	free_fork(t_philosopher *p);
 int	can_not_eat(t_philosopher *p);
+
+//simulate
+int	simulate(t_philosopher *p);
 
 #endif
