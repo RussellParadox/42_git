@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 19:33:47 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/25 00:28:07 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/25 14:36:51 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,6 @@
 //get time
 # define INIT 0
 # define CURRENT 1
-
-//philosopher hands
-# define EMPTY 0
-# define FULL 1
 
 typedef struct	s_philosopher
 {

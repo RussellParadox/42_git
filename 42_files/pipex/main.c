@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 01:47:06 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/25 14:24:27 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/25 15:11:39 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,10 @@
 int	execute_cmd(char **cmd, int io_fd[4], char *envp[], char *pathname)
 {
 	if (pathname == NULL)
+	{
+		shield(NULL, 2);
 		exit(1);
+	}
 	if (io_fd[2] != -1 && close(io_fd[2]) == -1)
 		perror("close");
 	if (io_fd[3] != -1 && close(io_fd[3]) == -1)
@@ -58,6 +61,7 @@ int	pipex(char ***cmd, int end_fd[2], char *envp[], int cmd_qt)
 			waitpid(pid, NULL, 0);
 		}
 	}
+	shield(NULL, 2);
 	return (0);
 }
 

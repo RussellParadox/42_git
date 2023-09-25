@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 14:54:39 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/25 01:40:29 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/25 15:14:00 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,12 @@ t_philosopher	*init_philosophers(int i, int args[5])
 {
 	static t_philosopher	*philosopher;
 
+	if (i == -1 && philosopher != NULL)
+	{
+		free(philosopher);
+		philosopher = NULL;
+		return (NULL);
+	}
 	if (philosopher == NULL)
 	{
 		philosopher = malloc(sizeof(t_philosopher) * args[0]);
@@ -54,6 +60,12 @@ pthread_mutex_t	*init_fork_mutex(int i, int args[5])
 	static pthread_mutex_t	*mutex;
 	int			j;
 
+	if (i == -1 && mutex != NULL)
+	{
+		free(mutex);
+		mutex = NULL;
+		return (NULL);
+	}
 	if (mutex == NULL)
 	{
 		mutex = malloc(sizeof(pthread_mutex_t) * args[0]);

@@ -6,7 +6,7 @@
 #    By: gdornic <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 21:58:09 by gdornic           #+#    #+#              #
-#    Updated: 2023/04/01 20:29:34 by gdornic          ###   ########.fr        #
+#    Updated: 2023/09/25 14:39:46 by gdornic          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ $(NAME): $(OBJ)
 	ar -cr $(NAME) $(OBJ)
 
 %.o: %.c
-	$(CC) $(CFLAGS) $(HEADERS) -O3 -c $< -o $@
+	$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@
 
 clean:
 	rm -f $(OBJ)

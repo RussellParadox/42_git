@@ -6,7 +6,7 @@
 #    By: gdornic <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 21:58:09 by gdornic           #+#    #+#              #
-#    Updated: 2023/09/25 14:09:11 by gdornic          ###   ########.fr        #
+#    Updated: 2023/09/25 14:38:18 by gdornic          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ $(NAME): $(OBJ)
 	$(CC) $(OBJ) $(HEADERS) $(LIB_LINK) -o $(NAME) -g
 
 %.o: %.c
-	$(CC) $(CFLAGS) $(HEADERS) -O3 -c $< -o $@ -g
+	$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@ -g
 
 clean:
 	rm -f $(OBJ)
