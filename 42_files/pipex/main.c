@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 01:47:06 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/24 02:50:49 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/25 14:24:27 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	execute_cmd(char **cmd, int io_fd[4], char *envp[], char *pathname)
 {
 	if (pathname == NULL)
-		exit(0);
+		exit(1);
 	if (io_fd[2] != -1 && close(io_fd[2]) == -1)
 		perror("close");
 	if (io_fd[3] != -1 && close(io_fd[3]) == -1)
@@ -26,7 +26,7 @@ int	execute_cmd(char **cmd, int io_fd[4], char *envp[], char *pathname)
 		perror("dup2");
 	if (execve(pathname, cmd, envp) == -1)
 		perror("execve");
-	exit(0);
+	exit(1);
 }
 
 //io_fd[0]: input fd
@@ -52,10 +52,10 @@ int	pipex(char ***cmd, int end_fd[2], char *envp[], int cmd_qt)
 			execute_cmd(cmd[i], io_fd, envp, pathname);
 		else
 		{
-			waitpid(pid, NULL, WNOHANG);
 			if ((++i && io_fd[0] != -1 && close(io_fd[0])) \
 			|| (io_fd[2] != -1 && close(io_fd[2])))
 				perror("close");
+			waitpid(pid, NULL, 0);
 		}
 	}
 	return (0);

@@ -6,7 +6,7 @@
 #    By: gdornic <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 21:58:09 by gdornic           #+#    #+#              #
-#    Updated: 2023/09/25 01:28:14 by gdornic          ###   ########.fr        #
+#    Updated: 2023/09/25 11:57:24 by gdornic          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ HEADERS =
 
 LIB_LINK = 
 
-SRC = main_test.c check_arguments.c args_init.c get_time.c state_change.c init_philosopher.c usleep_extend.c eat.c
+SRC = main.c check_arguments.c args_init.c get_time.c state_change.c init_philosopher.c usleep_extend.c eat.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -39,7 +39,7 @@ $(NAME): $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) $(HEADERS) $(LIB_LINK) -o $(NAME)
 
 %.o: %.c
-	$(CC) $(CFLAGS) $(HEADERS) -O3 -c $< -o $@
+	$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@
 
 clean:
 	rm -f $(OBJ)

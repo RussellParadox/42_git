@@ -6,11 +6,19 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 04:29:33 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/25 01:45:12 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/25 11:54:20 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int	*static_malloc_test(void)
+{
+	int	*all;
+
+	all = malloc(sizeof(int) * 10000000);
+	return (all);
+}
 
 void	*work(void *data)
 {
@@ -27,8 +35,9 @@ void	*work(void *data)
 int	main(int argc, char *argv[])
 {
 	t_philosopher	*p;
+	int		*test;
 	int		args[5];
 
-	args_init(args, argv);
-	p = init_philosopher(args);
+	//test = malloc(sizeof(int));
+	test = static_malloc_test();
 }
