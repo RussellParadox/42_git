@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 07:11:01 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/25 16:17:41 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/26 01:32:44 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,21 +34,21 @@ int	state_change(long int timestamp, t_philosopher *p, int state)
 	}
 	if (p == NULL)
 		return (0);
-	if (!simulate(p))
+	if (!simulate(p, GET))
 		return (0);
 	number = p->number;
 	if (pthread_mutex_lock(&mutex))
 		return (1);
-	if (state == FORK)
+	if (simulate(p, GET) && state == FORK)
 		printf("%ld %d has taken a fork\n", timestamp, number);
-	if (state == EAT)
+	if (simulate(p, GET) && state == EAT)
 		printf("%ld %d is eating\n", timestamp, number);
-	if (state == SLEEP)
+	if (simulate(p, GET) && state == SLEEP)
 		printf("%ld %d is sleeping\n", timestamp, number);
-	if (state == THINK)
+	if (simulate(p, GET) && state == THINK)
 		printf("%ld %d is thinking\n", timestamp, number);
-	if (state == DIED)
-		printf("%ld %d died\n", timestamp, number);
+	if (simulate(p, GET) && state == DIED)
+		printf("%ld %d died               \n", timestamp, number);
 	pthread_mutex_unlock(&mutex);
 	return (0);
 }

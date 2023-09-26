@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 19:33:32 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/25 16:20:31 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/26 01:26:24 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,26 +18,25 @@ void	*routine(void *data)
 
 	philosopher = (t_philosopher *)data;
 	philosopher->prev_eat = get_time(CURRENT);
-	while (philosopher->meals_left != 0 && simulate(philosopher))
+	while (philosopher->meals_left != 0 && simulate(philosopher, GET))
 	{
 		state_change(get_time(CURRENT), philosopher, THINK);
 		while (can_not_eat(philosopher))
 		{
-			if (simulate(philosopher) || get_time(CURRENT) - philosopher->prev_eat >= philosopher->die_time)
+			if (!simulate(philosopher, GET) || get_time(CURRENT) - philosopher->prev_eat >= philosopher->die_time)
 			{
 				state_change(get_time(CURRENT), philosopher, DIED);
-				philosopher->meals_left = 0;
-				simulate(philosopher);
+				simulate(philosopher, STOP);
 				break ;
 			}
 		}
-		if (philosopher->meals_left == 0)
+		if (!simulate(philosopher, GET))
 			break ;
 		state_change(get_time(CURRENT), philosopher, EAT);
+		philosopher->prev_eat = get_time(CURRENT);
 		usleep_extend(philosopher->eat_time);
 		free_fork(philosopher);
 		free_fork(philosopher->next);
-		philosopher->prev_eat = get_time(CURRENT);
 		state_change(get_time(CURRENT), philosopher, SLEEP);
 		usleep_extend(philosopher->sleep_time);
 		philosopher->meals_left--;
@@ -53,9 +52,9 @@ void	start_philosophy(t_philosopher *philosopher, int args[5])
 	state_change(-1, 0, 0);
 	p = philosopher;
 	i = 0;
-	get_time(INIT);
 	state_change(0, NULL, -1);
-	simulate(NULL);
+	simulate(NULL, GET);
+	get_time(INIT);
 	while (i < args[0])
 	{
 		if (pthread_create(&p->id, NULL, routine, p))

@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 19:33:47 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/25 16:00:16 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/26 00:11:07 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,9 @@
 //init functions
 # define GET 0
 # define FREE 1
+
+//simulate
+# define STOP 1
 
 typedef struct	s_philosopher
 {
@@ -82,6 +85,6 @@ void	free_fork(t_philosopher *p);
 int	can_not_eat(t_philosopher *p);
 
 //simulate
-int	simulate(t_philosopher *p);
+int	simulate(t_philosopher *p, int option);
 
 #endif

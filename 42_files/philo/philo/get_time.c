@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 08:14:33 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/22 22:41:02 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/26 01:24:22 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ long int	get_time(int mode)
 {
 	static long int		time_start;
 	static pthread_mutex_t	mutex;
-	struct timeval		time;
 	static int		mutex_init;
+	struct timeval		time;
 	long int		return_time;
 
 	if (mutex_init == 0)
