@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 14:54:39 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/25 16:04:11 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/27 21:50:11 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,50 @@ int	*init_simulation(int mode)
 		return (simulation);
 	}
 	return (simulation);
+}
+
+pthread_mutex_t	*init_print_mutex(int mode)
+{
+	static pthread_mutex_t	*print_mutex;
+
+	if (mode == FREE && print_mutex != NULL)
+	{
+		free(print_mutex);
+		print_mutex = NULL;
+		return (NULL);
+	}
+	if (print_mutex == NULL)
+	{
+		print_mutex = malloc(sizeof(pthread_mutex_t));
+		if (print_mutex == NULL)
+			return (NULL);
+		if (pthread_mutex_init(print_mutex, NULL))
+			return (NULL);
+		return (print_mutex);
+	}
+	return (print_mutex);
+}
+
+pthread_mutex_t	*init_ready_mutex(int mode)
+{
+	static pthread_mutex_t	*ready_mutex;
+
+	if (mode == FREE && ready_mutex != NULL)
+	{
+		free(ready_mutex);
+		ready_mutex = NULL;
+		return (NULL);
+	}
+	if (ready_mutex == NULL)
+	{
+		ready_mutex = malloc(sizeof(pthread_mutex_t));
+		if (ready_mutex == NULL)
+			return (NULL);
+		if (pthread_mutex_init(ready_mutex, NULL))
+			return (NULL);
+		return (ready_mutex);
+	}
+	return (ready_mutex);
 }
 
 pthread_mutex_t	*init_eat_mutex(int mode)
@@ -115,6 +159,12 @@ t_philosopher	*new_philosopher(int i, int args[5])
 		return (NULL);
 	new->simulation = init_simulation(GET);
 	if (new->simulation == NULL)
+		return (NULL);
+	new->ready_mutex = init_ready_mutex(GET);
+	if (new->ready_mutex == NULL)
+		return (NULL);
+	new->print_mutex = init_print_mutex(GET);
+	if (new->print_mutex == NULL)
 		return (NULL);
 	new->fork = 1;
 	new->number = i + 1;

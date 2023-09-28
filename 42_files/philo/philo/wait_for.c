@@ -1,33 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   usleep_extend.c                                    :+:      :+:    :+:   */
+/*   wait_for.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/22 22:03:21 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/28 23:15:25 by gdornic          ###   ########.fr       */
+/*   Created: 2023/09/28 22:06:38 by gdornic           #+#    #+#             */
+/*   Updated: 2023/09/29 00:02:30 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-#define USLEEP_LIMIT 999999
-
-//usleep with more than 999999 microseconds
-//time is in milliseconds
-int	usleep_extend(long int time)
+//suspend the thread for time ms
+//verify p life status
+int	wait_for(t_philosopher *p, long int time)
 {
-	long int	rest;
+	long int	time_delta;
 
-	time = time * 1000;
-	rest = time % USLEEP_LIMIT;
-	time = time / USLEEP_LIMIT;
-	while (time > 0)
+	time_delta = p->prev_eat + p->die_time - get_time(p, CURRENT) - time;
+	if (time_delta < 0)
 	{
-		if (usleep(USLEEP_LIMIT))
-			return (1);
-		time--;
+		usleep_extend(time_delta + time);
+		end_simulation(p);
+		return (1);
 	}
-	return (usleep(rest));
+	return (usleep_extend(time));
 }

@@ -6,11 +6,18 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 15:47:08 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/26 00:11:17 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/29 00:17:19 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	*end_simulation(t_philosopher *p)
+{
+	state_change(get_time(p, CURRENT), p, DIED);
+	simulate(p, STOP);
+	return (NULL);
+}
 
 int	simulate(t_philosopher *p, int option)
 {

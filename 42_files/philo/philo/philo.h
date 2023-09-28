@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 19:33:47 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/26 00:11:07 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/28 23:15:39 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,9 @@
 
 //get time
 # define INIT 0
-# define CURRENT 1
+# define INIT_P 1
+# define CURRENT 2
+# define END 3
 
 //init functions
 # define GET 0
@@ -43,6 +45,8 @@ typedef struct	s_philosopher
 	pthread_t	id;
 	pthread_mutex_t	*fork_mutex;
 	pthread_mutex_t	*eat_mutex;
+	pthread_mutex_t	*ready_mutex;
+	pthread_mutex_t	*print_mutex;
 	int		*simulation;
 	int		fork;
 	int		number;
@@ -61,21 +65,23 @@ int	check_arguments(char *argv[]);
 //args init
 void	args_init(int args[5], char *argv[]);
 
-//current time
-long int	get_time(int mode);
+//get time
+long int	get_time(t_philosopher *p, int mode);
 
 //state change
 int	state_change(long int timestamp, t_philosopher *p, int state);
 
 //init philosopher
 int	*init_simulation(int mode);
+pthread_mutex_t	*init_print_mutex(int mode);
+pthread_mutex_t	*init_ready_mutex(int mode);
 pthread_mutex_t	*init_eat_mutex(int mode);
 t_philosopher	*init_philosophers(int i, int args[5]);
 pthread_mutex_t	*init_fork_mutex(int i, int args[5]);
 t_philosopher	*init_philosopher(int args[5]);
 
 //usleep extend
-void	usleep_extend(long int time);
+int	usleep_extend(long int time);
 
 //atomic read
 int	atomic_read(int *value, pthread_mutex_t *mutex);
@@ -85,6 +91,10 @@ void	free_fork(t_philosopher *p);
 int	can_not_eat(t_philosopher *p);
 
 //simulate
+void	*end_simulation(t_philosopher *p);
 int	simulate(t_philosopher *p, int option);
+
+//wait for
+int	wait_for(t_philosopher *p, long int time);
 
 #endif

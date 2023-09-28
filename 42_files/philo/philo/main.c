@@ -6,40 +6,49 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 19:33:32 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/26 01:26:24 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/29 00:06:33 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+void	synchronize(void)
+{
+
+}
+
 void	*routine(void *data)
 {
-	t_philosopher	*philosopher;
+	t_philosopher	*p;
 
-	philosopher = (t_philosopher *)data;
-	philosopher->prev_eat = get_time(CURRENT);
-	while (philosopher->meals_left != 0 && simulate(philosopher, GET))
+	p = (t_philosopher *)data;
+	synchronize();
+	//usleep_extend(p->quantity - p->number);
+	state_change(get_time(p, CURRENT), p, THINK);
+	p->prev_eat = get_time(p, INIT_P);
+	while (p->meals_left != 0)
 	{
-		state_change(get_time(CURRENT), philosopher, THINK);
-		while (can_not_eat(philosopher))
+		if (can_not_eat(p))
 		{
-			if (!simulate(philosopher, GET) || get_time(CURRENT) - philosopher->prev_eat >= philosopher->die_time)
-			{
-				state_change(get_time(CURRENT), philosopher, DIED);
-				simulate(philosopher, STOP);
-				break ;
-			}
+			if (!simulate(p, GET) || p->prev_eat + p->die_time - get_time(p, CURRENT) < 0)
+				return (end_simulation(p));
 		}
-		if (!simulate(philosopher, GET))
-			break ;
-		state_change(get_time(CURRENT), philosopher, EAT);
-		philosopher->prev_eat = get_time(CURRENT);
-		usleep_extend(philosopher->eat_time);
-		free_fork(philosopher);
-		free_fork(philosopher->next);
-		state_change(get_time(CURRENT), philosopher, SLEEP);
-		usleep_extend(philosopher->sleep_time);
-		philosopher->meals_left--;
+		else
+		{
+			if (!simulate(p, GET))
+				return (NULL);
+			p->prev_eat = get_time(p, CURRENT);
+			state_change(p->prev_eat, p, EAT);
+			if (wait_for(p, p->eat_time))
+				return (NULL);
+			free_fork(p);
+			free_fork(p->next);
+			state_change(get_time(p, CURRENT), p, SLEEP);
+			if (wait_for(p, p->sleep_time))
+				return (NULL);
+			state_change(get_time(p, CURRENT), p, THINK);
+			p->meals_left--;
+		}
 	}
 	return (NULL);
 }
@@ -54,10 +63,19 @@ void	start_philosophy(t_philosopher *philosopher, int args[5])
 	i = 0;
 	state_change(0, NULL, -1);
 	simulate(NULL, GET);
-	get_time(INIT);
+	get_time(p, INIT);
 	while (i < args[0])
 	{
-		if (pthread_create(&p->id, NULL, routine, p))
+		if (p->number % 2 == 0 && pthread_create(&p->id, NULL, routine, p))
+			return ;
+		p = p->next;
+		i++;
+	}
+	p = philosopher;
+	i = 0;
+	while (i < args[0])
+	{
+		if (p->number % 2 != 0 && pthread_create(&p->id, NULL, routine, p))
 			return ;
 		p = p->next;
 		i++;
@@ -70,11 +88,14 @@ void	start_philosophy(t_philosopher *philosopher, int args[5])
 		p = p->next;
 		i++;
 	}
+	get_time(NULL, END);
 }
 
 void	free_init(void)
 {
+	init_print_mutex(FREE);
 	init_eat_mutex(FREE);
+	init_ready_mutex(FREE);
 	init_simulation(FREE);
 	init_philosophers(-1, NULL);
 	init_fork_mutex(-1, NULL);
