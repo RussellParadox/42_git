@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 14:54:39 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/27 21:50:11 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/29 07:06:12 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,26 @@ pthread_mutex_t	*init_fork_mutex(int i, int args[5])
 	return (&mutex[i]);
 }
 
+int	*init_ready(int mode)
+{
+	static int	*ready;
+
+	if (mode == FREE)
+	{
+		if (ready != NULL)
+			free(ready);
+		ready = NULL;
+	}
+	if (ready == NULL)
+	{
+		ready = malloc(sizeof(int));
+		if (ready == NULL)
+			return (NULL);
+		*ready = 0;
+	}
+	return (ready);
+}
+
 t_philosopher	*new_philosopher(int i, int args[5])
 {
 	t_philosopher	*new;
@@ -165,6 +185,9 @@ t_philosopher	*new_philosopher(int i, int args[5])
 		return (NULL);
 	new->print_mutex = init_print_mutex(GET);
 	if (new->print_mutex == NULL)
+		return (NULL);
+	new->ready = init_ready(GET);
+	if (new->ready == NULL)
 		return (NULL);
 	new->fork = 1;
 	new->number = i + 1;

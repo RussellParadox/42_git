@@ -6,25 +6,18 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 19:33:32 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/29 00:06:33 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/09/29 07:19:02 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-void	synchronize(void)
-{
-
-}
 
 void	*routine(void *data)
 {
 	t_philosopher	*p;
 
 	p = (t_philosopher *)data;
-	synchronize();
-	//usleep_extend(p->quantity - p->number);
-	state_change(get_time(p, CURRENT), p, THINK);
+	state_change(0, p, THINK);
 	p->prev_eat = get_time(p, INIT_P);
 	while (p->meals_left != 0)
 	{
@@ -68,6 +61,7 @@ void	start_philosophy(t_philosopher *philosopher, int args[5])
 	{
 		if (p->number % 2 == 0 && pthread_create(&p->id, NULL, routine, p))
 			return ;
+		//usleep(1000);
 		p = p->next;
 		i++;
 	}
@@ -77,6 +71,7 @@ void	start_philosophy(t_philosopher *philosopher, int args[5])
 	{
 		if (p->number % 2 != 0 && pthread_create(&p->id, NULL, routine, p))
 			return ;
+		//usleep(1000);
 		p = p->next;
 		i++;
 	}
@@ -97,6 +92,7 @@ void	free_init(void)
 	init_eat_mutex(FREE);
 	init_ready_mutex(FREE);
 	init_simulation(FREE);
+	init_ready(FREE);
 	init_philosophers(-1, NULL);
 	init_fork_mutex(-1, NULL);
 }
