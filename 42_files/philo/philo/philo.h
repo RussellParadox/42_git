@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 19:33:47 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/29 07:06:46 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/10/01 04:24:35 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,10 @@ typedef struct	s_philosopher
 	int		eat_time;
 	int		sleep_time;
 	int		meals_left;
+	int		fl_alternate;
+	int		alternate;
 	long int	prev_eat;
+	long int	time_start;
 	struct s_philosopher	*next;
 }	t_philosopher;
 

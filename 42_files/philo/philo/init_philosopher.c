@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 14:54:39 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/29 07:06:12 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/10/01 04:25:59 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,6 +196,14 @@ t_philosopher	*new_philosopher(int i, int args[5])
 	new->eat_time = args[2];
 	new->sleep_time = args[3];
 	new->meals_left = args[4];
+	if (new->number % 2)
+		new->alternate = 1;
+	else
+		new->alternate = 0;
+	if (new->number == args[0])
+		new->fl_alternate = 1;
+	else
+		new->fl_alternate = 0;
 	return (new);
 }
 

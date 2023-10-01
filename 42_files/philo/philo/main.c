@@ -6,28 +6,38 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 19:33:32 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/29 07:19:02 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/10/01 04:49:12 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+long int	delay;
+
 void	*routine(void *data)
 {
 	t_philosopher	*p;
+	struct timeval	time;
+	int		essais;
 
+	gettimeofday(&time, NULL);
+	printf("delay in thread: %ld micro-seconds\n", time.tv_sec * 1000000 + time.tv_usec - delay);
 	p = (t_philosopher *)data;
-	state_change(0, p, THINK);
 	p->prev_eat = get_time(p, INIT_P);
+	state_change(get_time(p, CURRENT), p, THINK);
+	essais = 0;
 	while (p->meals_left != 0)
 	{
 		if (can_not_eat(p))
 		{
 			if (!simulate(p, GET) || p->prev_eat + p->die_time - get_time(p, CURRENT) < 0)
 				return (end_simulation(p));
+			//wait_for(p, p->eat_time);
 		}
 		else
 		{
+			printf("%d essais avant de pouvoir manger: %d\n", p->number, essais);
+			essais = 0;
 			if (!simulate(p, GET))
 				return (NULL);
 			p->prev_eat = get_time(p, CURRENT);
@@ -42,6 +52,7 @@ void	*routine(void *data)
 			state_change(get_time(p, CURRENT), p, THINK);
 			p->meals_left--;
 		}
+		essais++;
 	}
 	return (NULL);
 }
@@ -49,6 +60,7 @@ void	*routine(void *data)
 void	start_philosophy(t_philosopher *philosopher, int args[5])
 {
 	t_philosopher	*p;
+	struct timeval	time;
 	int	i;
 
 	state_change(-1, 0, 0);
@@ -56,24 +68,15 @@ void	start_philosophy(t_philosopher *philosopher, int args[5])
 	i = 0;
 	state_change(0, NULL, -1);
 	simulate(NULL, GET);
-	get_time(p, INIT);
+	gettimeofday(&time, NULL);
+	delay = time.tv_sec * 1000000 + time.tv_usec;
 	while (i < args[0])
 	{
-		if (p->number % 2 == 0 && pthread_create(&p->id, NULL, routine, p))
+		if (pthread_create(&p->id, NULL, routine, p))
 			return ;
-		//usleep(1000);
-		p = p->next;
+		//usleep(10);
 		i++;
-	}
-	p = philosopher;
-	i = 0;
-	while (i < args[0])
-	{
-		if (p->number % 2 != 0 && pthread_create(&p->id, NULL, routine, p))
-			return ;
-		//usleep(1000);
 		p = p->next;
-		i++;
 	}
 	p = philosopher;
 	i = 0;
@@ -83,7 +86,6 @@ void	start_philosophy(t_philosopher *philosopher, int args[5])
 		p = p->next;
 		i++;
 	}
-	get_time(NULL, END);
 }
 
 void	free_init(void)

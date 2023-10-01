@@ -6,38 +6,24 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 04:29:33 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/25 11:54:20 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/10/01 02:40:39 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+#define WAIT_TIME 10000
 
-int	*static_malloc_test(void)
+int	main()
 {
-	int	*all;
+	struct timeval	time;
+	long int	delay;
 
-	all = malloc(sizeof(int) * 10000000);
-	return (all);
-}
-
-void	*work(void *data)
-{
-	t_philosopher	*p;
-
-	p = data;
-	printf("thread %ld\n", pthread_self());
-	if (p->number == 1)
-		p->next->fork = 0;
-	else
-		printf("thread 2: p->fork: %d\n", p->fork);
-}
-
-int	main(int argc, char *argv[])
-{
-	t_philosopher	*p;
-	int		*test;
-	int		args[5];
-
-	//test = malloc(sizeof(int));
-	test = static_malloc_test();
+	gettimeofday(&time, NULL);
+	delay = time.tv_sec * 1000000 + time.tv_usec;
+	//usleep(WAIT_TIME);
+	usleep_extend(WAIT_TIME);
+	gettimeofday(&time, NULL);
+	delay = time.tv_sec * 1000000 + time.tv_usec - delay;
+	printf("delay: %ld micro-seconds\n", delay);
+	printf("error: %ld micro-seconds\n", delay - WAIT_TIME * 1000);
 }

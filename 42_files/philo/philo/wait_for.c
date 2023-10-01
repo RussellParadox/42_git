@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 22:06:38 by gdornic           #+#    #+#             */
-/*   Updated: 2023/09/29 00:02:30 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/10/01 02:43:15 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ int	wait_for(t_philosopher *p, long int time)
 	time_delta = p->prev_eat + p->die_time - get_time(p, CURRENT) - time;
 	if (time_delta < 0)
 	{
-		usleep_extend(time_delta + time);
+		usleep((time_delta + time) * 1000);
 		end_simulation(p);
 		return (1);
 	}
-	return (usleep_extend(time));
+	return (usleep(time * 1000));
 }

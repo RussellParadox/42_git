@@ -6,7 +6,7 @@
 #    By: gdornic <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 21:58:09 by gdornic           #+#    #+#              #
-#    Updated: 2023/09/29 07:20:35 by gdornic          ###   ########.fr        #
+#    Updated: 2023/10/01 02:43:54 by gdornic          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ OBJ = $(SRC:.c=.o)
 
 CC = gcc
 
-CFLAGS = -pthread -Wall -Werror -Wextra #-fsanitize=thread -g
+CFLAGS = -pthread -Wall -Werror -Wextra -fsanitize=thread -g
 
 define make_dep
 	for d in $(DEP) ; do \

@@ -1,0 +1,324 @@
+0 1 is thinking
+0 2 is thinking
+2 essais avant de pouvoir manger: 0
+0 2 is eating
+0 3 is thinking
+0 4 is thinking
+4 essais avant de pouvoir manger: 0
+0 4 is eating
+200 2 is sleeping
+200 4 is sleeping
+3 essais avant de pouvoir manger: 185
+203 3 is eating
+1 essais avant de pouvoir manger: 187
+206 1 is eating
+400 2 is thinking
+400 4 is thinking
+403 3 is sleeping
+406 1 is sleeping
+2 essais avant de pouvoir manger: 4
+405 2 is eating
+4 essais avant de pouvoir manger: 2
+403 4 is eating
+604 3 is thinking
+607 1 is thinking
+605 2 is sleeping
+603 4 is sleeping
+3 essais avant de pouvoir manger: 2
+606 3 is eating
+1 essais avant de pouvoir manger: 2
+609 1 is eating
+805 2 is thinking
+803 4 is thinking
+806 3 is sleeping
+809 1 is sleeping
+2 essais avant de pouvoir manger: 2
+807 2 is eating
+4 essais avant de pouvoir manger: 2
+805 4 is eating
+1006 3 is thinking
+1009 1 is thinking
+1007 2 is sleeping
+1005 4 is sleeping
+3 essais avant de pouvoir manger: 2
+1008 3 is eating
+1 essais avant de pouvoir manger: 2
+1011 1 is eating
+1207 2 is thinking
+1205 4 is thinking
+1211 1 is sleeping
+1208 3 is sleeping
+2 essais avant de pouvoir manger: 2
+1209 2 is eating
+4 essais avant de pouvoir manger: 2
+1208 4 is eating
+1408 3 is thinking
+1412 1 is thinking
+1410 2 is sleeping
+1408 4 is sleeping
+3 essais avant de pouvoir manger: 2
+1411 3 is eating
+1 essais avant de pouvoir manger: 2
+1414 1 is eating
+1610 2 is thinking
+1608 4 is thinking
+1611 3 is sleeping
+1614 1 is sleeping
+2 essais avant de pouvoir manger: 2
+1612 2 is eating
+4 essais avant de pouvoir manger: 2
+1610 4 is eating
+1811 3 is thinking
+1814 1 is thinking
+1812 2 is sleeping
+1810 4 is sleeping
+3 essais avant de pouvoir manger: 2
+1813 3 is eating
+1 essais avant de pouvoir manger: 2
+1816 1 is eating
+2012 2 is thinking
+2010 4 is thinking
+2013 3 is sleeping
+2016 1 is sleeping
+4 essais avant de pouvoir manger: 2
+2013 4 is eating
+2 essais avant de pouvoir manger: 4
+2016 2 is eating
+2213 3 is thinking
+2217 1 is thinking
+2213 4 is sleeping
+2217 2 is sleeping
+1 essais avant de pouvoir manger: 2
+2219 1 is eating
+3 essais avant de pouvoir manger: 4
+2218 3 is eating
+2413 4 is thinking
+2417 2 is thinking
+2419 1 is sleeping
+2418 3 is sleeping
+2 essais avant de pouvoir manger: 2
+2419 2 is eating
+4 essais avant de pouvoir manger: 4
+2417 4 is eating
+2619 1 is thinking
+2618 3 is thinking
+2619 2 is sleeping
+2617 4 is sleeping
+3 essais avant de pouvoir manger: 2
+2620 3 is eating
+1 essais avant de pouvoir manger: 4
+2623 1 is eating
+2819 2 is thinking
+2817 4 is thinking
+2820 3 is sleeping
+2823 1 is sleeping
+4 essais avant de pouvoir manger: 2
+2820 4 is eating
+2 essais avant de pouvoir manger: 4
+2824 2 is eating
+3020 3 is thinking
+3024 1 is thinking
+3020 4 is sleeping
+3024 2 is sleeping
+1 essais avant de pouvoir manger: 2
+3026 1 is eating
+3 essais avant de pouvoir manger: 4
+3025 3 is eating
+3220 4 is thinking
+3224 2 is thinking
+3226 1 is sleeping
+3225 3 is sleeping
+2 essais avant de pouvoir manger: 2
+3226 2 is eating
+4 essais avant de pouvoir manger: 4
+3224 4 is eating
+3426 1 is thinking
+3425 3 is thinking
+3426 2 is sleeping
+3424 4 is sleeping
+3 essais avant de pouvoir manger: 2
+3427 3 is eating
+1 essais avant de pouvoir manger: 4
+3430 1 is eating
+3626 2 is thinking
+3624 4 is thinking
+3627 3 is sleeping
+3630 1 is sleeping
+4 essais avant de pouvoir manger: 2
+3627 4 is eating
+2 essais avant de pouvoir manger: 4
+3631 2 is eating
+3828 3 is thinking
+3831 1 is thinking
+3827 4 is sleeping
+3831 2 is sleeping
+1 essais avant de pouvoir manger: 2
+3833 1 is eating
+3 essais avant de pouvoir manger: 4
+3832 3 is eating
+4027 4 is thinking
+4031 2 is thinking
+4033 1 is sleeping
+4032 3 is sleeping
+2 essais avant de pouvoir manger: 2
+4033 2 is eating
+4 essais avant de pouvoir manger: 4
+4031 4 is eating
+4233 1 is thinking
+4232 3 is thinking
+4233 2 is sleeping
+4232 4 is sleeping
+1 essais avant de pouvoir manger: 4
+4237 1 is eating
+3 essais avant de pouvoir manger: 2
+4234 3 is eating
+4433 2 is thinking
+4432 4 is thinking
+4438 1 is sleeping
+4435 3 is sleeping
+2 essais avant de pouvoir manger: 2
+4436 2 is eating
+4 essais avant de pouvoir manger: 2
+4434 4 is eating
+4635 3 is thinking
+4638 1 is thinking
+4636 2 is sleeping
+4634 4 is sleeping
+3 essais avant de pouvoir manger: 2
+4637 3 is eating
+1 essais avant de pouvoir manger: 2
+4640 1 is eating
+4836 2 is thinking
+4834 4 is thinking
+4837 3 is sleeping
+4840 1 is sleeping
+4 essais avant de pouvoir manger: 2
+4836 4 is eating
+2 essais avant de pouvoir manger: 4
+4840 2 is eating
+5037 3 is thinking
+5040 1 is thinking
+5036 4 is sleeping
+5040 2 is sleeping
+3 essais avant de pouvoir manger: 2
+5039 3 is eating
+1 essais avant de pouvoir manger: 2
+5042 1 is eating
+5237 4 is thinking
+5240 2 is thinking
+5239 3 is sleeping
+5242 1 is sleeping
+4 essais avant de pouvoir manger: 2
+5239 4 is eating
+2 essais avant de pouvoir manger: 2
+5243 2 is eating
+5440 3 is thinking
+5443 1 is thinking
+5439 4 is sleeping
+5443 2 is sleeping
+3 essais avant de pouvoir manger: 2
+1 essais avant de pouvoir manger: 2
+5442 3 is eating
+5445 1 is eating
+5639 4 is thinking
+5643 2 is thinking
+5645 1 is sleeping
+5642 3 is sleeping
+4 essais avant de pouvoir manger: 2
+5641 4 is eating
+2 essais avant de pouvoir manger: 2
+5645 2 is eating
+5845 1 is thinking
+5842 3 is thinking
+5841 4 is sleeping
+5845 2 is sleeping
+1 essais avant de pouvoir manger: 2
+5847 1 is eating
+3 essais avant de pouvoir manger: 2
+5844 3 is eating
+6041 4 is thinking
+6045 2 is thinking
+6047 1 is sleeping
+6044 3 is sleeping
+4 essais avant de pouvoir manger: 2
+6044 4 is eating
+2 essais avant de pouvoir manger: 2
+6047 2 is eating
+6247 1 is thinking
+6245 3 is thinking
+6244 4 is sleeping
+6248 2 is sleeping
+1 essais avant de pouvoir manger: 2
+6250 1 is eating
+3 essais avant de pouvoir manger: 2
+6247 3 is eating
+6444 4 is thinking
+6448 2 is thinking
+6450 1 is sleeping
+6447 3 is sleeping
+4 essais avant de pouvoir manger: 2
+6446 4 is eating
+2 essais avant de pouvoir manger: 2
+6450 2 is eating
+6650 1 is thinking
+6647 3 is thinking
+6646 4 is sleeping
+6650 2 is sleeping
+1 essais avant de pouvoir manger: 2
+6652 1 is eating
+3 essais avant de pouvoir manger: 2
+6649 3 is eating
+6847 4 is thinking
+6850 2 is thinking
+6852 1 is sleeping
+6849 3 is sleeping
+4 essais avant de pouvoir manger: 2
+6849 4 is eating
+2 essais avant de pouvoir manger: 2
+6852 2 is eating
+7052 1 is thinking
+7050 3 is thinking
+7049 4 is sleeping
+7053 2 is sleeping
+1 essais avant de pouvoir manger: 2
+7055 1 is eating
+3 essais avant de pouvoir manger: 2
+7052 3 is eating
+7249 4 is thinking
+7253 2 is thinking
+7255 1 is sleeping
+7252 3 is sleeping
+4 essais avant de pouvoir manger: 2
+7251 4 is eating
+2 essais avant de pouvoir manger: 2
+7255 2 is eating
+7455 1 is thinking
+7452 3 is thinking
+7451 4 is sleeping
+7455 2 is sleeping
+1 essais avant de pouvoir manger: 2
+7457 1 is eating
+3 essais avant de pouvoir manger: 2
+7454 3 is eating
+7652 4 is thinking
+7655 2 is thinking
+7657 1 is sleeping
+7654 3 is sleeping
+4 essais avant de pouvoir manger: 2
+7654 4 is eating
+2 essais avant de pouvoir manger: 2
+7657 2 is eating
+7855 3 is thinking
+7858 1 is thinking
+7854 4 is sleeping
+7858 2 is sleeping
+3 essais avant de pouvoir manger: 2
+7857 3 is eating
+1 essais avant de pouvoir manger: 2
+7860 1 is eating
+8054 4 is thinking
+8058 2 is thinking
+8057 3 is sleeping
+8060 1 is sleeping
+8257 3 is thinking
+8260 1 is thinking
