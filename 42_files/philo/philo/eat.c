@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 16:00:51 by gdornic           #+#    #+#             */
-/*   Updated: 2023/10/01 04:40:42 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/10/02 07:14:10 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,25 +27,21 @@ int	can_not_eat(t_philosopher *p)
 
 	if (p->quantity == 1)
 		return (1);
-	if (p->alternate)
+	/*
+	if (p->quantity % 2 && (p->number == 1 || p->number == p->quantity))
 	{
-		if (p->quantity % 2 && (p->number == 1 || p->number == p->quantity))
+		if (p->fl_alternate)
 		{
-			if (p->fl_alternate)
-			{
-				p->fl_alternate = 0;
-				usleep(1000);
-				return (1);
-			}
-			else
-				p->fl_alternate = 1;
+			p->fl_alternate = 0;
+			wait_for(p, 10);
+			return (1);
 		}
-		p->alternate = 0;
-		usleep(1000);
-		return (1);
+		else
+			p->fl_alternate = 1;
 	}
-	else
-		p->alternate = 1;
+	*/
+	//else
+	//	p->alternate = 1;
 	res = 1;
 	while (res)
 	{
@@ -81,6 +77,7 @@ int	can_not_eat(t_philosopher *p)
 			}
 			pthread_mutex_unlock(p->next->fork_mutex);
 		}
+		usleep(10);
 	}
 	return (res);
 }

@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 14:54:39 by gdornic           #+#    #+#             */
-/*   Updated: 2023/10/01 04:25:59 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/10/02 05:51:29 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,26 +76,26 @@ pthread_mutex_t	*init_ready_mutex(int mode)
 	return (ready_mutex);
 }
 
-pthread_mutex_t	*init_eat_mutex(int mode)
+pthread_mutex_t	*init_hold_mutex(int mode)
 {
-	static pthread_mutex_t	*eat_mutex;
+	static pthread_mutex_t	*hold_mutex;
 
-	if (mode == FREE && eat_mutex != NULL)
+	if (mode == FREE && hold_mutex != NULL)
 	{
-		free(eat_mutex);
-		eat_mutex = NULL;
+		free(hold_mutex);
+		hold_mutex = NULL;
 		return (NULL);
 	}
-	if (eat_mutex == NULL)
+	if (hold_mutex == NULL)
 	{
-		eat_mutex = malloc(sizeof(pthread_mutex_t));
-		if (eat_mutex == NULL)
+		hold_mutex = malloc(sizeof(pthread_mutex_t));
+		if (hold_mutex == NULL)
 			return (NULL);
-		if (pthread_mutex_init(eat_mutex, NULL))
+		if (pthread_mutex_init(hold_mutex, NULL))
 			return (NULL);
-		return (eat_mutex);
+		return (hold_mutex);
 	}
-	return (eat_mutex);
+	return (hold_mutex);
 }
 
 t_philosopher	*init_philosophers(int i, int args[5])
@@ -174,8 +174,8 @@ t_philosopher	*new_philosopher(int i, int args[5])
 	new->fork_mutex = init_fork_mutex(i, args);
 	if (new->fork_mutex == NULL)
 		return (NULL);
-	new->eat_mutex = init_eat_mutex(GET);
-	if (new->eat_mutex == NULL)
+	new->hold_mutex = init_hold_mutex(GET);
+	if (new->hold_mutex == NULL)
 		return (NULL);
 	new->simulation = init_simulation(GET);
 	if (new->simulation == NULL)

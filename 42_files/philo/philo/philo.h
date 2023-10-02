@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 19:33:47 by gdornic           #+#    #+#             */
-/*   Updated: 2023/10/01 04:24:35 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/10/02 05:53:21 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ typedef struct	s_philosopher
 {
 	pthread_t	id;
 	pthread_mutex_t	*fork_mutex;
-	pthread_mutex_t	*eat_mutex;
+	pthread_mutex_t	*hold_mutex;
 	pthread_mutex_t	*ready_mutex;
 	pthread_mutex_t	*print_mutex;
 	int		*simulation;
@@ -70,6 +70,7 @@ typedef struct	s_philosopher
 int	check_arguments(char *argv[]);
 
 //args init
+int	ft_atoi(const char *nptr);
 void	args_init(int args[5], char *argv[]);
 
 //get time
@@ -83,7 +84,7 @@ int	*init_ready(int mode);
 int	*init_simulation(int mode);
 pthread_mutex_t	*init_print_mutex(int mode);
 pthread_mutex_t	*init_ready_mutex(int mode);
-pthread_mutex_t	*init_eat_mutex(int mode);
+pthread_mutex_t	*init_hold_mutex(int mode);
 t_philosopher	*init_philosophers(int i, int args[5]);
 pthread_mutex_t	*init_fork_mutex(int i, int args[5]);
 t_philosopher	*init_philosopher(int args[5]);
@@ -104,5 +105,8 @@ int	simulate(t_philosopher *p, int option);
 
 //wait for
 int	wait_for(t_philosopher *p, long int time);
+
+//hold philo
+void	hold_philo(t_philosopher *p);
 
 #endif
