@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 16:00:51 by gdornic           #+#    #+#             */
-/*   Updated: 2023/10/02 07:14:10 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/10/03 01:11:49 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	can_not_eat(t_philosopher *p)
 	//else
 	//	p->alternate = 1;
 	res = 1;
-	while (res)
+	while (simulate(p, GET) && res)
 	{
 		if (p->number % 2 == 0)
 		{
