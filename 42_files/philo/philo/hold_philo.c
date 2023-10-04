@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 05:35:07 by gdornic           #+#    #+#             */
-/*   Updated: 2023/10/02 05:50:32 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/10/04 15:00:46 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	hold_philo(t_philosopher *p)
 {
 	if (p->number == p->quantity)
 	{
+		get_time(p, INIT);
 		pthread_mutex_lock(p->ready_mutex);
 		*p->ready = 1;
 		pthread_mutex_unlock(p->ready_mutex);

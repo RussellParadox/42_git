@@ -6,11 +6,22 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 19:33:32 by gdornic           #+#    #+#             */
-/*   Updated: 2023/10/03 01:45:14 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/10/04 19:24:52 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int	eat(t_philosopher *p)
+{
+	p->prev_eat = get_time(p, CURRENT);
+	state_change(p->prev_eat, p, EAT);
+	if (wait_for(p, p->eat_time))
+		return (1);
+	free_fork(p);
+	free_fork(p->next);
+	return (0);
+}
 
 void	*routine(void *data)
 {
@@ -23,20 +34,11 @@ void	*routine(void *data)
 	while (p->meals_left != 0)
 	{
 		if (can_not_eat(p))
-		{
-			if (!simulate(p, GET) || p->prev_eat + p->die_time - get_time(p, CURRENT) < 0)
-				return (end_simulation(p));
-		}
+			return (NULL);
 		else
 		{
-			if (!simulate(p, GET))
+			if (eat(p))
 				return (NULL);
-			p->prev_eat = get_time(p, CURRENT);
-			state_change(p->prev_eat, p, EAT);
-			if (wait_for(p, p->eat_time))
-				return (NULL);
-			free_fork(p);
-			free_fork(p->next);
 			state_change(get_time(p, CURRENT), p, SLEEP);
 			if (wait_for(p, p->sleep_time))
 				return (NULL);
@@ -50,13 +52,11 @@ void	*routine(void *data)
 void	start_philosophy(t_philosopher *philosopher, int args[5])
 {
 	t_philosopher	*p;
-	int	i;
+	int				i;
 
 	state_change(-1, 0, 0);
 	p = philosopher;
 	i = 0;
-	state_change(0, NULL, -1);
-	simulate(NULL, GET);
 	while (i < args[0])
 	{
 		if (pthread_create(&p->id, NULL, routine, p))
@@ -75,17 +75,6 @@ void	start_philosophy(t_philosopher *philosopher, int args[5])
 	}
 }
 
-void	free_init(void)
-{
-	init_print_mutex(FREE);
-	init_hold_mutex(FREE);
-	init_ready_mutex(FREE);
-	init_simulation(FREE);
-	init_ready(FREE);
-	init_philosophers(-1, NULL);
-	init_fork_mutex(-1, NULL);
-}
-
 //args: 0: number of philosophers
 //      1: time to die
 //      2: time to eat
@@ -94,7 +83,7 @@ void	free_init(void)
 int	main(int argc, char *argv[])
 {
 	t_philosopher	*philosopher;
-	int			args[5];
+	int				args[5];
 
 	if (argc < 5 || argc > 6)
 	{

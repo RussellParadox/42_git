@@ -6,7 +6,7 @@
 #    By: gdornic <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 21:58:09 by gdornic           #+#    #+#              #
-#    Updated: 2023/10/03 01:43:18 by gdornic          ###   ########.fr        #
+#    Updated: 2023/10/04 19:12:30 by gdornic          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,11 +18,11 @@ HEADERS =
 
 LIB_LINK = 
 
-SRC = main.c check_arguments.c args_init.c get_time.c state_change.c init_philosopher.c usleep_extend.c eat.c simulate.c wait_for.c hold_philo.c
+SRC = main.c check_arguments.c args_init.c get_time.c state_change.c init_philosopher.c usleep_extend.c eat.c simulate.c wait_for.c hold_philo.c init_mutex.c init_shared_memory.c free_init.c
 
 OBJ = $(SRC:.c=.o)
 
-SRC_TEST = main_test.c check_arguments.c args_init.c get_time.c state_change.c init_philosopher.c usleep_extend.c eat.c simulate.c wait_for.c
+SRC_TEST = main_test.c check_arguments.c args_init.c get_time.c state_change.c init_philosopher.c usleep_extend.c eat.c simulate.c wait_for.c hold_philo.c init_mutex.c init_shared_memory.c free_init.c
 
 OBJ_TEST = $(SRC_TEST:.c=.o)
 

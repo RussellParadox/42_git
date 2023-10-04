@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 16:00:51 by gdornic           #+#    #+#             */
-/*   Updated: 2023/10/03 01:11:49 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/10/04 18:28:51 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,94 +21,44 @@ void	free_fork(t_philosopher *p)
 	pthread_mutex_unlock(p->fork_mutex);
 }
 
+int	take_forks(pthread_mutex_t *fork_m1, pthread_mutex_t *fork_m2, \
+		int *fork1, int *fork2)
+{
+	int	res;
+
+	res = 1;
+	pthread_mutex_lock(fork_m1);
+	if (*fork1)
+	{
+		pthread_mutex_lock(fork_m2);
+		if (*fork2)
+		{
+			*fork1 = 0;
+			*fork2 = 0;
+			res = 0;
+		}
+		pthread_mutex_unlock(fork_m2);
+	}
+	pthread_mutex_unlock(fork_m1);
+	return (res);
+}
+
 int	can_not_eat(t_philosopher *p)
 {
 	int	res;
 
 	if (p->quantity == 1)
 		return (1);
-	/*
-	if (p->quantity % 2 && (p->number == 1 || p->number == p->quantity))
-	{
-		if (p->fl_alternate)
-		{
-			p->fl_alternate = 0;
-			wait_for(p, 10);
-			return (1);
-		}
-		else
-			p->fl_alternate = 1;
-	}
-	*/
-	//else
-	//	p->alternate = 1;
 	res = 1;
 	while (simulate(p, GET) && res)
 	{
 		if (p->number % 2 == 0)
-		{
-			pthread_mutex_lock(p->fork_mutex);
-			if (p->fork)
-			{
-				pthread_mutex_lock(p->next->fork_mutex);
-				if (p->next->fork)
-				{
-					p->fork = 0;
-					p->next->fork = 0;
-					res = 0;
-				}
-				pthread_mutex_unlock(p->next->fork_mutex);
-			}
-			pthread_mutex_unlock(p->fork_mutex);
-		}
+			res = take_forks(p->fork_mutex, p->next->fork_mutex, \
+				&p->fork, &p->next->fork);
 		else
-		{
-			pthread_mutex_lock(p->next->fork_mutex);
-			if (p->next->fork)
-			{
-				pthread_mutex_lock(p->fork_mutex);
-				if (p->fork)
-				{
-					p->fork = 0;
-					p->next->fork = 0;
-					res = 0;
-				}
-				pthread_mutex_unlock(p->fork_mutex);
-			}
-			pthread_mutex_unlock(p->next->fork_mutex);
-		}
+			res = take_forks(p->next->fork_mutex, p->fork_mutex, \
+				&p->next->fork, &p->fork);
 		usleep(10);
 	}
 	return (res);
 }
-
-/*
-int	can_not_eat(t_philosopher *p)
-{
-	int	res;
-
-	if (p == NULL)
-		return (1);
-	pthread_mutex_lock(p->fork_mutex);
-	if (p->fork)
-	{
-		p->fork = 0;
-		res = 0;
-	}
-	else
-		res = 1;
-	pthread_mutex_unlock(p->fork_mutex);
-	if (!res)
-	{
-		pthread_mutex_lock(p->next->fork_mutex);
-		if (p->next->fork)
-			p->next->fork = 0;
-		else
-			res = 2;
-		pthread_mutex_unlock(p->next->fork_mutex);
-	}
-	if (res == 2)
-		free_fork(p);
-	return (res);
-}
-*/

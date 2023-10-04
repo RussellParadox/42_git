@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 07:11:01 by gdornic           #+#    #+#             */
-/*   Updated: 2023/10/03 01:45:13 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/10/04 15:18:54 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	state_change(long int timestamp, t_philosopher *p, int state)
 	if (!simulate(p, GET))
 	{
 		pthread_mutex_unlock(p->print_mutex);
-		return (1);
+		return (0);
 	}
 	if (state == FORK)
 		printf("%ld %d has taken a fork\n", timestamp, number);

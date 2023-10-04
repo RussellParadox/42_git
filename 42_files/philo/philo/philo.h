@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 19:33:47 by gdornic           #+#    #+#             */
-/*   Updated: 2023/10/02 05:53:21 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/10/04 19:12:16 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct	s_philosopher
 	pthread_mutex_t	*hold_mutex;
 	pthread_mutex_t	*ready_mutex;
 	pthread_mutex_t	*print_mutex;
+	pthread_mutex_t	*simulation_mutex;
 	int		*simulation;
 	int		*ready;
 	int		fork;
@@ -80,14 +81,22 @@ long int	get_time(t_philosopher *p, int mode);
 int	state_change(long int timestamp, t_philosopher *p, int state);
 
 //init philosopher
-int	*init_ready(int mode);
-int	*init_simulation(int mode);
+t_philosopher	*init_philosophers(int i, int args[5]);
+t_philosopher	*init_philosopher(int args[5]);
+
+//init mutex
+pthread_mutex_t	*init_simulation_mutex(int mode);
 pthread_mutex_t	*init_print_mutex(int mode);
 pthread_mutex_t	*init_ready_mutex(int mode);
 pthread_mutex_t	*init_hold_mutex(int mode);
-t_philosopher	*init_philosophers(int i, int args[5]);
 pthread_mutex_t	*init_fork_mutex(int i, int args[5]);
-t_philosopher	*init_philosopher(int args[5]);
+
+//free init
+void	free_init(void);
+
+//init shared memory
+int	*init_ready(int mode);
+int	*init_simulation(int mode);
 
 //usleep extend
 int	usleep_extend(long int time);
