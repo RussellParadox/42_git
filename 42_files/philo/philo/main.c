@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 19:33:32 by gdornic           #+#    #+#             */
-/*   Updated: 2023/10/04 19:24:52 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/10/05 10:02:18 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	*routine(void *data)
 	while (p->meals_left != 0)
 	{
 		if (can_not_eat(p))
-			return (NULL);
+			return (end_simulation(p));
 		else
 		{
 			if (eat(p))
