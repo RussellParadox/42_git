@@ -1,33 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_time.c                                         :+:      :+:    :+:   */
+/*   state_change.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/20 08:14:33 by gdornic           #+#    #+#             */
-/*   Updated: 2023/10/11 17:14:10 by gdornic          ###   ########.fr       */
+/*   Created: 2023/10/11 18:00:49 by gdornic           #+#    #+#             */
+/*   Updated: 2023/10/11 18:02:16 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-double	time_in_ms(struct timeval time)
+void	state_change(int message, int nb, long int time)
 {
-	return (time.tv_sec * 1000. + time.tv_usec / 1000.);
-}
-
-long int	get_time(int mode)
-{
-	static long int		time_start;
-	struct timeval		time;
-
-	if (gettimeofday(&time, NULL))
-	{
-		printf("Gettimeofday malfunction.\n");
-		return (-1);
-	}
-	if (mode == INIT)
-		time_start = time_in_ms(time);
-	return (time_in_ms(time) - time_start);
+	sem_t	*
 }
