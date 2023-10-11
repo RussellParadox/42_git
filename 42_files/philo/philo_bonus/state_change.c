@@ -6,13 +6,13 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 18:00:49 by gdornic           #+#    #+#             */
-/*   Updated: 2023/10/11 18:02:16 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/10/11 19:08:03 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-void	state_change(int message, int nb, long int time)
+void	state_change(int state, int nb, long int time)
 {
 	sem_t	*
 }

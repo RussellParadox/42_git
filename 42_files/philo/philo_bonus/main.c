@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 19:33:32 by gdornic           #+#    #+#             */
-/*   Updated: 2023/10/11 18:14:57 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/10/11 20:03:18 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,10 @@
 
 void	*watchtower(void *data)
 {
-	long int	prev_eat;
 	sem_t		*time_sem;
 
 	time_sem = (sem_t *)data;
-	prev_eat = get_time(INIT);
+	synchronize_timer(args);
 	while (1)
 	{
 		//watch eat time
@@ -27,17 +26,16 @@ void	*watchtower(void *data)
 
 void	routine(int args[5], int nb)
 {
-	sem_t	*forks_sem;
-	sem_t	*time_sem;
-	pthread_t	watch_tid;
+	t_watcher	*watcher;
+	sem_t		*forks_sem;
 
 	forks_sem = sem_open("/forks", O_CREAT, S_IRWXU, args[0]);
 	if (forks_sem == SEM_FAILED)
 		exit(1);
-	time_sem = sem_open("/time", O_CREAT, S_IRWXU, 1);
-	if (time_sem == SEM_FAILED)
+	watcher = init_watcher(args[1], nb);
+	if (watcher == NULL)
 		exit(1);
-	pthread_create(&watch_tid, NULL, watchtower, time_sem);
+	pthread_create(&watcher->tid, NULL, watchtower, watcher);
 	while (args[4] != 0)
 	{
 		sem_wait(forks_sem);
@@ -45,8 +43,7 @@ void	routine(int args[5], int nb)
 		sem_wait(forks_sem);
 		state_change(FORK, nb, get_time(CURRENT);
 		state_change(EAT, nb, get_time(CURRENT);
-		sem_wait(time_sem);
-		prev_eat 
+		contact_watcher(watcher);
 	}
 	pthread_join(watch_tid, NULL);
 	sem_close(forks_sem);
