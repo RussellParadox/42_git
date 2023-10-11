@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 19:33:32 by gdornic           #+#    #+#             */
-/*   Updated: 2023/10/05 10:02:18 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/10/11 01:17:50 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ void	*routine(void *data)
 			if (wait_for(p, p->sleep_time))
 				return (NULL);
 			state_change(get_time(p, CURRENT), p, THINK);
-			p->meals_left--;
+			if (p->meals_left != -1)
+				p->meals_left--;
 		}
 	}
 	return (NULL);

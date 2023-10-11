@@ -6,31 +6,25 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 12:22:46 by gdornic           #+#    #+#             */
-/*   Updated: 2023/10/05 12:31:38 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/10/11 02:05:01 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-void	child_routine(void)
+void	*child_routine(void *data)
 {
-	while (1)
-	{
-		printf("coucou\n");
-		usleep(100000);
-	}
-	exit(0);
+	usleep(1000000);
+	printf("%ld\n",  get_time(CURRENT));
 }
 
 int	main(void)
 {
-	pid_t	pid;
+	pthread_t	tid;
 
-	pid = fork();
-	if (pid < 0)
-		return (1);
-	if (pid == 0)
-		child_routine();
+	printf("%ld\n", get_time(INIT));
 	usleep(1000000);
-	printf("kill return: %d\n", kill(pid, SIGKILL));
+	printf("%ld\n",  get_time(CURRENT));
+	pthread_create(&tid, NULL, child_routine, NULL);
+	pthread_join(tid, NULL);
 }
