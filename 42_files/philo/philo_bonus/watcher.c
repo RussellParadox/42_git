@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 19:09:44 by gdornic           #+#    #+#             */
-/*   Updated: 2023/10/11 21:01:19 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/10/11 22:42:55 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,37 @@ void	init_name(char name[250], int nb)
 		name[i] = nb % 10 + '0';
 		nb /= 10;
 		i++;
+	}
+}
+
+void	*watchtower(void *data)
+{
+	t_watcher	*watcher;
+	long int	delay;
+
+	watcher = (t_watcher *)data;
+	delay = 0;
+	while (1)
+	{
+		if (delay > watcher->threshold)
+		{
+			free(watcher);
+			exit(0);
+		}
+		sem_wait(watcher->sem);
+		if (watcher->signal == 1)
+		{
+			delay = 0;
+			watcher->signal = 0;
+		}
+		if (watcher->signal == 2)
+		{
+			sem_post(watcher->sem);
+			break ;
+		}
+		sem_post(watcher->sem);
+		usleep(1000);
+		delay += 1;
 	}
 }
 

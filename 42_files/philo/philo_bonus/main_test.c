@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 12:22:46 by gdornic           #+#    #+#             */
-/*   Updated: 2023/10/11 21:00:57 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/10/11 22:19:49 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,31 @@ void	*child_routine(void *data)
 	sem_wait(watcher->sem);
 	printf("%ld\n", get_time(INIT));
 	sem_post(watcher->sem);
+	exit(0);
+}
+
+void	test_routine(void)
+{
+	while (1)
+	{
+	}
 }
 
 int	main(void)
 {
 	t_watcher	*watcher;
+	pid_t		pid;
 
-	watcher = init_watcher(200, 513);
-	pthread_create(&watcher->tid, NULL, child_routine, watcher);
-	usleep(10000);
-	sem_wait(watcher->sem);
-	printf("%ld\n", get_time(CURRENT));
-	sem_post(watcher->sem);
-	pthread_join(watcher->tid, NULL);
+	pid = fork();
+	if (pid == 0)
+	{
+		watcher = init_watcher(200, 513);
+		pthread_create(&watcher->tid, NULL, child_routine, watcher);
+		while (1)
+		{
+		}
+		pthread_join(watcher->tid, NULL);
+	}
 	sem_unlink("/315");
+	wait(NULL);
 }

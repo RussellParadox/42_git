@@ -6,23 +6,11 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 19:33:32 by gdornic           #+#    #+#             */
-/*   Updated: 2023/10/11 20:03:18 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/10/11 22:43:13 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
-
-void	*watchtower(void *data)
-{
-	sem_t		*time_sem;
-
-	time_sem = (sem_t *)data;
-	synchronize_timer(args);
-	while (1)
-	{
-		//watch eat time
-	}
-}
 
 void	routine(int args[5], int nb)
 {
@@ -38,16 +26,26 @@ void	routine(int args[5], int nb)
 	pthread_create(&watcher->tid, NULL, watchtower, watcher);
 	while (args[4] != 0)
 	{
+		state_change(THINK, nb, get_time(CURRENT));
 		sem_wait(forks_sem);
-		state_change(FORK, nb, get_time(CURRENT);
+		state_change(FORK, nb, get_time(CURRENT));
 		sem_wait(forks_sem);
-		state_change(FORK, nb, get_time(CURRENT);
-		state_change(EAT, nb, get_time(CURRENT);
-		contact_watcher(watcher);
+		state_change(FORK, nb, get_time(CURRENT));
+		state_change(EAT, nb, get_time(CURRENT));
+		contact_watchtower(watcher, 1);
+		wait_for(args[2], args);
+		sem_post(forks_sem);
+		sem_post(forks_sem);
+		state_change(SLEEP);
+		wait_for(args[3], args);
+		if (args[4] != -1)
+			args[4]--;
 	}
+	contact_watchtower(watcher, 2);
 	pthread_join(watch_tid, NULL);
 	sem_close(forks_sem);
 	sem_close(time_sem);
+	exit(0);
 }
 
 void	simulation(int args[5])
@@ -69,7 +67,7 @@ void	simulation(int args[5])
 		i++;
 	}
 	if (i == args[0])
-		wait(NULL);
+		waitpid(-1, NULL, 0);
 	i--;
 	while (i >= 0)
 	{
