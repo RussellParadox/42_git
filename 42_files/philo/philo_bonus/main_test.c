@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 12:22:46 by gdornic           #+#    #+#             */
-/*   Updated: 2023/10/11 22:19:49 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/10/12 16:05:25 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,8 @@ int	main(void)
 	{
 		watcher = init_watcher(200, 513);
 		pthread_create(&watcher->tid, NULL, child_routine, watcher);
-		while (1)
-		{
-		}
 		pthread_join(watcher->tid, NULL);
+		printf("coucou");
 	}
 	sem_unlink("/315");
 	wait(NULL);

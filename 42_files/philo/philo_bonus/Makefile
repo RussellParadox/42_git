@@ -6,7 +6,7 @@
 #    By: gdornic <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 21:58:09 by gdornic           #+#    #+#              #
-#    Updated: 2023/10/11 20:08:05 by gdornic          ###   ########.fr        #
+#    Updated: 2023/10/12 22:11:55 by gdornic          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ HEADERS =
 
 LIB_LINK = 
 
-SRC = main_test.c check_arguments.c args_init.c get_time.c watcher.c
+SRC = main.c check_arguments.c args_init.c get_time.c watcher.c state_change.c
 
 OBJ = $(SRC:.c=.o)
 

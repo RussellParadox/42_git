@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 19:33:32 by gdornic           #+#    #+#             */
-/*   Updated: 2023/10/11 22:43:13 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/10/12 22:53:55 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,37 +14,48 @@
 
 void	routine(int args[5], int nb)
 {
-	t_watcher	*watcher;
+	t_watcher	*w;
 	sem_t		*forks_sem;
+	int		alternate;
 
 	forks_sem = sem_open("/forks", O_CREAT, S_IRWXU, args[0]);
 	if (forks_sem == SEM_FAILED)
 		exit(1);
-	watcher = init_watcher(args[1], nb);
-	if (watcher == NULL)
+	w = init_watcher(args[1], nb);
+	if (w == NULL)
 		exit(1);
-	pthread_create(&watcher->tid, NULL, watchtower, watcher);
+	get_time(INIT);
+	state_change(THINK, nb, get_time(CURRENT));
+	pthread_create(&w->tid, NULL, watchtower, w);
+	alternate = nb % 2;
 	while (args[4] != 0)
 	{
-		state_change(THINK, nb, get_time(CURRENT));
-		sem_wait(forks_sem);
-		state_change(FORK, nb, get_time(CURRENT));
-		sem_wait(forks_sem);
-		state_change(FORK, nb, get_time(CURRENT));
-		state_change(EAT, nb, get_time(CURRENT));
-		contact_watchtower(watcher, 1);
-		wait_for(args[2], args);
-		sem_post(forks_sem);
-		sem_post(forks_sem);
-		state_change(SLEEP);
-		wait_for(args[3], args);
-		if (args[4] != -1)
-			args[4]--;
+		if (alternate)
+		{
+			alternate = 0;
+			usleep(1000);
+		}
+		else
+		{
+			sem_wait(forks_sem);
+			state_change(FORK, nb, get_time(CURRENT));
+			sem_wait(forks_sem);
+			contact_watchtower(w, EAT);
+			state_change(FORK, nb, get_time(CURRENT));
+			state_change(EAT, nb, get_time(CURRENT));
+			usleep(args[2] * 1000);
+			sem_post(forks_sem);
+			sem_post(forks_sem);
+			state_change(SLEEP, nb, get_time(CURRENT));
+			usleep(args[3] * 1000);
+			state_change(THINK, nb, get_time(CURRENT));
+			if (args[4] != -1)
+				args[4]--;
+		}
 	}
-	contact_watchtower(watcher, 2);
-	pthread_join(watch_tid, NULL);
+	contact_watchtower(w, STOP);
+	pthread_join(w->tid, NULL);
 	sem_close(forks_sem);
-	sem_close(time_sem);
 	exit(0);
 }
 
@@ -53,6 +64,8 @@ void	simulation(int args[5])
 	pid_t	*pid;
 	int	i;
 
+	sem_unlink("/forks");
+	sem_unlink("/print");
 	pid = malloc(sizeof(pid_t) * args[0]);
 	if (pid == NULL)
 		return ;
