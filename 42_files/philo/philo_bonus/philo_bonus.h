@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 19:33:47 by gdornic           #+#    #+#             */
-/*   Updated: 2023/10/12 15:52:41 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/10/18 19:47:19 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct	s_watcher
 {
 	pthread_t	tid;
 	sem_t		*sem;
+	sem_t		*print_sem;
 	long int	threshold;
 	int		signal;
 	int		nb;
@@ -36,7 +37,8 @@ typedef struct	s_watcher
 //watcher
 # define STOP 2
 t_watcher	*init_watcher(int threshold, int nb);
-void	contact_watchtower(t_watcher *w, int signal);
+void	put_wsignal(t_watcher *w, int signal);
+int	get_wsignal(t_watcher *w);
 void	*watchtower(void *data);
 
 //get time
@@ -50,7 +52,7 @@ long int	get_time(int mode);
 # define SLEEP 2
 # define THINK 3
 # define DIE 4
-void	state_change(int state, int nb, long int timestamp);
+void	state_change(int state, int nb, long int timestamp, t_watcher *w);
 
 //check arguments
 int	check_arguments(char *argv[]);

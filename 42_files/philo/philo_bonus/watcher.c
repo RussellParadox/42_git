@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 19:09:44 by gdornic           #+#    #+#             */
-/*   Updated: 2023/10/12 22:45:41 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/10/18 19:32:01 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,22 @@ void	init_name(char name[250], int nb)
 	}
 }
 
-void	contact_watchtower(t_watcher *w, int signal)
+void	put_wsignal(t_watcher *w, int signal)
 {
 	sem_wait(w->sem);
-	w->signal = signal;
+	if (w->signal != STOP)
+		w->signal = signal;
 	sem_post(w->sem);
+}
+
+int	get_wsignal(t_watcher *w)
+{
+	int	wsignal;
+
+	sem_wait(w->sem);
+	wsignal = w->signal;
+	sem_post(w->sem);
+	return (wsignal);
 }
 
 void	*watchtower(void *data)
@@ -47,26 +58,22 @@ void	*watchtower(void *data)
 	{
 		if (delay > w->threshold)
 		{
-			state_change(DIE, w->nb, get_time(CURRENT));
-			free(w);
-			exit(0);
+			state_change(DIE, w->nb, get_time(CURRENT), w);
+			put_wsignal(w, STOP);
+			break ;
 		}
-		sem_wait(w->sem);
-		if (w->signal == EAT)
+		if (get_wsignal(w) == EAT)
 		{
 			reference = get_time(CURRENT);
 			delay = 0;
-			w->signal = 0;
+			put_wsignal(w, 0);
 		}
-		if (w->signal == STOP)
-		{
-			sem_post(w->sem);
+		if (get_wsignal(w) == STOP)
 			break ;
-		}
-		sem_post(w->sem);
 		usleep(100);
 		delay = get_time(CURRENT) - reference;
 	}
+	return (NULL);
 }
 
 t_watcher	*init_watcher(int threshold, int nb)
