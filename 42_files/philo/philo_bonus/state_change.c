@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 18:00:49 by gdornic           #+#    #+#             */
-/*   Updated: 2023/10/18 19:47:04 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/10/18 20:31:58 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ void	state_change(int state, int nb, long int timestamp, t_watcher *w)
 	sem_wait(print_sem);
 	delay = get_time(CURRENT) - delay;
 	if (delay >= 2)
+	{
 		put_wsignal(w, STOP);
+		state = -1;
+	}
 	else if (state == FORK)
 		printf("%ld %d has taken a fork\n", timestamp, nb);
 	else if (state == EAT)
@@ -36,7 +39,8 @@ void	state_change(int state, int nb, long int timestamp, t_watcher *w)
 	else if (state == DIE)
 	{
 		printf("%ld %d died\n", timestamp, nb);
-		usleep(5000);
+		put_wsignal(w, STOP);
+		usleep(1000000);
 	}
 	sem_post(print_sem);
 }

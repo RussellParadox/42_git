@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 19:09:44 by gdornic           #+#    #+#             */
-/*   Updated: 2023/10/18 19:32:01 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/10/18 20:31:47 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ void	*watchtower(void *data)
 		if (delay > w->threshold)
 		{
 			state_change(DIE, w->nb, get_time(CURRENT), w);
-			put_wsignal(w, STOP);
 			break ;
 		}
 		if (get_wsignal(w) == EAT)
