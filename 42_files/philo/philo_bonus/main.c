@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 19:33:32 by gdornic           #+#    #+#             */
-/*   Updated: 2023/10/18 20:21:23 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/10/19 04:45:36 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,13 @@ void	routine(int args[5], int nb, pid_t *pid)
 {
 	t_watcher	*w;
 	sem_t		*forks_sem;
-	int		alternate;
+	sem_t		*forks_pair;
 
 	forks_sem = sem_open("/forks", O_CREAT, S_IRWXU, args[0]);
 	if (forks_sem == SEM_FAILED)
+		exit(1);
+	forks_pair = sem_open("/forks_pair", O_CREAT, S_IRWXU, 1);
+	if (forks_pair == SEM_FAILED)
 		exit(1);
 	w = init_watcher(args[1], nb);
 	if (w == NULL)
@@ -30,31 +33,24 @@ void	routine(int args[5], int nb, pid_t *pid)
 	get_time(INIT);
 	state_change(THINK, nb, get_time(CURRENT), w);
 	pthread_create(&w->tid, NULL, watchtower, w);
-	alternate = nb % 2;
 	while (args[4] != 0 && get_wsignal(w) != STOP)
 	{
-		if (alternate)
-		{
-			alternate = 0;
-			usleep(1000);
-		}
-		else
-		{
-			sem_wait(forks_sem);
-			state_change(FORK, nb, get_time(CURRENT), w);
-			sem_wait(forks_sem);
-			put_wsignal(w, EAT);
-			state_change(FORK, nb, get_time(CURRENT), w);
-			state_change(EAT, nb, get_time(CURRENT), w);
-			usleep(args[2] * 1000);
-			sem_post(forks_sem);
-			sem_post(forks_sem);
-			state_change(SLEEP, nb, get_time(CURRENT), w);
-			usleep(args[3] * 1000);
-			state_change(THINK, nb, get_time(CURRENT), w);
-			if (args[4] != -1)
-				args[4]--;
-		}
+		sem_wait(forks_pair);
+		sem_wait(forks_sem);
+		state_change(FORK, nb, get_time(CURRENT), w);
+		sem_wait(forks_sem);
+		sem_post(forks_pair);
+		put_wsignal(w, EAT);
+		state_change(FORK, nb, get_time(CURRENT), w);
+		state_change(EAT, nb, get_time(CURRENT), w);
+		usleep(args[2] * 1000);
+		sem_post(forks_sem);
+		sem_post(forks_sem);
+		state_change(SLEEP, nb, get_time(CURRENT), w);
+		usleep(args[3] * 1000);
+		state_change(THINK, nb, get_time(CURRENT), w);
+		if (args[4] != -1)
+			args[4]--;
 	}
 	put_wsignal(w, STOP);
 	sem_close(forks_sem);
@@ -73,6 +69,7 @@ void	simulation(int args[5])
 
 	sem_unlink("/forks");
 	sem_unlink("/print");
+	sem_unlink("/forks_pair");
 	pid = malloc(sizeof(pid_t) * args[0]);
 	if (pid == NULL)
 		return ;

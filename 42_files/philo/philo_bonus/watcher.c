@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 19:09:44 by gdornic           #+#    #+#             */
-/*   Updated: 2023/10/18 20:31:47 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/10/19 04:00:19 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	*watchtower(void *data)
 	long int	delay;
 
 	w = (t_watcher *)data;
+	printf("thread of %d: %d\n", w->nb, sched_getscheduler(0));
 	reference = get_time(CURRENT);
 	delay = 0;
 	while (1)
