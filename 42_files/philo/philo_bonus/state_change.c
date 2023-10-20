@@ -6,15 +6,22 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 18:00:49 by gdornic           #+#    #+#             */
-/*   Updated: 2023/10/18 20:31:58 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/10/20 03:27:14 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
+void	die(long int timestamp, int nb, t_watcher *w)
+{
+	printf("%ld %d died\n", timestamp, nb);
+	put_wsignal(w, STOP);
+	usleep(1000000);
+}
+
 void	state_change(int state, int nb, long int timestamp, t_watcher *w)
 {
-	sem_t	*print_sem;
+	sem_t		*print_sem;
 	long int	delay;
 
 	if (get_wsignal(w) == STOP)
@@ -37,10 +44,6 @@ void	state_change(int state, int nb, long int timestamp, t_watcher *w)
 	else if (state == THINK)
 		printf("%ld %d is thinking\n", timestamp, nb);
 	else if (state == DIE)
-	{
-		printf("%ld %d died\n", timestamp, nb);
-		put_wsignal(w, STOP);
-		usleep(1000000);
-	}
+		die(timestamp, nb, w);
 	sem_post(print_sem);
 }

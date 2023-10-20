@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 19:09:44 by gdornic           #+#    #+#             */
-/*   Updated: 2023/10/19 04:00:19 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/10/20 03:28:44 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,14 @@ void	*watchtower(void *data)
 	long int	delay;
 
 	w = (t_watcher *)data;
-	printf("thread of %d: %d\n", w->nb, sched_getscheduler(0));
 	reference = get_time(CURRENT);
 	delay = 0;
-	while (1)
+	while (get_wsignal(w) != STOP)
 	{
 		if (delay > w->threshold)
 		{
 			state_change(DIE, w->nb, get_time(CURRENT), w);
+			sem_post(w->forks_sem);
 			break ;
 		}
 		if (get_wsignal(w) == EAT)
@@ -68,15 +68,13 @@ void	*watchtower(void *data)
 			delay = 0;
 			put_wsignal(w, 0);
 		}
-		if (get_wsignal(w) == STOP)
-			break ;
 		usleep(100);
 		delay = get_time(CURRENT) - reference;
 	}
 	return (NULL);
 }
 
-t_watcher	*init_watcher(int threshold, int nb)
+t_watcher	*init_watcher(int args[5], int nb)
 {
 	t_watcher	*w;
 	char		name[250];
@@ -86,13 +84,17 @@ t_watcher	*init_watcher(int threshold, int nb)
 		return (NULL);
 	init_name(name, nb);
 	sem_unlink(name);
+	w->print_sem = sem_open("/print", O_CREAT, S_IRWXU, 1);
+	w->forks_sem = sem_open("/forks", O_CREAT, S_IRWXU, args[0]);
+	w->forks_pair = sem_open("/forks_pair", O_CREAT, S_IRWXU, 1);
 	w->sem = sem_open(name, O_CREAT, S_IRWXU, 1);
-	if (w->sem == SEM_FAILED)
+	if (w->print_sem == NULL || w->forks_sem == NULL || \
+		w->forks_pair == NULL || w->sem == NULL)
 	{
 		free(w);
 		return (NULL);
 	}
-	w->threshold = threshold;
+	w->threshold = args[1];
 	w->signal = -1;
 	w->nb = nb;
 	return (w);
