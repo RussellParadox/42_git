@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 14:54:39 by gdornic           #+#    #+#             */
-/*   Updated: 2023/10/04 19:06:25 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/10/20 06:51:17 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ t_philosopher	*new_philosopher(int i, int args[5])
 	new->eat_time = args[2];
 	new->sleep_time = args[3];
 	new->meals_left = args[4];
-	if (new->number % 2)
+	if (!(new->number % 2))
 		new->alternate = 1;
 	else
 		new->alternate = 0;

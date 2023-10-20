@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 19:33:32 by gdornic           #+#    #+#             */
-/*   Updated: 2023/10/11 01:17:50 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/10/20 06:54:46 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void	*routine(void *data)
 	state_change(get_time(p, CURRENT), p, THINK);
 	while (p->meals_left != 0)
 	{
+		if (p->alternate && !usleep(1000))
+			p->alternate = 0;
 		if (can_not_eat(p))
 			return (end_simulation(p));
 		else
