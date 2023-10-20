@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 19:33:47 by gdornic           #+#    #+#             */
-/*   Updated: 2023/10/04 19:12:16 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/10/20 04:53:22 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,42 +43,42 @@
 //synchronize
 # define ADD 1
 
-typedef struct	s_philosopher
+typedef struct s_philosopher
 {
-	pthread_t	id;
-	pthread_mutex_t	*fork_mutex;
-	pthread_mutex_t	*hold_mutex;
-	pthread_mutex_t	*ready_mutex;
-	pthread_mutex_t	*print_mutex;
-	pthread_mutex_t	*simulation_mutex;
-	int		*simulation;
-	int		*ready;
-	int		fork;
-	int		number;
-	int		quantity;
-	int		die_time;
-	int		eat_time;
-	int		sleep_time;
-	int		meals_left;
-	int		fl_alternate;
-	int		alternate;
-	long int	prev_eat;
-	long int	time_start;
+	pthread_t				id;
+	pthread_mutex_t			*fork_mutex;
+	pthread_mutex_t			*hold_mutex;
+	pthread_mutex_t			*ready_mutex;
+	pthread_mutex_t			*print_mutex;
+	pthread_mutex_t			*simulation_mutex;
+	int						*simulation;
+	int						*ready;
+	int						fork;
+	int						number;
+	int						quantity;
+	int						die_time;
+	int						eat_time;
+	int						sleep_time;
+	int						meals_left;
+	int						fl_alternate;
+	int						alternate;
+	long int				prev_eat;
+	long int				time_start;
 	struct s_philosopher	*next;
 }	t_philosopher;
 
 //check arguments
-int	check_arguments(char *argv[]);
+int				check_arguments(char *argv[]);
 
 //args init
-int	ft_atoi(const char *nptr);
-void	args_init(int args[5], char *argv[]);
+int				ft_atoi(const char *nptr);
+void			args_init(int args[5], char *argv[]);
 
 //get time
-long int	get_time(t_philosopher *p, int mode);
+long int		get_time(t_philosopher *p, int mode);
 
 //state change
-int	state_change(long int timestamp, t_philosopher *p, int state);
+int				state_change(long int timestamp, t_philosopher *p, int state);
 
 //init philosopher
 t_philosopher	*init_philosophers(int i, int args[5]);
@@ -92,30 +92,30 @@ pthread_mutex_t	*init_hold_mutex(int mode);
 pthread_mutex_t	*init_fork_mutex(int i, int args[5]);
 
 //free init
-void	free_init(void);
+void			free_init(void);
 
 //init shared memory
-int	*init_ready(int mode);
-int	*init_simulation(int mode);
+int				*init_ready(int mode);
+int				*init_simulation(int mode);
 
 //usleep extend
-int	usleep_extend(long int time);
+int				usleep_extend(long int time);
 
 //atomic read
-int	atomic_read(int *value, pthread_mutex_t *mutex);
+int				atomic_read(int *value, pthread_mutex_t *mutex);
 
 //eat
-void	free_fork(t_philosopher *p);
-int	can_not_eat(t_philosopher *p);
+void			free_fork(t_philosopher *p);
+int				can_not_eat(t_philosopher *p);
 
 //simulate
-void	*end_simulation(t_philosopher *p);
-int	simulate(t_philosopher *p, int option);
+void			*end_simulation(t_philosopher *p);
+int				simulate(t_philosopher *p, int option);
 
 //wait for
-int	wait_for(t_philosopher *p, long int time);
+int				wait_for(t_philosopher *p, long int time);
 
 //hold philo
-void	hold_philo(t_philosopher *p);
+void			hold_philo(t_philosopher *p);
 
 #endif

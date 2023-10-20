@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 16:00:51 by gdornic           #+#    #+#             */
-/*   Updated: 2023/10/19 23:56:43 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/10/20 04:58:18 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int	can_not_eat(t_philosopher *p)
 	if (p->quantity == 1)
 		return (1);
 	res = 1;
+	pthread_mutex_lock(p->hold_mutex);
 	while (simulate(p, GET) && \
 		get_time(p, CURRENT) - p->prev_eat <= p->die_time && res)
 	{
@@ -64,7 +65,8 @@ int	can_not_eat(t_philosopher *p)
 			state_change(get_time(p, CURRENT), p, FORK);
 			state_change(get_time(p, CURRENT), p, FORK);
 		}
-		usleep(10);
+		usleep(100);
 	}
+	pthread_mutex_unlock(p->hold_mutex);
 	return (res);
 }
